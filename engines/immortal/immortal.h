@@ -34,6 +34,8 @@ public:
 	~ImmortalEngine();
 
 	virtual Common::Error run();
+private:
+	void updateEvents();
 };
 
 }

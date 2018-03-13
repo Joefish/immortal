@@ -20,6 +20,11 @@
  *
  */
 
+#include "common/error.h"
+#include "common/events.h"
+#include "common/system.h"
+#include "engines/util.h"
+
 #include "immortal/immortal.h"
 
 namespace Immortal {
@@ -33,7 +38,33 @@ ImmortalEngine::~ImmortalEngine() {
 
 }
 
+void ImmortalEngine::updateEvents() {
+	Common::Event event;
+	while (_system->getEventManager()->pollEvent(event)) {
+		switch (event.type) {
+		case Common::EVENT_KEYDOWN:
+			if (event.kbd.keycode == Common::KEYCODE_d &&
+				(event.kbd.flags & Common::KBD_CTRL)) {
+			}
+			break;
+		default:
+			break;
+		}
+	}
+}
+
 Common::Error ImmortalEngine::run() {
+	initGraphics(320, 200);
+
+	while (!shouldQuit()) {
+		uint32 start = _system->getMillis();
+		updateEvents();
+		_system->updateScreen();
+		int end = 30 - (_system->getMillis() - start);
+		if (end > 0)
+			_system->delayMillis(end);
+	}
+
 	return Common::kNoError;
 }
 
