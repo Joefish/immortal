@@ -20,26 +20,26 @@
  *
  */
 
-#ifndef IMMORTAL_IMMORTAL_H
-#define IMMORTAL_IMMORTAL_H
+#ifndef IMMORTAL_CONSOLE_H
+#define IMMORTAL_CONSOLE_H
 
-#include "common/error.h"
-#include "engines/engine.h"
+#include "gui/debugger.h"
 
 namespace Immortal {
 
-class Console;
+class ImmortalEngine;
 
-class ImmortalEngine : public Engine {
+enum {
+	kDebugGeneral = 1 << 0,
+};
+
+class Console : public GUI::Debugger {
 public:
-	explicit ImmortalEngine(OSystem *syst);
-	~ImmortalEngine();
+	Console(ImmortalEngine *vm);
+	virtual ~Console() {}
 
-	virtual Common::Error run();
 private:
-	void updateEvents();
-
-	Console *_console;
+	ImmortalEngine *_vm;
 };
 
 }

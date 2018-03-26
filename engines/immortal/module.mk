@@ -1,8 +1,9 @@
 MODULE := engines/immortal
 
-MODULE_OBJS := \
+MODULE_OBJS :=  \
+	console.o   \
 	detection.o \
-	immortal.o \
+	immortal.o
 
 MODULE_DIRS += \
 	engines/immortal

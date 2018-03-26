@@ -26,6 +26,7 @@
 #include "engines/util.h"
 
 #include "immortal/immortal.h"
+#include "immortal/console.h"
 
 namespace Immortal {
 
@@ -45,6 +46,7 @@ void ImmortalEngine::updateEvents() {
 		case Common::EVENT_KEYDOWN:
 			if (event.kbd.keycode == Common::KEYCODE_d &&
 				(event.kbd.flags & Common::KBD_CTRL)) {
+				_console->attach();
 			}
 			break;
 		default:
@@ -55,10 +57,12 @@ void ImmortalEngine::updateEvents() {
 
 Common::Error ImmortalEngine::run() {
 	initGraphics(320, 200);
+	_console = new Console(this);
 
 	while (!shouldQuit()) {
 		uint32 start = _system->getMillis();
 		updateEvents();
+		_console->onFrame();
 		_system->updateScreen();
 		int end = 30 - (_system->getMillis() - start);
 		if (end > 0)
