@@ -3,7 +3,8 @@ MODULE := engines/immortal
 MODULE_OBJS :=  \
 	console.o   \
 	detection.o \
-	immortal.o
+	immortal.o \
+	resman.o
 
 MODULE_DIRS += \
 	engines/immortal

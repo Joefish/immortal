@@ -20,28 +20,55 @@
  *
  */
 
-#ifndef IMMORTAL_IMMORTAL_H
-#define IMMORTAL_IMMORTAL_H
+#ifndef IMMORTAL_RESMAN_H
+#define IMMORTAL_RESMAN_H
 
+#include "common/array.h"
 #include "common/error.h"
-#include "engines/engine.h"
+#include "common/ptr.h"
+#include "graphics/surface.h"
 
 namespace Immortal {
 
-class Console;
-class ResourceManager;
+class ImmortalEngine;
 
-class ImmortalEngine : public Engine {
+enum AssetId {
+	kAssetEGATitleScreen,
+	kAssetVGATitleScreen,
+	kAssetScreenBorder,
+	kAssetInvalid
+};
+
+struct AssetFile {
+	AssetFile()
+		: _id(kAssetInvalid)
+		, _filename()
+		, _size(0)
+		, _offset(0)
+		, _data(nullptr) {
+	}
+
+	AssetId _id;
+	char _filename[13];	// 8.3
+	int _size;
+	int _offset;
+	Common::ScopedPtr<byte> _data;
+};
+
+class ResourceManager {
 public:
-	explicit ImmortalEngine(OSystem *syst);
-	~ImmortalEngine();
+	ResourceManager();
+	Graphics::Surface *getImage(AssetId id);
 
-	virtual Common::Error run();
 private:
-	void updateEvents();
+	void init();
+	Common::Error loadLibrary(const char *filename);
+	Common::Error convertImage(const AssetFile *assetFile);
 
-	Console *_console;
-	ResourceManager *_resMan;
+private:
+	Graphics::Surface _titleScreen;
+	Graphics::Surface _screenBorder;
+
 };
 
 }

@@ -26,9 +26,12 @@
 #include "common/events.h"
 #include "common/system.h"
 #include "engines/util.h"
+#include "graphics/palette.h"
+#include "graphics/surface.h"
 
-#include "immortal/immortal.h"
 #include "immortal/console.h"
+#include "immortal/immortal.h"
+#include "immortal/resman.h"
 
 namespace Immortal {
 
@@ -40,6 +43,8 @@ ImmortalEngine::ImmortalEngine(OSystem *syst)
 ImmortalEngine::~ImmortalEngine() {
 	DebugMan.clearAllDebugChannels();
 
+	delete _console;
+	delete _resMan;
 }
 
 void ImmortalEngine::updateEvents() {
@@ -58,13 +63,44 @@ void ImmortalEngine::updateEvents() {
 	}
 }
 
+static const int titlePalette[16] = {
+	0x0000,
+	0x0007,
+	0x0363,
+	0x00AA,
+	0x0A00,
+	0x0999,
+	0x090A,
+	0x0CBB,
+	0x0555,
+	0x085F,
+	0x0995,
+	0x05FF,
+	0x0F33,
+	0x0B6F,
+	0x0CC4,
+	0x0FFF
+};
+
 Common::Error ImmortalEngine::run() {
 	initGraphics(320, 200);
-	_console = new Console(this);
+	byte convertedPalette[48] = {};
+	for (int i = 0; i < 16; ++i) {
+		int color = titlePalette[i];
+		convertedPalette[i * 3 + 2] = ((color & 0xF)) * 17;
+		convertedPalette[i * 3 + 1] = ((color & 0xF0) >> 4) * 17;
+		convertedPalette[i * 3 + 0] = ((color & 0xF00) >> 8) * 17;
+	}
+	_system->getPaletteManager()->setPalette(convertedPalette, 0, 16);
 
+	_console = new Console(this);
+	_resMan = new ResourceManager();
+
+	Graphics::Surface *test = _resMan->getImage(kAssetVGATitleScreen);
 	while (!shouldQuit()) {
 		uint32 start = _system->getMillis();
 		updateEvents();
+		_system->copyRectToScreen(test->getPixels(), test->pitch, 0, 0, test->w, test->h);
 		_console->onFrame();
 		_system->updateScreen();
 		int end = 30 - (_system->getMillis() - start);
