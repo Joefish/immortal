@@ -20,6 +20,8 @@
  *
  */
 
+#include "common/debug.h"
+#include "common/debug-channels.h"
 #include "common/error.h"
 #include "common/events.h"
 #include "common/system.h"
@@ -32,10 +34,11 @@ namespace Immortal {
 
 ImmortalEngine::ImmortalEngine(OSystem *syst)
 	: Engine(syst) {
-
+	DebugMan.addDebugChannel(kDebugGeneral, "general", "Immortal general debug channel");
 }
 
 ImmortalEngine::~ImmortalEngine() {
+	DebugMan.clearAllDebugChannels();
 
 }
 
