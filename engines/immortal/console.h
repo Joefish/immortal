@@ -30,7 +30,7 @@ namespace Immortal {
 class ImmortalEngine;
 
 enum {
-	kDebugGeneral = 1 << 0,
+	kDebugGeneral = 1 << 0
 };
 
 class Console : public GUI::Debugger {
