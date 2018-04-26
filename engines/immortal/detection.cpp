@@ -31,14 +31,14 @@
 
 static const PlainGameDescriptor immortalGames[] = {
 	{"immortal", "The Immortal"},
-	{NULL, NULL}
+	{nullptr, nullptr}
 };
 
 namespace Immortal {
 static const ADGameDescription gameDescriptions[] = {
 	{
 		"immortal",
-		NULL,
+		nullptr,
 		AD_ENTRY1s("IMMORTAL.EXE", "ebf4660b5d8eb3370609e0b2c60d93cd", 53434),
 		Common::EN_ANY,
 		Common::kPlatformDOS,
@@ -93,7 +93,7 @@ bool ImmortalMetaEngine::createInstance(OSystem *syst, Engine **engine, const AD
 		*engine = new Immortal::ImmortalEngine(syst);
 	}
 
-	return desc != NULL;
+	return desc != nullptr;
 }
 
 
