@@ -39,7 +39,12 @@ static const ADGameDescription gameDescriptions[] = {
 	{
 		"immortal",
 		nullptr,
-		AD_ENTRY1s("IMMORTAL.EXE", "ebf4660b5d8eb3370609e0b2c60d93cd", 53434),
+		{
+			{"IMMORTAL.EXE", 0, "ebf4660b5d8eb3370609e0b2c60d93cd",  53434},
+			{"IMM1.LIB",     0, "45933f560d9c55384e10b9a7fb797026", 181166},
+			{"IMM2.LIB",     0, "ba0aa7459cff483df34506303c8b9889", 362044},
+			AD_LISTEND
+		},
 		Common::EN_ANY,
 		Common::kPlatformDOS,
 		ADGF_UNSTABLE,
