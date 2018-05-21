@@ -20,6 +20,7 @@
  *
  */
 
+#include "audio/mixer.h"
 #include "common/debug.h"
 #include "common/debug-channels.h"
 #include "common/error.h"
@@ -32,6 +33,8 @@
 #include "immortal/console.h"
 #include "immortal/immortal.h"
 #include "immortal/resman.h"
+#include "immortal/sound.h"
+
 
 namespace Immortal {
 
@@ -82,6 +85,7 @@ static const int titlePalette[16] = {
 	0x0FFF
 };
 
+
 Common::Error ImmortalEngine::run() {
 	initGraphics(320, 200);
 	byte convertedPalette[48] = {};
@@ -95,14 +99,18 @@ Common::Error ImmortalEngine::run() {
 
 	_console = new Console(this);
 	_resMan = new ResourceManager();
+	_midiPlayer = new MusicPlayer(_resMan);
 
-	Graphics::Surface *test = _resMan->getImage(kAssetVGATitleScreen);
+	ImageData *image = _resMan->getImage(kImageTitleScreen);
+	_midiPlayer->play(kMusicSleeping);
+
 	while (!shouldQuit()) {
 		uint32 start = _system->getMillis();
 		updateEvents();
-		_system->copyRectToScreen(test->getPixels(), test->pitch, 0, 0, test->w, test->h);
+		_system->copyRectToScreen(image->_data, image->_width, 0, 0, image->_width, image->_height);
 		_console->onFrame();
 		_system->updateScreen();
+
 		int end = 30 - (_system->getMillis() - start);
 		if (end > 0)
 			_system->delayMillis(end);

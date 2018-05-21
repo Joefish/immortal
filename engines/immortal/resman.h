@@ -26,49 +26,80 @@
 #include "common/array.h"
 #include "common/error.h"
 #include "common/ptr.h"
-#include "graphics/surface.h"
 
 namespace Immortal {
 
-class ImmortalEngine;
+class AssetFile;
 
-enum AssetId {
-	kAssetEGATitleScreen,
-	kAssetVGATitleScreen,
-	kAssetScreenBorder,
-	kAssetInvalid
+enum MusicId {
+	kMusic00,
+	kMusic01,
+	kMusicSleeping,
+	kMusic03,
+	kMusic04,
+	kMusic05,
+	kMusic06,
+	kMusic07,
+	kMusic08,
+	kMusic09,
+	kMusic10,
+	kMusic11,
+	kMusicLevelCompleted,
+	kMusic13,
+	kMusic14,
+	kMusicBattle,
+	kMusicDied,
+	kMusic17,
+	kMusic18,
+	kMusicIntro,
+	kMusic20,
+	kMusicNum
 };
 
-struct AssetFile {
-	AssetFile()
-		: _id(kAssetInvalid)
-		, _filename()
-		, _size(0)
-		, _offset(0)
-		, _data(nullptr) {
-	}
+enum ImageId {
+	kImageTitleScreen,
+	kImageScreenFrame,
+	kImageNum
+};
 
-	AssetId _id;
-	char _filename[13];	// 8.3
+struct MusicData {
+	byte *_data;
+	int _size;
+	bool _loop;
+	byte _volume[16];
+	byte _adlibToMidiChannelTable[9];
+};
+
+struct ImageData {
+	byte *_data;
+	int _size;
+	int _width;
+	int _height;
+};
+
+class ResourceManager {
+struct AssetFile {
+	char _name[13];
 	int _size;
 	int _offset;
 	Common::ScopedPtr<byte> _data;
 };
 
-class ResourceManager {
 public:
 	ResourceManager();
-	Graphics::Surface *getImage(AssetId id);
+	ImageData *getImage(ImageId id);
+	MusicData *getMusic(MusicId id);
 
 private:
 	void init();
 	Common::Error loadLibrary(const char *filename);
-	Common::Error convertImage(const AssetFile *assetFile);
+	Common::Error convertImage(AssetFile *assetFile, ImageData *dest);
+	Common::Error convertMusic(AssetFile *assetFile, MusicData *dest);
 
 private:
-	Graphics::Surface _titleScreen;
-	Graphics::Surface _screenBorder;
-
+	Common::Array<ImageData> _imageContainer;
+	MusicData _musicContainer[kMusicNum];
+	ImageData _titleScreen;
 };
 
 }

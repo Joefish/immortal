@@ -20,32 +20,29 @@
  *
  */
 
-#ifndef IMMORTAL_IMMORTAL_H
-#define IMMORTAL_IMMORTAL_H
+#ifndef IMMORTAL_SOUND_H
+#define IMMORTAL_SOUND_H
 
-#include "audio/mixer.h"
-#include "common/error.h"
-#include "engines/engine.h"
+#include "audio/midiplayer.h"
+#include "immortal/resman.h"
 
 namespace Immortal {
 
-class Console;
-class ResourceManager;
-class MusicPlayer;
-
-class ImmortalEngine : public Engine {
+class MusicPlayer : public Audio::MidiPlayer {
 public:
-	explicit ImmortalEngine(OSystem *syst);
-	~ImmortalEngine();
+	MusicPlayer(ResourceManager *resMan);
+	~MusicPlayer();
 
-	virtual Common::Error run();
+	void play(MusicId id);
+
 private:
-	void updateEvents();
+	void playMusic();
 
-	Console *_console;
+	virtual void send(uint32 msg);
+	virtual void sendToChannel(byte channel, uint32 b);
+
 	ResourceManager *_resMan;
-	MusicPlayer *_midiPlayer;
-	Audio::SoundHandle _soundHandle;
+	MusicData *_currentMusic;
 };
 
 }

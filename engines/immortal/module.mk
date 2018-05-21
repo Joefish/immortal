@@ -4,7 +4,8 @@ MODULE_OBJS :=  \
 	console.o   \
 	detection.o \
 	immortal.o \
-	resman.o
+	resman.o \
+	sound.o
 
 MODULE_DIRS += \
 	engines/immortal
