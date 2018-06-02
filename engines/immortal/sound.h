@@ -42,7 +42,7 @@ private:
 	virtual void sendToChannel(byte channel, uint32 b);
 
 	ResourceManager *_resMan;
-	MusicData *_currentMusic;
+	const MusicData *_currentMusic;
 };
 
 }

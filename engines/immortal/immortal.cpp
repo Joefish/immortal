@@ -31,6 +31,7 @@
 #include "graphics/surface.h"
 
 #include "immortal/console.h"
+#include "immortal/graphics.h"
 #include "immortal/immortal.h"
 #include "immortal/resman.h"
 #include "immortal/sound.h"
@@ -66,52 +67,30 @@ void ImmortalEngine::updateEvents() {
 	}
 }
 
-static const int titlePalette[16] = {
-	0x0000,
-	0x0007,
-	0x0363,
-	0x00AA,
-	0x0A00,
-	0x0999,
-	0x090A,
-	0x0CBB,
-	0x0555,
-	0x085F,
-	0x0995,
-	0x05FF,
-	0x0F33,
-	0x0B6F,
-	0x0CC4,
-	0x0FFF
-};
-
-
 Common::Error ImmortalEngine::run() {
 	initGraphics(320, 200);
-	byte convertedPalette[48] = {};
-	for (int i = 0; i < 16; ++i) {
-		int color = titlePalette[i];
-		convertedPalette[i * 3 + 2] = ((color & 0xF)) * 17;
-		convertedPalette[i * 3 + 1] = ((color & 0xF0) >> 4) * 17;
-		convertedPalette[i * 3 + 0] = ((color & 0xF00) >> 8) * 17;
-	}
-	_system->getPaletteManager()->setPalette(convertedPalette, 0, 16);
 
-	_console = new Console(this);
 	_resMan = new ResourceManager();
+	_console = new Console(this);
 	_midiPlayer = new MusicPlayer(_resMan);
+	_screen = new Renderer(_resMan);
 
-	ImageData *image = _resMan->getImage(kImageTitleScreen);
-	_midiPlayer->play(kMusicSleeping);
-
+	_midiPlayer->play(kMusicIntro);
+	int anim1 = 0;
+	int anim2 = 0;
+	int anim3 = 0;
 	while (!shouldQuit()) {
 		uint32 start = _system->getMillis();
-		updateEvents();
-		_system->copyRectToScreen(image->_data, image->_width, 0, 0, image->_width, image->_height);
-		_console->onFrame();
-		_system->updateScreen();
 
-		int end = 30 - (_system->getMillis() - start);
+		updateEvents();
+		_console->onFrame();
+		_screen->draw(kImageScreenFrame);
+		_screen->draw(kAnimationIconCoffee, 120, 40, &anim1);
+		_screen->draw(kAnimationWizardDeathSonic, 60, 60, &anim2);
+		_screen->draw(kAnimationWizardWalking, 180, 80, &anim3);
+		_screen->update();
+
+		int end = 200 - (_system->getMillis() - start);
 		if (end > 0)
 			_system->delayMillis(end);
 	}

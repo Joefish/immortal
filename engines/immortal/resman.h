@@ -26,10 +26,70 @@
 #include "common/array.h"
 #include "common/error.h"
 #include "common/ptr.h"
+#include "common/rect.h"
 
 namespace Immortal {
 
-class AssetFile;
+enum FileId {
+//	kFileTTT00,
+//	kFileTTT01,
+//	kFileTTT02,
+//	kFileTTT03,
+//	kFileTTT04,
+//	kFileTTT05,
+//	kFileTTT06,
+//	kFileTTT07,
+//	kFileTTT08,
+//	kFileTTT09,
+//	kFileTTT10,
+//	kFileTTT11,
+//	kFileTTT12,
+//	kFileTTT13,
+//	kFileTTT14,
+//	kFileTTT15,
+//	kFileTTT16,
+//	kFileTTT17,
+//	kFileTTT18,
+//	kFileTTT19,
+//	kFileTTT20,
+//	kFileMaze,
+//	kFileEgaTitle,
+//	kFileVgaTitle,
+//	kFileWindows,
+	kFileGeneral1,
+	kFileGeneral2,
+	kFileWizard,
+	kFileGoblin,
+	kFileTroll,
+	kFileBigWizard,
+	kFileBigGoblin,
+	kFileBigTroll,
+	kFileBigSpider,
+	kFileBigUlindor,
+	kFileDragon,
+	kFileCache8,
+	kFileLevel1,
+	kFileLevel1N8,
+	kFileLevel1T5,
+	kFileLevel1T7,
+	kFileLevel2,
+	kFileLevel2N3,
+	kFileLevel2N5,
+	kFileLevel2T4,
+	kFileLevel3,
+	kFileLevel4,
+	kFileLevel5,
+	kFileLevel6,
+	kFileLevel7P1,
+	kFileLevel7P2,
+	kFileLevel8P1,
+	kFileLevel8P2,
+	kFileLevel123,
+	kFileLevel134,
+	kFileLevel147,
+	kFileLevel235,
+	kFileAnimationNum
+};
 
 enum MusicId {
 	kMusic00,
@@ -62,20 +122,254 @@ enum ImageId {
 	kImageNum
 };
 
+// TODO: Check all sprites as files from source differ from release
+enum AnimationId {
+	// GENERAL1
+	kAnimationTunnelFalling,
+	kAnimationTorchFire,
+	kAnimationWoodenDoor,
+	kAnimationSteelDoor,
+	kAnimationLadder, // single sprite
+	kAnimationLadderClimbing,
+	kAnimationTunnel,
+	kAnimationTunnelDescending,
+	kAnimationWizardIncinerate,
+	kAnimationTunnelOpening,
+
+	// GENERAL2
+	kAnimationSymbols, // Alphabet + symbols [0;122]
+	kAnimationShadowBezierTopLeft,
+	kAnimationShadowBezierTopRight,
+	kAnimationShadowTriangleLightLeft,
+	kAnimationShadowTriangleLightRight,
+	kAnimationShadowTriangleDarkLeft,
+	kAnimationShadowTriangleDarkRight,
+	// Effects
+	kAnimationBloodLeft,
+	kAnimationBloodRight,
+	kAnimationSparksLeft,
+	kAnimationSparksRight,
+	kAnimationSparksCenter,
+	kAnimationSparksSmall,
+	kAnimationFireballN,
+	kAnimationFireballNE,
+	kAnimationFireballE,
+	kAnimationFireballSE,
+	kAnimationFireballS,
+	kAnimationFireballSW,
+	kAnimationFireballW,
+	kAnimationFireballNW,
+	kAnimationArrowNE,
+	kAnimationArrowSE,
+	kAnimationArrowSW,
+	kAnimationArrowNW,
+	kAnimationFiredot,
+	// Icons
+	kAnimationChestClosed,
+	kAnimationChestOpen,
+	kAnimationRing,
+	kAnimationDagger,
+	kAnimationSlainWarrior,
+	kAnimationIconCoffee,
+	kAnimationSpiderEgg,
+	kAnimationIconButtonYesInactive,
+	kAnimationIconButtonYesActive,
+	kAnimationIconButtonNoInactive,
+	kAnimationIconButtonNoActive,
+	kAnimationIconInventorySelect,
+	kAnimationIconNothing,
+	kAnimationIconSword,
+	kAnimationIconBottle,
+	kAnimationBottle,
+	kAnimationIconKey,
+	kAnimationIconWormSensor,
+	kAnimationIconBait,
+	kAnimationIconBook,
+	kAnimationIconDragonEgg,
+	kAnimationScroll,
+	kAnimationIconScroll,
+	kAnimationIconButtonOk,
+	kAnimationTable,
+	kAnimationIconMoneybag,
+	kAnimationIconMap,
+	kAnimationPitfall,
+	kAnimationSkeleton,
+	kAnimationIconSporesBag,
+	kAnimationSporesGrowing,
+	kAnimationRuby,
+	kAnimationThingy39,
+	kAnimationThingy40,
+	kAnimationIconRuby,
+	kAnimationIconRock,
+	kAnimationGold,
+	kAnimationIconLetter,
+	kAnimationMerchant,
+	kAnimationIconAmulet,
+	kAnimationIconGold,
+	kAnimationDragonEgg,
+	kAnimationShadowThingy52,
+	kAnimationIconBomb,
+	kAnimationIconRing,
+	kAnimationIconDagger,
+	kAnimationIconCarpet,
+	kAnimationAna,
+	kAnimationShadowThingy58,
+	kAnimationThingy59,
+	kAnimationFightingGaugeExhaustion,
+	kAnimationFightingGaugeLife,
+	kAnimationKoorsLight,
+	kAnimationFlashSmall,
+	kAnimationFlashBig,
+	kAnimationWizardAmuletUse1,
+	kAnimationWizardMortified,
+	kAnimationWizardAmuletUse2,
+	kAnimationWizardCharred,
+
+	// WIZARD -- Animations 0-7 directions
+	kAnimationWizardWalking,
+	kAnimationWizardStaff,
+	kAnimationWizardDodgeRight,
+	kAnimationWizardDodgeBack,
+	kAnimationWizardDodgeLeft,
+	kAnimationWizardStab,
+	kAnimationWizard10to12,
+	kAnimationWizardSlashRightToLeft,
+	kAnimationWizardSlash,
+	kAnimationWizardSlashLeftToRight,
+	kAnimationWizardBarrelRaft,
+	kAnimationWizardCarpet,
+	kAnimationWizard25to26,
+
+	// GOBLIN
+	kAnimationGoblinDummy,
+
+	// TROLL
+	kAnimationTrollDummy,
+
+	// BIGWIZ
+	kAnimationBigWizardDummy,
+
+	// BIGGOB
+	kAnimationBigGoblinDummy,
+
+	// BIGTROL
+	kAnimationBigTrollDummy,
+
+	// BIGSPID
+	kAnimationBigSpiderDummy,
+
+	// BIGULIN
+	kAnimationBigUlindorDummy,
+
+	// DRAGON
+	kAnimationDragonDummy,
+
+	// CACHE8
+	kAnimationRescueAna,
+	kAnimationRescueGoblin,
+
+	// LEVEL1
+	kAnimationLevel1Dummy,
+
+	// LEVEL1N8
+	kAnimationLevel1N8Dummy,
+
+	// LEVEL1T5
+	kAnimationLevel1T5Dummy,
+
+	// LEVEL1T7
+	kAnimationLevel1T7Dummy,
+
+	// LEVEL2
+	kAnimationLevel2Dummy,
+
+	// LEVEL2N3
+	kAnimationLevel2N3Dummy,
+
+	// LEVEL2N5
+	kAnimationLevel2N5Dummy,
+
+	// LEVEL2T4
+	kAnimationLevel2T4Dummy,
+
+	// LEVEL3
+	kAnimationLevel3Dummy,
+
+	// LEVEL4
+	kAnimationLevel4Dummy,
+
+	// LEVEL5
+	kAnimationLevel5Dummy,
+
+	// LEVEL6
+	kAnimationLevel6Dummy,
+
+	// LEVEL7P1
+	kAnimationLevel7P1Dummy,
+
+	// LEVEL7P2
+	kAnimationLevel7P2Dummy,
+
+	// LEVEL8P1
+	kAnimationLevel8P1Dummy,
+
+	// LEVEL8P2
+	kAnimationWizardDeathSonic,
+	kAnimationReaper,
+	kAnimationNursingGoblin,
+	kAnimationDragonFire1,
+	kAnimationDragonFire2,
+	kAnimationWizardBeheaded,
+
+	// LEVEL123
+	kAnimationLevel123Dummy,
+
+	// LEVEL134
+	kAnimationLevel134Dummy,
+
+	// LEVEL147
+	kAnimationLevel147Dummy,
+
+	// LEVEL235
+	kAnimationLevel235Dummy,
+
+	kAnimationNum
+};
+
 struct MusicData {
-	byte *_data;
+	Common::ScopedPtr<byte> _data;
 	int _size;
 	bool _loop;
 	byte _volume[16];
 	byte _adlibToMidiChannelTable[9];
 };
 
-struct ImageData {
-	byte *_data;
-	int _size;
+struct Sprite {
+	int _x;
+	int _y;
 	int _width;
 	int _height;
+	byte *_data;
+
+	// TODO: Desctructor for _data
 };
+
+class Animation {
+public:
+	Common::Point getCenter() const;
+	Common::Point getPos(int frame) const;
+	const Sprite *getFrame(int frame) const;
+	int getNumFrames() const;
+	void setFrame(int frame, int x, int y, int width, int height, byte *buffer);
+	void setInfo(int centerX, int centerY, int numFrames);
+
+private:
+	int _centerX;
+	int _centerY;
+	int _numFrames;
+	Common::Array<Sprite> _data;
+};
+
 
 class ResourceManager {
 struct AssetFile {
@@ -87,19 +381,21 @@ struct AssetFile {
 
 public:
 	ResourceManager();
-	ImageData *getImage(ImageId id);
-	MusicData *getMusic(MusicId id);
+	const byte *getImage(ImageId id);
+	const MusicData *getMusic(MusicId id);
+	const Animation *getAnimation(AnimationId id);
 
 private:
-	void init();
 	Common::Error loadLibrary(const char *filename);
-	Common::Error convertImage(AssetFile *assetFile, ImageData *dest);
-	Common::Error convertMusic(AssetFile *assetFile, MusicData *dest);
+	Common::Error convertImage(AssetFile *assetFile);
+	Common::Error convertAnimation(AssetFile *assetFile);
+	Common::Error convertMusic(AssetFile *assetFile);
 
 private:
-	Common::Array<ImageData> _imageContainer;
+	Common::ScopedPtr<byte> _mazeMap;
+	Common::ScopedPtr<byte> _imageContainer[kImageNum];
+	Animation _animationContainer[kAnimationNum];
 	MusicData _musicContainer[kMusicNum];
-	ImageData _titleScreen;
 };
 
 }

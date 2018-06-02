@@ -87,7 +87,7 @@ void MusicPlayer::play(MusicId id) {
 	}
 
 	MidiParser *parser = MidiParser::createParser_SMF();
-	if (parser->loadMusic(_currentMusic->_data, _currentMusic->_size)) {
+	if (parser->loadMusic(_currentMusic->_data.get(), _currentMusic->_size)) {
 		parser->setTrack(0);
 		parser->setMidiDriver(this);
 		parser->setTimerRate(_driver->getBaseTempo());

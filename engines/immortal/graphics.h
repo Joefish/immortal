@@ -20,34 +20,35 @@
  *
  */
 
-#ifndef IMMORTAL_IMMORTAL_H
-#define IMMORTAL_IMMORTAL_H
+#ifndef IMMORTAL_SCREEN_H
+#define IMMORTAL_SCREEN_H
 
-#include "audio/mixer.h"
-#include "common/error.h"
-#include "engines/engine.h"
+#include "immortal/resman.h"
 
 namespace Immortal {
 
-class Console;
-class ResourceManager;
-class MusicPlayer;
-class Renderer;
+class Renderer {
+	enum PaletteId {
+		kPaletteInvalid,
+		kPaletteDefault,
+		kPaletteTitle,
+		kPaletteFade
+	};
 
-class ImmortalEngine : public Engine {
 public:
-	explicit ImmortalEngine(OSystem *syst);
-	~ImmortalEngine();
+	Renderer(ResourceManager *resMan);
+	void draw(ImageId id);
+	void draw(AnimationId id, int x, int y, int *frame);
+	void draw(const byte *buffer, int x, int y, int width, int height);
+	void update();
 
-	virtual Common::Error run();
 private:
-	void updateEvents();
+	void loadPalette(PaletteId id);
 
-	Console *_console;
 	ResourceManager *_resMan;
-	MusicPlayer *_midiPlayer;
-	Renderer *_screen;
-	Audio::SoundHandle _soundHandle;
+	PaletteId _currentPalette;
+	int _screenWidth;
+	int _screenHeight;
 };
 
 }

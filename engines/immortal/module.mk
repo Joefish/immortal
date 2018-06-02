@@ -3,6 +3,7 @@ MODULE := engines/immortal
 MODULE_OBJS :=  \
 	console.o   \
 	detection.o \
+	graphics.o \
 	immortal.o \
 	resman.o \
 	sound.o
