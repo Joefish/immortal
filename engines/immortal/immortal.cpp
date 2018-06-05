@@ -33,6 +33,7 @@
 #include "immortal/console.h"
 #include "immortal/graphics.h"
 #include "immortal/immortal.h"
+#include "immortal/logic.h"
 #include "immortal/resman.h"
 #include "immortal/sound.h"
 
@@ -40,59 +41,45 @@
 namespace Immortal {
 
 ImmortalEngine::ImmortalEngine(OSystem *syst)
-	: Engine(syst) {
+	: Engine(syst)
+	, _resMan(nullptr)
+	, _midiPlayer(nullptr)
+	, _screen(nullptr)
+	, _console(nullptr)
+	, _logic(nullptr) {
 	DebugMan.addDebugChannel(kDebugGeneral, "general", "Immortal general debug channel");
 }
 
 ImmortalEngine::~ImmortalEngine() {
 	DebugMan.clearAllDebugChannels();
 
+	delete _logic;
+	delete _screen;
+	delete _midiPlayer;
 	delete _console;
 	delete _resMan;
 }
 
-void ImmortalEngine::updateEvents() {
-	Common::Event event;
-	while (_system->getEventManager()->pollEvent(event)) {
-		switch (event.type) {
-		case Common::EVENT_KEYDOWN:
-			if (event.kbd.keycode == Common::KEYCODE_d &&
-				(event.kbd.flags & Common::KBD_CTRL)) {
-				_console->attach();
-			}
-			break;
-		default:
-			break;
-		}
-	}
-}
 
 Common::Error ImmortalEngine::run() {
 	initGraphics(320, 200);
 
 	_resMan = new ResourceManager();
-	_console = new Console(this);
 	_midiPlayer = new MusicPlayer(_resMan);
 	_screen = new Renderer(_resMan);
+	_console = new Console(this);
+	_logic = new Logic(this);
 
-	_midiPlayer->play(kMusicIntro);
-	int anim1 = 0;
-	int anim2 = 0;
-	int anim3 = 0;
+	_logic->init();
+
 	while (!shouldQuit()) {
-		uint32 start = _system->getMillis();
-
-		updateEvents();
-		_console->onFrame();
-		_screen->draw(kImageScreenFrame);
-		_screen->draw(kAnimationIconCoffee, 120, 40, &anim1);
-		_screen->draw(kAnimationWizardDeathSonic, 60, 60, &anim2);
-		_screen->draw(kAnimationWizardWalking, 180, 80, &anim3);
+		int64 loopStart = g_system->getMillis();
+		_logic->update();
 		_screen->update();
 
-		int end = 200 - (_system->getMillis() - start);
-		if (end > 0)
-			_system->delayMillis(end);
+		int64 loopEnd = 16 - (g_system->getMillis() - loopStart);
+		if (loopEnd > 0)
+			g_system->delayMillis(loopEnd);
 	}
 
 	return Common::kNoError;

@@ -20,12 +20,11 @@
  *
  */
 
-#ifndef IMMORTAL_IMMORTAL_H
-#define IMMORTAL_IMMORTAL_H
+#ifndef IMMORTAL_LOGIC_H
+#define IMMORTAL_LOGIC_H
 
-#include "audio/mixer.h"
 #include "common/error.h"
-#include "engines/engine.h"
+#include "common/events.h"
 
 namespace Immortal {
 
@@ -33,22 +32,36 @@ class Console;
 class ResourceManager;
 class MusicPlayer;
 class Renderer;
-class Logic;
+class ImmortalEngine;
 
-class ImmortalEngine : public Engine {
+enum KeyState {
+	kKeyLeft,
+	kKeyRight,
+	kKeyUp,
+	kKeyDown,
+	kKeyAttack,
+	kKeyStart,
+	kKeyQuit,
+	kKeyNum
+};
+
+
+class Logic {
 public:
-	explicit ImmortalEngine(OSystem *syst);
-	~ImmortalEngine();
+	Logic(ImmortalEngine *vm);
+	void init();
+	void update();
 
-	virtual Common::Error run();
+private:
+	void handleInput();
 
-public:
+private:
 	Console *_console;
 	ResourceManager *_resMan;
-	MusicPlayer *_midiPlayer;
+	MusicPlayer *_music;
 	Renderer *_screen;
-	Logic *_logic;
-	Audio::SoundHandle _soundHandle;
+
+	bool _keyState[kKeyNum];
 };
 
 }

@@ -5,6 +5,7 @@ MODULE_OBJS :=  \
 	detection.o \
 	graphics.o \
 	immortal.o \
+	logic.o \
 	resman.o \
 	sound.o
 
