@@ -345,6 +345,9 @@ struct MusicData {
 };
 
 struct Sprite {
+	Sprite();
+	~Sprite();
+
 	int _x;
 	int _y;
 	int _width;

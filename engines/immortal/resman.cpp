@@ -616,6 +616,20 @@ void Animation::setInfo(int centerX, int centerY, int numFrames) {
 	_data.resize(numFrames);
 }
 
+Sprite::Sprite()
+	: _x(0)
+	, _y(0)
+	, _width(0)
+	, _height(0)
+	, _minScanlineOffset(0)
+	, _remap(0)
+	, _data(nullptr) {
+}
+
+Sprite::~Sprite() {
+	delete[] _data;
+}
+
 const Sprite *Animation::getFrame(int frame) const {
 	return &_data[frame];
 }
