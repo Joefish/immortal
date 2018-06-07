@@ -80,7 +80,7 @@ static const AnimationInfo infoGeneral2[] = {
 	{kAnimationBloodLeft, 					3,  0,  2},
 	{kAnimationBloodRight, 					3,  3,  5},
 	{kAnimationSparksLeft, 					3,  6, 10},
-	{kAnimationSparksRight, 				3, 10, 15},
+	{kAnimationSparksRight, 				3, 11, 15},
 	{kAnimationSparksCenter, 				3, 16, 25},
 	{kAnimationSparksSmall, 				3, 26, 30},
 	{kAnimationFireballN, 					3, 31, 33},
