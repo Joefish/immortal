@@ -23,6 +23,7 @@
 #ifndef IMMORTAL_SCREEN_H
 #define IMMORTAL_SCREEN_H
 
+#include "graphics/surface.h"
 #include "immortal/resman.h"
 
 namespace Immortal {
@@ -40,11 +41,13 @@ public:
 	void draw(ImageId id);
 	void draw(AnimationId id, int x, int y, int *frame);
 	void draw(const byte *buffer, int x, int y, int width, int height);
+	void drawSprite(AnimationId id, int x, int y);
 	void update();
 
 private:
 	void loadPalette(PaletteId id);
 
+	Graphics::Surface _backBuffer;
 	ResourceManager *_resMan;
 	PaletteId _currentPalette;
 	int _screenWidth;

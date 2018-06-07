@@ -69,6 +69,7 @@ Renderer::Renderer(ResourceManager *resMan)
 	, _screenWidth(320)
 	, _screenHeight(200)
 	, _currentPalette(kPaletteInvalid) {
+	_backBuffer.create(_screenWidth, _screenHeight, g_system->getScreenFormat());
 }
 
 void Renderer::draw(ImageId id) {
@@ -78,7 +79,7 @@ void Renderer::draw(ImageId id) {
 		loadPalette(kPaletteDefault);
 
 	const byte *buffer = _resMan->getImage(id);
-	g_system->copyRectToScreen(buffer, _screenWidth, 0, 0, _screenWidth, _screenHeight);
+	_backBuffer.copyRectToSurface(buffer, _screenWidth, 0, 0, _screenWidth, _screenHeight);
 }
 
 void Renderer::draw(AnimationId id, int x, int y, int *frame) {
@@ -88,14 +89,43 @@ void Renderer::draw(AnimationId id, int x, int y, int *frame) {
 	const Sprite *sprite = anim->getFrame(*frame);
 	*frame = *frame + 1;
 
-	g_system->copyRectToScreen(sprite->_data, sprite->_width, x + sprite->_x, y + sprite->_y, sprite->_width, sprite->_height);
+	g_system->copyRectToScreen(sprite->_data, sprite->_width, x + sprite->_x,
+							   y + sprite->_y, sprite->_width, sprite->_height);
 }
 
 void Renderer::draw(const byte *buffer, int x, int y, int width, int height) {
-	g_system->copyRectToScreen(buffer, width, x, y, width, height);
+	_backBuffer.copyRectToSurface(buffer, width, x, y, width, height);
+}
+
+void Renderer::drawSprite(AnimationId id, int x, int y) {
+	// TODO:
+	// Add Clipping
+
+	const Animation *animation = _resMan->getAnimation(id);
+	const Sprite *sprite = animation->getFrame(0);
+	byte *screenPtr = static_cast<byte *>(_backBuffer.getBasePtr(x, y));
+
+	int currentPixel = 0;
+	for (int dy = 0; dy < sprite->_height; ++dy) {
+		for (int dx = 0; dx < sprite->_scanlineWidth[dy]; ++dx) {
+			int pos = dy * _screenWidth + dx + sprite->_x + sprite->_scanlinePosOffset[dy];
+			byte pixel = 0;
+			if (currentPixel & 1)
+				pixel = sprite->_data[currentPixel >> 1] & 0x0F;
+			else
+				pixel = (sprite->_data[currentPixel >> 1] >> 4) & 0x0F;
+			if (pixel)
+				screenPtr[pos] = pixel;
+
+			++currentPixel;
+		}
+	}
 }
 
 void Renderer::update() {
+	g_system->copyRectToScreen(_backBuffer.getPixels(), _backBuffer.pitch, 0, 0,
+							   _backBuffer.w, _backBuffer.h);
+//	_backBuffer.fillRect(Common::Rect(_backBuffer.w, _backBuffer.h), 0);
 	g_system->updateScreen();
 }
 

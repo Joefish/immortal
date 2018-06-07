@@ -448,6 +448,15 @@ Common::Error ResourceManager::convertMusic(AssetFile *assetFile) {
 	return Common::kNoError;
 }
 
+/**
+ * Read sprite data for animation in.
+ * We keep data as it is instead of converting it to a Surface for
+ * handling transparency by drawing the pixels directly to the backbuffer
+ * instead of blitting and avoiding scanline offset shenanigans.
+ *
+ * @param assetFile
+ * @return
+ */
 Common::Error ResourceManager::convertAnimation(AssetFile *assetFile) {
 	int decodeSize;
 	byte *buffer = decodeFile(assetFile->_data.get(), assetFile->_size, &decodeSize);
@@ -499,39 +508,27 @@ Common::Error ResourceManager::convertAnimation(AssetFile *assetFile) {
 		for (int i = 0; i < numFrames; ++i) {
 			int frame = info[animation]._frameStart + i;
 			stream.seek(spriteOffset[info[animation]._animation][frame]);
-			int spriteX = stream.readByte();
-			int spriteY = stream.readByte();
-			int spriteWidth = stream.readByte();
-			int spriteHeight = stream.readByte();
-			int remap = stream.readByte();
-			Common::Array<int> pixelWidth(spriteHeight);
-			Common::Array<int> pixelPosOffset(spriteHeight);
+			Sprite *sprite = const_cast<Sprite *>(container->getFrame(i));
+			sprite->_x = stream.readByte();
+			sprite->_y = stream.readByte();
+			sprite->_width = stream.readByte();
+			sprite->_height = stream.readByte();
+			sprite->_remap = stream.readByte();	// EGA - CGA palette remap
+			sprite->_scanlineWidth.resize(sprite->_height);
+			sprite->_scanlinePosOffset.resize(sprite->_height);
+			sprite->_minScanlineOffset = 0;
 
-			for (int y = 0; y < spriteHeight; ++y) {
-				pixelWidth[y] = stream.readByte();
-				pixelPosOffset[y] = stream.readByte();
-				if (pixelWidth[y] + pixelPosOffset[y] > spriteWidth)
-					spriteWidth = pixelWidth[y] + pixelPosOffset[y];
+			for (int y = 0; y < sprite->_height; ++y) {
+				sprite->_scanlineWidth[y] = stream.readByte();
+				sprite->_scanlinePosOffset[y] = stream.readByte();
+				if (sprite->_scanlinePosOffset[y] > sprite->_minScanlineOffset)
+					sprite->_minScanlineOffset = sprite->_scanlinePosOffset[y];
 			}
 
-			byte *pixelBuffer = new byte[spriteWidth * spriteHeight];
-			Common::Array<byte> rawPixelBuffer(spriteWidth * spriteHeight);
-			memset(pixelBuffer, 0, spriteWidth * spriteHeight);
-			stream.read(&rawPixelBuffer[0], spriteWidth * spriteHeight);
-			int currentPixel = 0;
-			for (int y = 0; y < spriteHeight; ++y) {
-				for (int x = 0; x < pixelWidth[y]; ++x) {
-					int pos = y * spriteWidth + x + pixelPosOffset[y];
-					assert(pos < spriteWidth * spriteHeight);
-					if (currentPixel & 1)
-						pixelBuffer[pos] = rawPixelBuffer[currentPixel >> 1] & 0x0F;
-					else
-						pixelBuffer[pos] = (rawPixelBuffer[currentPixel >> 1] >> 4) & 0x0F;
-
-					++currentPixel;
-				}
-			}
-			container->setFrame(i, spriteX, spriteY, spriteWidth, spriteHeight, pixelBuffer);
+			byte *pixelBuffer = new byte[sprite->_width * sprite->_height];
+			memset(pixelBuffer, 0, sprite->_width * sprite->_height);
+			stream.read(pixelBuffer, sprite->_width * sprite->_height);
+			sprite->_data = pixelBuffer;
 		}
 	}
 

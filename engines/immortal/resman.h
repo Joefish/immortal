@@ -349,9 +349,11 @@ struct Sprite {
 	int _y;
 	int _width;
 	int _height;
+	int _minScanlineOffset;
+	int _remap;
+	Common::Array<int> _scanlineWidth;
+	Common::Array<int> _scanlinePosOffset;
 	byte *_data;
-
-	// TODO: Desctructor for _data
 };
 
 class Animation {
