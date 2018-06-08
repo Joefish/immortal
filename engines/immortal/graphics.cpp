@@ -108,7 +108,8 @@ void Renderer::drawSprite(AnimationId id, int x, int y) {
 	int currentPixel = 0;
 	for (int dy = 0; dy < sprite->_height; ++dy) {
 		for (int dx = 0; dx < sprite->_scanlineWidth[dy]; ++dx) {
-			int pos = dy * _screenWidth + dx + sprite->_x + sprite->_scanlinePosOffset[dy];
+			int pos = (dy + sprite->_y) * _screenWidth +
+					  dx + sprite->_x + sprite->_scanlinePosOffset[dy];
 			byte pixel = 0;
 			if (currentPixel & 1)
 				pixel = sprite->_data[currentPixel >> 1] & 0x0F;
@@ -125,7 +126,6 @@ void Renderer::drawSprite(AnimationId id, int x, int y) {
 void Renderer::update() {
 	g_system->copyRectToScreen(_backBuffer.getPixels(), _backBuffer.pitch, 0, 0,
 							   _backBuffer.w, _backBuffer.h);
-//	_backBuffer.fillRect(Common::Rect(_backBuffer.w, _backBuffer.h), 0);
 	g_system->updateScreen();
 }
 
