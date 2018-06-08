@@ -51,6 +51,9 @@ private:
 	PaletteId _currentPalette;
 	int _screenWidth;
 	int _screenHeight;
+	int _viewportWidth;
+	int _viewportHeight;
+	Common::Point _viewportPos;
 };
 
 }

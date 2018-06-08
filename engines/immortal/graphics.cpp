@@ -68,6 +68,9 @@ Renderer::Renderer(ResourceManager *resMan)
 	: _resMan(resMan)
 	, _screenWidth(320)
 	, _screenHeight(200)
+	, _viewportWidth(256)
+	, _viewportHeight(128)
+	, _viewportPos(32, 20)
 	, _currentPalette(kPaletteInvalid) {
 	_backBuffer.create(_screenWidth, _screenHeight, g_system->getScreenFormat());
 }
