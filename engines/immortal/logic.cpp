@@ -30,7 +30,7 @@
 
 namespace Immortal {
 
-static const Common::KeyCode KeyMap[] = {
+static const Common::KeyCode keyMap[] = {
 	Common::KEYCODE_LEFT,
 	Common::KEYCODE_RIGHT,
 	Common::KEYCODE_UP,
@@ -68,13 +68,13 @@ void Logic::handleInput() {
 				_console->attach();
 			}
 			for (int i = 0; i < kKeyNum; ++i) {
-				if (event.kbd.keycode == KeyMap[i])
+				if (event.kbd.keycode == keyMap[i])
 					_keyState[i] = true;
 			}
 			break;
 		case Common::EVENT_KEYUP:
 			for (int i = 0; i < kKeyNum; ++i) {
-				if (event.kbd.keycode == KeyMap[i])
+				if (event.kbd.keycode == keyMap[i])
 					_keyState[i] = false;
 			}
 			break;
