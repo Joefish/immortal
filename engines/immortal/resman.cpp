@@ -516,12 +516,12 @@ Common::Error ResourceManager::convertAnimation(AssetFile *assetFile) {
 			sprite->_remap = stream.readByte();	// EGA - CGA palette remap
 			sprite->_scanlineWidth.resize(sprite->_height);
 			sprite->_scanlinePosOffset.resize(sprite->_height);
-			sprite->_minScanlineOffset = 0;
+			sprite->_minScanlineOffset = 256;
 
 			for (int y = 0; y < sprite->_height; ++y) {
 				sprite->_scanlineWidth[y] = stream.readByte();
 				sprite->_scanlinePosOffset[y] = stream.readByte();
-				if (sprite->_scanlinePosOffset[y] > sprite->_minScanlineOffset)
+				if (sprite->_scanlinePosOffset[y] < sprite->_minScanlineOffset)
 					sprite->_minScanlineOffset = sprite->_scanlinePosOffset[y];
 			}
 
