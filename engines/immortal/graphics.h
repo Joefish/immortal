@@ -38,14 +38,13 @@ class Renderer {
 
 public:
 	Renderer(ResourceManager *resMan);
-	void draw(ImageId id);
-	void draw(AnimationId id, int x, int y, int *frame);
-	void draw(const byte *buffer, int x, int y, int width, int height);
-	void drawSprite(AnimationId id, int x, int y);
+	void drawImage(ImageId id);
+	void drawSprite(AnimationId id, int frame, int x, int y);
 	void update();
 
 private:
 	void loadPalette(PaletteId id);
+	void draw(const Sprite *sprite, int x, int y);
 
 	Graphics::Surface _backBuffer;
 	ResourceManager *_resMan;

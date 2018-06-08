@@ -72,7 +72,15 @@ Renderer::Renderer(ResourceManager *resMan)
 	_backBuffer.create(_screenWidth, _screenHeight, g_system->getScreenFormat());
 }
 
-void Renderer::draw(ImageId id) {
+// TODO:
+// Rather than drawing the screen frame and limiting viewport to 256x128
+// why not drawing full 320x200 of the map and make frame togglable.
+// Extending/Reducing the viewport on the fly and update clipping would be better
+// than just overdraw for performance (measure).
+// For this to work, drawImage() need to support transparency or predefine frame
+// dimensions to not overdraw viewport. Don't forget to memset the backBuffer
+// after blitting in update() to remove garbage.
+void Renderer::drawImage(ImageId id) {
 	if (id == kImageTitleScreen)
 		loadPalette(kPaletteTitle);
 	else if (id == kImageScreenFrame)
@@ -82,51 +90,39 @@ void Renderer::draw(ImageId id) {
 	_backBuffer.copyRectToSurface(buffer, _screenWidth, 0, 0, _screenWidth, _screenHeight);
 }
 
-void Renderer::draw(AnimationId id, int x, int y, int *frame) {
-	const Animation *anim = _resMan->getAnimation(id);
-	if (*frame >= anim->getNumFrames())
-		*frame = 0;
-	const Sprite *sprite = anim->getFrame(*frame);
-	*frame = *frame + 1;
-
-	g_system->copyRectToScreen(sprite->_data, sprite->_width, x + sprite->_x,
-							   y + sprite->_y, sprite->_width, sprite->_height);
-}
-
-void Renderer::draw(const byte *buffer, int x, int y, int width, int height) {
-	_backBuffer.copyRectToSurface(buffer, width, x, y, width, height);
-}
-
-void Renderer::drawSprite(AnimationId id, int x, int y) {
-	// TODO:
-	// Add Clipping
-
+void Renderer::drawSprite(AnimationId id, int frame, int x, int y) {
 	const Animation *animation = _resMan->getAnimation(id);
-	const Sprite *sprite = animation->getFrame(0);
-	byte *screenPtr = static_cast<byte *>(_backBuffer.getBasePtr(x, y));
-
-	int currentPixel = 0;
-	for (int dy = 0; dy < sprite->_height; ++dy) {
-		for (int dx = 0; dx < sprite->_scanlineWidth[dy]; ++dx) {
-			int pos = (dy + sprite->_y) * _screenWidth +
-					  dx + sprite->_x + sprite->_scanlinePosOffset[dy];
-			byte pixel = 0;
-			if (currentPixel & 1)
-				pixel = sprite->_data[currentPixel >> 1] & 0x0F;
-			else
-				pixel = (sprite->_data[currentPixel >> 1] >> 4) & 0x0F;
-			if (pixel)
-				screenPtr[pos] = pixel;
-
-			++currentPixel;
-		}
-	}
+	const Sprite *sprite = animation->getFrame(frame);
+	draw(sprite, x, y);
 }
 
 void Renderer::update() {
 	g_system->copyRectToScreen(_backBuffer.getPixels(), _backBuffer.pitch, 0, 0,
 							   _backBuffer.w, _backBuffer.h);
 	g_system->updateScreen();
+}
+
+// TODO:
+// Add Clipping
+void Renderer::draw(const Sprite *sprite, int x, int y) {
+	byte *screenPtr = static_cast<byte *>(_backBuffer.getBasePtr(x, y));
+	int currentPixel = 0;
+
+	for (int dy = 0; dy < sprite->_height; ++dy) {
+		for (int dx = 0; dx < sprite->_scanlineWidth[dy]; ++dx) {
+			int pos = (dy + sprite->_y) * _screenWidth +
+					  dx + sprite->_x + sprite->_scanlinePosOffset[dy];
+			byte pixel = sprite->_data[currentPixel >> 1];
+			if (currentPixel & 1)
+				pixel &= 0x0F;
+			else
+				pixel = (pixel >> 4) & 0x0F;
+			if (pixel)
+				screenPtr[pos] = pixel;
+
+			++currentPixel;
+		}
+	}
 }
 
 void Renderer::loadPalette(PaletteId id) {
