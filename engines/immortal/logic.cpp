@@ -40,21 +40,6 @@ static const Common::KeyCode keyMap[] = {
 	Common::KEYCODE_ESCAPE
 };
 
-// TODO:
-// Change Intro string depending on game version
-static const char *dialogText[kDialogNum] = {
-	// kDialogIntro
-	"\\   Electronic Arts presents&&       The Immortal&&&&      1991 Will Harvey|]]]]]]]]\\]="
-	"          written by&&         Will Harvey&         Ian Gooding&      Michael Marcantel&       Brett G. Durrett&        Douglas Fulton|]]]]]]]/="
-#if 0
-	"&&      Amiga version by&&       Brett G. Durrett&]]]]]]]="
-	"&&       Atari version by&&      Brett G. Durrett&]]]]]]]="
-#endif
-	"&&       IBM version by&&      Kenneth L. Hurley&|]]]]]]]=",
-	// kDialogNewGame
-	"New game?%"
-};
-
 Logic::Logic(ImmortalEngine *vm)
 	: _console(vm->_console)
 	, _resMan(vm->_resMan)
