@@ -2,6 +2,7 @@ MODULE := engines/immortal
 
 MODULE_OBJS :=  \
 	console.o   \
+	dialog.o \
 	detection.o \
 	graphics.o \
 	immortal.o \
