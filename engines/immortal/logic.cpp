@@ -30,7 +30,9 @@
 
 namespace Immortal {
 
-static const Common::KeyCode keyMap[] = {
+// TODO:
+// Make keys remappable
+static const Common::KeyCode keyMap[kKeyNum] = {
 	Common::KEYCODE_LEFT,
 	Common::KEYCODE_RIGHT,
 	Common::KEYCODE_UP,
@@ -45,17 +47,37 @@ Logic::Logic(ImmortalEngine *vm)
 	, _resMan(vm->_resMan)
 	, _music(vm->_midiPlayer)
 	, _screen(vm->_screen)
-	, _keyState() {
+	, _keyState()
+	, _logicState(kLogicStartup)
+	, _timeInit(vm->_system->getMillis()) {
 }
 
+// TODO:
+// Parameters for loading savestates/new game/..
+// init rooms and gamestate
 void Logic::init() {
-	// TODO:
-	// Parameters for loading savestates/new game/start from password/..
-	// init rooms and gamestate
 }
 
 void Logic::update() {
 	handleInput();
+
+	switch (_logicState) {
+	case kLogicStartup:
+		runStartup();
+		break;
+	case kLogicDialog:
+		runDialog();
+		break;
+	case kLogicGame:
+		runGame();
+		break;
+	case kLogicPause:
+		runPause();
+		break;
+	default:
+		error("Game ended up in invalid state!");
+		break;
+	}
 }
 
 void Logic::handleInput() {
@@ -82,6 +104,30 @@ void Logic::handleInput() {
 			break;
 		}
 	}
+}
+
+void Logic::runStartup() {
+	_screen->drawImage(kImageTitleScreen);
+}
+
+void Logic::runDialog() {
+	_screen->drawImage(kImageScreenFrame);
+	DialogReturnCode rc = _dialog.update();
+	if (rc != kDialogRCNotFinished) {
+
+	}
+}
+
+void Logic::runGame() {
+	_screen->drawImage(kImageScreenFrame);
+}
+
+void Logic::runPause() {
+
+}
+
+void Logic::setState(LogicState state) {
+	_logicState = state;
 }
 
 }

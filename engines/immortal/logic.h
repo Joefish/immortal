@@ -25,6 +25,7 @@
 
 #include "common/error.h"
 #include "common/events.h"
+#include "immortal/dialog.h"
 
 namespace Immortal {
 
@@ -45,6 +46,12 @@ enum KeyState {
 	kKeyNum
 };
 
+enum LogicState {
+	kLogicStartup,
+	kLogicDialog,
+	kLogicGame,
+	kLogicPause
+};
 
 class Logic {
 public:
@@ -53,7 +60,13 @@ public:
 	void update();
 
 private:
+	void runStartup();
+	void runDialog();
+	void runGame();
+	void runPause();
+
 	void handleInput();
+	void setState(LogicState state);
 
 private:
 	Console *_console;
@@ -61,6 +74,9 @@ private:
 	MusicPlayer *_music;
 	Renderer *_screen;
 
+	Dialog _dialog;
+	LogicState _logicState;
+	int64 _timeInit;
 	bool _keyState[kKeyNum];
 };
 
