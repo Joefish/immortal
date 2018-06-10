@@ -117,7 +117,6 @@ void Logic::runStartup() {
 }
 
 void Logic::runDialog() {
-	_screen->drawImage(kImageScreenFrame);
 	DialogReturnCode rc = _dialog.update();
 	if (rc != kDialogRCNotFinished) {
 
@@ -134,6 +133,16 @@ void Logic::runPause() {
 
 void Logic::setState(LogicState state) {
 	_logicState = state;
+}
+
+void Logic::loadDialog(DialogId id) {
+	// TODO:
+	// Different music for intro, sleep and default
+	// Draw health meter as well
+	_dialog.load(id);
+	_screen->drawImage(kImageScreenFrame);
+	if (id == kDialogIntro)
+		_music->play(kMusicIntro);
 }
 
 }

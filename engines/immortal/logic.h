@@ -69,6 +69,7 @@ private:
 
 	void handleInput();
 	void setState(LogicState state);
+	void loadDialog(DialogId id);
 
 private:
 	Console *_console;
