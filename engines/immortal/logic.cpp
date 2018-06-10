@@ -108,6 +108,12 @@ void Logic::handleInput() {
 
 void Logic::runStartup() {
 	_screen->drawImage(kImageTitleScreen);
+	_timer.start();
+	if (_timer.elapsedTime() > 3000) {
+		_timer.stop();
+		loadDialog(kDialogIntro);
+		setState(kLogicDialog);
+	}
 }
 
 void Logic::runDialog() {

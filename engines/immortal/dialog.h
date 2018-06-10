@@ -24,6 +24,7 @@
 #define IMMORTAL_DIALOG_H
 
 #include "common/rect.h"
+#include "immortal/timer.h"
 
 namespace Immortal {
 
@@ -66,7 +67,7 @@ private:
 
 	const char *_text;
 	Common::Point _cursorPos;
-	int _timeSinceLastUpdate;
+	Timer _timeSinceLastUpdate;
 };
 
 }

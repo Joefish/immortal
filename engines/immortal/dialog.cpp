@@ -64,12 +64,13 @@ Dialog::Dialog() {
 void Dialog::load(DialogId id) {
 	reset();
 	_text = dialogText[id];
+	_timeSinceLastUpdate.start();
 }
 
 void Dialog::reset() {
 	_cursorPos = _cursorOrigin;
 	_text = nullptr;
-	_timeSinceLastUpdate = 0;
+	_timeSinceLastUpdate.stop();
 }
 
 /**

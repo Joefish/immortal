@@ -25,7 +25,9 @@
 
 #include "common/error.h"
 #include "common/events.h"
+
 #include "immortal/dialog.h"
+#include "immortal/timer.h"
 
 namespace Immortal {
 
@@ -75,6 +77,7 @@ private:
 	Renderer *_screen;
 
 	Dialog _dialog;
+	Timer _timer;
 	LogicState _logicState;
 	int64 _timeInit;
 	bool _keyState[kKeyNum];
