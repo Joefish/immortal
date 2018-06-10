@@ -73,6 +73,7 @@ void Dialog::reset() {
 	_cursorPos = _cursorOrigin;
 	_text = nullptr;
 	_timeSinceLastUpdate.stop();
+	_scrollingMode = false;
 }
 
 /**
@@ -111,6 +112,11 @@ void Dialog::reset() {
  * 		   For dialog without buttons we just return Ok as well.
  */
 DialogReturnCode Dialog::update() {
+	if (_scrollingMode && (_timeSinceLastUpdate.elapsedTime() < _scrollingDelay)) {
+		g_system->delayMillis(10);
+		return kDialogRCNotFinished;
+	}
+
 	switch (*_text) {
 	case '=':
 		break;
@@ -164,6 +170,7 @@ DialogReturnCode Dialog::update() {
 	}
 
 	++_text;
+	_timeSinceLastUpdate.reset();
 
 	return kDialogRCNotFinished;
 }

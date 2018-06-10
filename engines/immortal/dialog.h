@@ -73,6 +73,7 @@ private:
 	const char *_text;
 	Common::Point _cursorPos;
 	Timer _timeSinceLastUpdate;
+	bool _scrollingMode;
 };
 
 }
