@@ -46,6 +46,9 @@ const Common::Point Dialog::_cursorOrigin(40, 24);
 // button pos relative to viewport
 const Common::Point Dialog::_buttonNo(40 - 32, 100 - 12);
 const Common::Point Dialog::_buttonYes(214 - 32, 100 - 12);
+const int Dialog::_maxCharWidth = 16;
+const int Dialog::_rowHeight = 16;
+const int Dialog::_rowWidthLimit = 288; // 256 px viewport + 32 px border
 const int Dialog::_maxRows = 5;
 const int Dialog::_charGaugeOff = 1;
 const int Dialog::_charGaugeOn = 2;

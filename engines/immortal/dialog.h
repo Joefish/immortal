@@ -53,7 +53,10 @@ private:
 	static const Common::Point _cursorOrigin;
 	static const Common::Point _buttonYes;
 	static const Common::Point _buttonNo;
+	static const int _maxCharWidth;
 	static const int _maxRows;
+	static const int _rowHeight;
+	static const int _rowWidthLimit;
 	static const int _delay;
 	static const int _charGaugeOff;
 	static const int _charGaugeOn;
