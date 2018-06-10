@@ -8,7 +8,9 @@ MODULE_OBJS :=  \
 	immortal.o \
 	logic.o \
 	resman.o \
-	sound.o
+	sound.o \
+	timer.o
+
 
 MODULE_DIRS += \
 	engines/immortal
