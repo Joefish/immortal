@@ -62,7 +62,7 @@ private:
 	static const int _maxRows;
 	static const int _rowHeight;
 	static const int _rowWidthLimit;
-	static const int _delay;
+	static const int _scrollingDelay;
 	static const int _charGaugeOff;
 	static const int _charGaugeOn;
 	static const int _charCopyright;

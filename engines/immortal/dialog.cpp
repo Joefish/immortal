@@ -56,7 +56,7 @@ const int Dialog::_charGaugeOn = 2;
 const int Dialog::_charCopyright = 24;
 const int Dialog::_charTrademark = 25;
 const int Dialog::_charBlank = 26;
-const int Dialog::_delay = 100;
+const int Dialog::_scrollingDelay = 100;
 
 Dialog::Dialog(Renderer *screen)
 	: _screen(screen) {
