@@ -44,7 +44,6 @@ public:
 
 private:
 	void loadPalette(PaletteId id);
-	void draw(const Sprite *sprite, int x, int y);
 
 	Graphics::Surface _backBuffer;
 	ResourceManager *_resMan;

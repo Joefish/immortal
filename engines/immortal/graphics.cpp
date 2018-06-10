@@ -93,28 +93,18 @@ void Renderer::drawImage(ImageId id) {
 	_backBuffer.copyRectToSurface(buffer, _screenWidth, 0, 0, _screenWidth, _screenHeight);
 }
 
+// TODO:
+// Add Clipping
 void Renderer::drawSprite(AnimationId id, int frame, int x, int y) {
 	const Animation *animation = _resMan->getAnimation(id);
 	const Sprite *sprite = animation->getFrame(frame);
-	draw(sprite, x, y);
-}
-
-void Renderer::update() {
-	g_system->copyRectToScreen(_backBuffer.getPixels(), _backBuffer.pitch, 0, 0,
-							   _backBuffer.w, _backBuffer.h);
-	g_system->updateScreen();
-}
-
-// TODO:
-// Add Clipping
-void Renderer::draw(const Sprite *sprite, int x, int y) {
 	byte *screenPtr = static_cast<byte *>(_backBuffer.getBasePtr(x, y));
 	int currentPixel = 0;
 
 	for (int dy = 0; dy < sprite->_height; ++dy) {
 		for (int dx = 0; dx < sprite->_scanlineWidth[dy]; ++dx) {
-			int pos = (dy + sprite->_y) * _screenWidth +
-					  dx + sprite->_x + sprite->_scanlinePosOffset[dy];
+			int pos = (dy + sprite->_y - animation->getCenter().y) * _screenWidth +
+					  (dx + sprite->_scanlinePosOffset[dy] - animation->getCenter().x);
 			byte pixel = sprite->_data[currentPixel >> 1];
 			if (currentPixel & 1)
 				pixel &= 0x0F;
@@ -126,6 +116,12 @@ void Renderer::draw(const Sprite *sprite, int x, int y) {
 			++currentPixel;
 		}
 	}
+}
+
+void Renderer::update() {
+	g_system->copyRectToScreen(_backBuffer.getPixels(), _backBuffer.pitch, 0, 0,
+							   _backBuffer.w, _backBuffer.h);
+	g_system->updateScreen();
 }
 
 void Renderer::loadPalette(PaletteId id) {
