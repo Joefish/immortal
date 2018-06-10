@@ -32,7 +32,7 @@ namespace Immortal {
 // Substitute \x27 with '\''
 static const char *dialogText[kDialogNum] = {
 	// kDialogIntro
-	"\\   Electronic Arts presents&&       The Immortal&&&&      1991 Will Harvey|]]]]]]]]\\]="
+	"\\   Electronic Arts presents&&       The Immortal\x19&&&&     \x18 1991 Will Harvey|]]]]]]]]\\]="
 	"          written by&&         Will Harvey&         Ian Gooding&      Michael Marcantel&       Brett G. Durrett&        Douglas Fulton|]]]]]]]/="
 #if 0
 	"&&      Amiga version by&&       Brett G. Durrett&]]]]]]]="
