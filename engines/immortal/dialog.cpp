@@ -96,9 +96,8 @@ void Dialog::reset() {
  * 		<	fast text
  * 		>	no format
  * 		|	do fadein
- * 	------ Add missing tokens
- *		\
- *		/
+ *		\	fadeout
+ *		/	slow fadeout
  *
  * @brief Dialog::update iterates over the dialog text one char at a time
  * @return kDialogRCNotFinished if there are still chars left to print.
