@@ -49,7 +49,8 @@ Logic::Logic(ImmortalEngine *vm)
 	, _screen(vm->_screen)
 	, _keyState()
 	, _logicState(kLogicStartup)
-	, _timeInit(vm->_system->getMillis()) {
+	, _timeInit(vm->_system->getMillis())
+	, _dialog(vm->_screen) {
 }
 
 // TODO:

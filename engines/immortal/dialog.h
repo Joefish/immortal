@@ -28,6 +28,8 @@
 
 namespace Immortal {
 
+class Renderer;
+
 enum DialogId {
 	kDialogIntro,
 	kDialogNewGame,
@@ -43,12 +45,14 @@ enum DialogReturnCode {
 
 class Dialog {
 public:
-	Dialog();
+	Dialog(Renderer *screen);
 	void load(DialogId id);
 	DialogReturnCode update();
 
 private:
 	void reset();
+	void printChar(char c);
+	void newline();
 
 private:
 	static const Common::Point _cursorOrigin;
@@ -65,6 +69,7 @@ private:
 	static const int _charTrademark;
 	static const int _charBlank;
 
+	Renderer *_screen;
 	const char *_text;
 	Common::Point _cursorPos;
 	Timer _timeSinceLastUpdate;

@@ -23,6 +23,7 @@
 #include "common/system.h"
 
 #include "immortal/dialog.h"
+#include "immortal/graphics.h"
 
 namespace Immortal {
 
@@ -57,7 +58,8 @@ const int Dialog::_charTrademark = 25;
 const int Dialog::_charBlank = 26;
 const int Dialog::_delay = 100;
 
-Dialog::Dialog() {
+Dialog::Dialog(Renderer *screen)
+	: _screen(screen) {
 	reset();
 }
 
@@ -117,6 +119,7 @@ DialogReturnCode Dialog::update() {
 	case '*':
 		break;
 	case '&':
+		newline();
 		break;
 	case '^':
 		break;
@@ -152,14 +155,67 @@ DialogReturnCode Dialog::update() {
 		break;
 	case '/':
 		break;
+	case '\0':
+		// TODO: Wait on user action (if necessary)
+		return kDialogRCOk;
 	default:
-		error("Encountered not supported token in Dialog text (%c)", *_text);
+		printChar(*_text);
 		break;
 	}
 
 	++_text;
 
 	return kDialogRCNotFinished;
+}
+
+void Dialog::printChar(char c) {
+	// TODO:
+	// Advance to next line if word does not fit in row (test row limit to be sure)
+	// Current linebreak is just a workaround
+	if (_cursorPos.x + _maxCharWidth > _rowWidthLimit)
+		newline();
+
+	switch (c) {
+	case ' ':
+		_cursorPos.x += 8;
+		return;
+	case '\'':
+		_cursorPos.x -= 2;
+		break;
+	case 'm':
+	case 'M':
+	case 'w':
+	case 'W':
+		_cursorPos.x += 8;
+		break;
+	case 'i':
+	case 'l':
+		_cursorPos.x -= 4;
+		break;
+	case 'j':
+	case 't':
+		_cursorPos.x -= 2;
+		break;
+	}
+	if (Common::isUpper(c))
+		_cursorPos.x += 8;
+
+	_screen->drawSprite(kAnimationSymbols, c, _cursorPos.x, _cursorPos.y);
+
+	switch (c) {
+	case '\'':
+	case 'T':
+		_cursorPos.x += 6;
+		break;
+	default:
+		_cursorPos.x += 8;
+		break;
+	}
+}
+
+void Dialog::newline() {
+	_cursorPos.x = _cursorOrigin.x;
+	_cursorPos.y += 16;
 }
 
 }
