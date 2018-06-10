@@ -28,6 +28,7 @@ namespace Immortal {
 
 // TODO:
 // Change Intro string depending on game version
+// Substitute \x27 with '\''
 static const char *dialogText[kDialogNum] = {
 	// kDialogIntro
 	"\\   Electronic Arts presents&&       The Immortal&&&&      1991 Will Harvey|]]]]]]]]\\]="
@@ -42,6 +43,15 @@ static const char *dialogText[kDialogNum] = {
 };
 
 const Common::Point Dialog::_cursorOrigin(40, 24);
+// button pos relative to viewport
+const Common::Point Dialog::_buttonNo(40 - 32, 100 - 12);
+const Common::Point Dialog::_buttonYes(214 - 32, 100 - 12);
+const int Dialog::_maxRows = 5;
+const int Dialog::_charGaugeOff = 1;
+const int Dialog::_charGaugeOn = 2;
+const int Dialog::_charCopyright = 24;
+const int Dialog::_charTrademark = 25;
+const int Dialog::_charBlank = 26;
 const int Dialog::_delay = 100;
 
 Dialog::Dialog() {

@@ -51,7 +51,15 @@ private:
 
 private:
 	static const Common::Point _cursorOrigin;
+	static const Common::Point _buttonYes;
+	static const Common::Point _buttonNo;
+	static const int _maxRows;
 	static const int _delay;
+	static const int _charGaugeOff;
+	static const int _charGaugeOn;
+	static const int _charCopyright;
+	static const int _charTrademark;
+	static const int _charBlank;
 
 	const char *_text;
 	Common::Point _cursorPos;
