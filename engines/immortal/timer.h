@@ -33,6 +33,7 @@ public:
 
 	void start();
 	void stop();
+	void reset();
 	int elapsedTime();
 
 private:

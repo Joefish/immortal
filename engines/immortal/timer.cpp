@@ -42,6 +42,11 @@ void Timer::stop() {
 	_running = false;
 }
 
+void Timer::reset() {
+	stop();
+	start();
+}
+
 int Timer::elapsedTime() {
 	return _running ? g_system->getMillis() - _timeStart : 0;
 }
