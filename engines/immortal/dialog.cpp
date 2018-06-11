@@ -78,6 +78,16 @@ void Dialog::reset() {
 	_scrollingMode = false;
 }
 
+int Dialog::getDelay() const {
+	return _delay;
+}
+
+void Dialog::nextChar() {
+	assert(*_text != '\0');
+	++_text;
+	_delay = 0;
+}
+
 /**
  * TODO:
  * Add pre/post render offset table for lower ASCII chars
@@ -113,13 +123,7 @@ void Dialog::reset() {
  * 		   kDialogRCYes/No/Ok represent what button was selected.
  * 		   For dialog without buttons we just return Ok as well.
  */
-DialogToken Dialog::update(bool fastScroll) {
-	if (!fastScroll && _scrollingMode) {
-		while (_timeSinceLastUpdate.elapsedTime() < _scrollingDelay) {
-			g_system->delayMillis(10);
-		}
-	}
-
+DialogToken Dialog::update(bool keyPressed) {
 	switch (*_text) {
 	// handle in logic
 	case kDialogTokenEndOfString:

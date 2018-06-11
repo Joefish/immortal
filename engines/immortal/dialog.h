@@ -66,7 +66,9 @@ class Dialog {
 public:
 	Dialog(Renderer *screen);
 	void load(DialogId id);
-	DialogToken update(bool fastScroll);
+	DialogToken update(bool keyPressed);
+	void nextChar();
+	int getDelay() const;
 
 private:
 	void reset();
@@ -94,6 +96,7 @@ private:
 	const char *_text;
 	Common::Point _cursorPos;
 	Timer _timeSinceLastUpdate;
+	int _delay;
 	bool _scrollingMode;
 };
 
