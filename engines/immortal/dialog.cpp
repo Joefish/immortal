@@ -47,6 +47,8 @@ const Common::Point Dialog::_cursorOrigin(40, 24);
 // button pos relative to viewport
 const Common::Point Dialog::_buttonNo(40 - 32, 100 - 12);
 const Common::Point Dialog::_buttonYes(214 - 32, 100 - 12);
+const int Dialog::_iconWidth = 64;
+const int Dialog::_iconHeight = 48;
 const int Dialog::_maxCharWidth = 16;
 const int Dialog::_rowHeight = 16;
 const int Dialog::_rowWidthLimit = 288; // 256 px viewport + 32 px border
@@ -111,78 +113,87 @@ void Dialog::reset() {
  * 		   kDialogRCYes/No/Ok represent what button was selected.
  * 		   For dialog without buttons we just return Ok as well.
  */
-DialogReturnCode Dialog::update() {
-	if (_scrollingMode && (_timeSinceLastUpdate.elapsedTime() < _scrollingDelay)) {
-		g_system->delayMillis(10);
-		return kDialogRCNotFinished;
+DialogToken Dialog::update(bool fastScroll) {
+	if (!fastScroll && _scrollingMode) {
+		while (_timeSinceLastUpdate.elapsedTime() < _scrollingDelay) {
+			g_system->delayMillis(10);
+		}
 	}
 
 	switch (*_text) {
-	case '=':
+	// handle in logic
+	case kDialogTokenEndOfString:
+	case kDialogTokenEndOfStringOk:
+	case kDialogTokenEndOfStringYesNo:
+	case kDialogTokenLoadNextString:
+		return (DialogToken)*_text;
+	case kDialogTokenDelayAndClear:
+		// parse number after token
 		break;
-	case '@':
+	case kDialogTokenDelayAndPageBreak:
+		// 1960ms delay
 		break;
-	case '*':
+	case kDialogTokenDelay:
+		// parse number after token
 		break;
-	case '&':
+	case kDialogTokenDelay40:
+		// 560ms delay
+		break;
+	case kDialogTokenSlowScroll:
+		break;
+	case kDialogTokenFastScroll:
+		break;
+	case kDialogTokenFadeIn:
+		_screen->paletteFadeIn();
+		break;
+	case kDialogTokenFadeOut:
+		_screen->paletteFadeOut();
+		break;
+	case kDialogTokenSlowFadeOut:
+		_screen->paletteSlowFadeOut();
+		break;
+	case kDialogTokenLineBreak:
 		newline();
 		break;
-	case '^':
+	case kDialogTokenDrawIcon:
 		break;
-	case '#':
+	case kDialogTokenPrintNumber:
 		break;
-	case '%':
+	case kDialogTokenNoFormat:
 		break;
-	case '+':
+	case kDialogTokenApostrophy:
+		printText();
 		break;
-	case '_':
+	case kDialogTokenBackquote:
+		printText();
 		break;
-	case '~':
+	case kDialogTokenCenterCursorX:
+		_cursorPos.x = _screen->_frameWidth +
+					   ((_screen->_viewportWidth / 2) - (_iconWidth / 2));
 		break;
-	case '{':
+	case kDialogTokenAutoLineAndPageBreaks:
 		break;
-	case '}':
-		break;
-	case '[':
-		break;
-	case ']':
-		break;
-	case '$':
-		break;
-	case '(':
-		break;
-	case '<':
-		break;
-	case '>':
-		break;
-	case '|':
-		break;
-	case '\\':
-		break;
-	case '/':
-		break;
-	case '\0':
-		// TODO: Wait on user action (if necessary)
-		return kDialogRCOk;
 	default:
-		printChar(*_text);
+		printText();
 		break;
 	}
 
 	++_text;
 	_timeSinceLastUpdate.reset();
 
-	return kDialogRCNotFinished;
+	return (DialogToken)*_text;
 }
 
-void Dialog::printChar(char c) {
+void Dialog::printText() {
 	// TODO:
 	// Advance to next line if word does not fit in row (test row limit to be sure)
 	// Current linebreak is just a workaround
+	// If dialog not in scrolling mode, render whole page instead of single char
+	// return if *_text is a token
 	if (_cursorPos.x + _maxCharWidth > _rowWidthLimit)
 		newline();
 
-	switch (c) {
+	switch (*_text) {
 	case ' ':
 		_cursorPos.x += 8;
 		return;
@@ -204,12 +215,12 @@ void Dialog::printChar(char c) {
 		_cursorPos.x -= 2;
 		break;
 	}
-	if (Common::isUpper(c))
+	if (Common::isUpper(*_text))
 		_cursorPos.x += 8;
 
-	_screen->drawSprite(kAnimationSymbols, c, _cursorPos.x, _cursorPos.y);
+	_screen->drawSprite(kAnimationSymbols, *_text, _cursorPos.x, _cursorPos.y);
 
-	switch (c) {
+	switch (*_text) {
 	case '\'':
 	case 'T':
 		_cursorPos.x += 6;

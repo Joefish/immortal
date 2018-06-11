@@ -118,14 +118,25 @@ void Logic::runStartup() {
 }
 
 void Logic::runDialog() {
-	DialogReturnCode rc = _dialog.update();
-	if (rc != kDialogRCNotFinished) {
-
+	bool fastScroll = isKeyPressed(kKeyAttack) || isKeyPressed(kKeyStart);
+	DialogToken token = _dialog.update(fastScroll);
+	switch (token) {
+	case kDialogTokenEndOfString:
+		break;
+	case kDialogTokenEndOfStringOk:
+		break;
+	case kDialogTokenEndOfStringYesNo:
+		break;
+	case kDialogTokenLoadNextString:
+		break;
+	default:
+		break;
 	}
 }
 
 void Logic::runGame() {
 	_screen->drawImage(kImageScreenFrame);
+	_screen->drawSprite(kAnimationWizardWalking, 0, 80, 80);
 }
 
 void Logic::runPause() {

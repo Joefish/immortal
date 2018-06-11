@@ -24,6 +24,7 @@
 #define IMMORTAL_DIALOG_H
 
 #include "common/rect.h"
+
 #include "immortal/timer.h"
 
 namespace Immortal {
@@ -36,28 +37,47 @@ enum DialogId {
 	kDialogNum
 };
 
-enum DialogReturnCode {
-	kDialogRCNotFinished,
-	kDialogRCYes,
-	kDialogRCNo,
-	kDialogRCOk
+enum DialogToken {
+	kDialogTokenEndOfString = '=',
+	kDialogTokenEndOfStringOk = '@',
+	kDialogTokenEndOfStringYesNo = '%',
+	kDialogTokenDelayAndClear = '*',
+	kDialogTokenDelayAndPageBreak = '[',
+	kDialogTokenSlowScroll = '_',
+	kDialogTokenFastScroll = '<',
+	kDialogTokenFadeIn = '|',
+	kDialogTokenFadeOut = '\\',
+	kDialogTokenSlowFadeOut = '/',
+	kDialogTokenLineBreak = '&',
+	kDialogTokenDrawIcon = '#',
+	kDialogTokenLoadNextString = '~',
+	kDialogTokenPrintNumber = '$',
+	kDialogTokenNoFormat = '>',
+	kDialogTokenApostrophy = '+',
+	kDialogTokenBackquote = '(',
+	kDialogTokenDelay = '{',
+	kDialogTokenDelay40 = ']',
+	kDialogTokenCenterCursorX = '^',
+	kDialogTokenAutoLineAndPageBreaks = '}'
 };
 
 class Dialog {
 public:
 	Dialog(Renderer *screen);
 	void load(DialogId id);
-	DialogReturnCode update();
+	DialogToken update(bool fastScroll);
 
 private:
 	void reset();
-	void printChar(char c);
+	void printText();
 	void newline();
 
 private:
 	static const Common::Point _cursorOrigin;
 	static const Common::Point _buttonYes;
 	static const Common::Point _buttonNo;
+	static const int _iconWidth;
+	static const int _iconHeight;
 	static const int _maxCharWidth;
 	static const int _maxRows;
 	static const int _rowHeight;
