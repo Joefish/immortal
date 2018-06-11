@@ -57,7 +57,7 @@ enum DialogToken {
 	kDialogTokenApostrophy = '+',
 	kDialogTokenBackquote = '(',
 	kDialogTokenDelay = '{',
-	kDialogTokenDelay40 = ']',
+	kDialogTokenDelay140 = ']',
 	kDialogTokenCenterCursorX = '^',
 	kDialogTokenAutoLineAndPageBreaks = '}'
 };
