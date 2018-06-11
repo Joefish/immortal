@@ -24,6 +24,7 @@
 #define IMMORTAL_SCREEN_H
 
 #include "graphics/surface.h"
+
 #include "immortal/resman.h"
 
 namespace Immortal {

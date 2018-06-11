@@ -128,56 +128,86 @@ DialogToken Dialog::update(bool keyPressed) {
 	switch (*_text) {
 	// handle in logic
 	case kDialogTokenEndOfString:
+		_delay = 2500;
+		return kDialogTokenDelay;
+
+	case kDialogTokenDelay140:
+		_delay = 140;
+		return kDialogTokenDelay;
+
+	case kDialogTokenDelayAndPageBreak:
+		_delay = 490;
+		return kDialogTokenDelay;
+
+	case kDialogTokenDelay:
+		_delay = 0;
+		++_text;
+		while (Common::isDigit(*_text)) {
+			_delay = _delay * 10 + (*_text - '0');
+			++_text;
+		}
+		--_text;
+		_delay *= 3.5; 	// conversion from 'jiffies' to ms
+		return kDialogTokenDelay;
+
+	case kDialogTokenDelayAndClear:
+		// parse number after token
+		break;
+
 	case kDialogTokenEndOfStringOk:
 	case kDialogTokenEndOfStringYesNo:
 	case kDialogTokenLoadNextString:
 		return (DialogToken)*_text;
-	case kDialogTokenDelayAndClear:
-		// parse number after token
-		break;
-	case kDialogTokenDelayAndPageBreak:
-		// 1960ms delay
-		break;
-	case kDialogTokenDelay:
-		// parse number after token
-		break;
-	case kDialogTokenDelay40:
-		// 560ms delay
-		break;
+
 	case kDialogTokenSlowScroll:
+		_scrollingMode = true;
 		break;
+
 	case kDialogTokenFastScroll:
+		_scrollingMode = true;
 		break;
+
 	case kDialogTokenFadeIn:
 		_screen->paletteFadeIn();
 		break;
+
 	case kDialogTokenFadeOut:
 		_screen->paletteFadeOut();
 		break;
+
 	case kDialogTokenSlowFadeOut:
 		_screen->paletteSlowFadeOut();
 		break;
+
 	case kDialogTokenLineBreak:
 		newline();
 		break;
+
 	case kDialogTokenDrawIcon:
 		break;
+
 	case kDialogTokenPrintNumber:
 		break;
+
 	case kDialogTokenNoFormat:
 		break;
+
 	case kDialogTokenApostrophy:
 		printText();
 		break;
+
 	case kDialogTokenBackquote:
 		printText();
 		break;
+
 	case kDialogTokenCenterCursorX:
 		_cursorPos.x = _screen->_frameWidth +
 					   ((_screen->_viewportWidth / 2) - (_iconWidth / 2));
 		break;
+
 	case kDialogTokenAutoLineAndPageBreaks:
 		break;
+
 	default:
 		printText();
 		break;

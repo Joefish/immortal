@@ -79,6 +79,7 @@ private:
 	Renderer *_screen;
 
 	Dialog _dialog;
+	DialogToken _lastDialogToken;
 	Timer _timer;
 	LogicState _logicState;
 	int64 _timeInit;

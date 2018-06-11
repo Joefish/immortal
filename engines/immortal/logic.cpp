@@ -50,6 +50,7 @@ Logic::Logic(ImmortalEngine *vm)
 	, _keyState()
 	, _logicState(kLogicStartup)
 	, _timeInit(vm->_system->getMillis())
+	, _lastDialogToken(kDialogTokenInvalid)
 	, _dialog(vm->_screen) {
 }
 
@@ -118,18 +119,26 @@ void Logic::runStartup() {
 }
 
 void Logic::runDialog() {
-	bool fastScroll = isKeyPressed(kKeyAttack) || isKeyPressed(kKeyStart);
-	DialogToken token = _dialog.update(fastScroll);
-	switch (token) {
-	case kDialogTokenEndOfString:
+	bool keyPressed = isKeyPressed(kKeyAttack) || isKeyPressed(kKeyStart);
+
+	switch (_lastDialogToken) {
+	case kDialogTokenDelay:
+		_timer.start();
+		if (keyPressed || _timer.elapsedTime() > _dialog.getDelay()) {
+			_timer.stop();
+			_dialog.nextChar();
+		}
 		break;
 	case kDialogTokenEndOfStringOk:
 		break;
 	case kDialogTokenEndOfStringYesNo:
+		// draw yes/no buttons depending on user input
 		break;
 	case kDialogTokenLoadNextString:
+		// TODO: Add support for 'follwoing string' in dialogText
 		break;
 	default:
+		_lastDialogToken = _dialog.update(keyPressed);
 		break;
 	}
 }
