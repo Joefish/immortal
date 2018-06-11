@@ -68,6 +68,7 @@ private:
 	void runPause();
 
 	void handleInput();
+	bool isKeyPressed(KeyState key);
 	void setState(LogicState state);
 	void loadDialog(DialogId id);
 

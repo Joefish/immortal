@@ -136,6 +136,10 @@ void Logic::setState(LogicState state) {
 	_logicState = state;
 }
 
+bool Logic::isKeyPressed(KeyState key) {
+	return _keyState[key];
+}
+
 void Logic::loadDialog(DialogId id) {
 	// TODO:
 	// Different music for intro, sleep and default
