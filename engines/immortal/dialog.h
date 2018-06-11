@@ -38,6 +38,7 @@ enum DialogId {
 };
 
 enum DialogToken {
+	kDialogTokenInvalid = -1,
 	kDialogTokenEndOfString = '=',
 	kDialogTokenEndOfStringOk = '@',
 	kDialogTokenEndOfStringYesNo = '%',
