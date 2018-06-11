@@ -36,23 +36,40 @@ class Renderer {
 		kPaletteFade
 	};
 
+	enum PaletteFadeType {
+		kPaletteFadeIn,
+		kPaletteFadeOut,
+		kPaletteFadeSlowOut
+	};
+
 public:
 	Renderer(ResourceManager *resMan);
 	void drawImage(ImageId id);
 	void drawSprite(AnimationId id, int frame, int x, int y);
+	void paletteFadeIn();
+	void paletteFadeOut();
+	void paletteSlowFadeOut();
 	void update();
 
-private:
-	void loadPalette(PaletteId id);
+public:
+	static const int _screenWidth;
+	static const int _screenHeight;
+	static const int _viewportWidth;
+	static const int _viewportHeight;
+	static const Common::Point _viewportPos;
+	static const int _frameWidth;
+	static const int _frameHeight;
 
-	Graphics::Surface _backBuffer;
+private:
+	static void convertPaletteToRGB(int palColor, byte *red, byte *green, byte *blue);
+	void loadPalette(PaletteId id);
+	void internalDrawImage(ImageId id);
+	void internalDrawSprite(AnimationId id, int frame, int x, int y);
+	void internalPaletteFade(PaletteFadeType type);
+
 	ResourceManager *_resMan;
+	Graphics::Surface _backBuffer;
 	PaletteId _currentPalette;
-	int _screenWidth;
-	int _screenHeight;
-	int _viewportWidth;
-	int _viewportHeight;
-	Common::Point _viewportPos;
 };
 
 }

@@ -64,58 +64,44 @@ static const int dimcmap[16] = {
 	0x0781, 0x0AAA, 0x0000, 0x0666
 };
 
+const int Renderer::_screenWidth = 320;
+const int Renderer::_screenHeight = 200;
+const int Renderer::_viewportWidth = 256;
+const int Renderer::_viewportHeight = 128;
+const int Renderer::_frameWidth = 32;
+const int Renderer::_frameHeight = 20;	// 12 px frame + 8 px health bar
+const Common::Point Renderer::_viewportPos(Renderer::_frameWidth, Renderer::_frameHeight);
+
+void Renderer::convertPaletteToRGB(int palColor, byte *red, byte *green, byte *blue) {
+	*blue = ((palColor & 0xF)) * 16;
+	*green = ((palColor & 0xF0) >> 4) * 16;
+	*red = ((palColor & 0xF00) >> 8) * 16;
+}
+
 Renderer::Renderer(ResourceManager *resMan)
 	: _resMan(resMan)
-	, _screenWidth(320)
-	, _screenHeight(200)
-	, _viewportWidth(256)
-	, _viewportHeight(128)
-	, _viewportPos(32, 20)
 	, _currentPalette(kPaletteInvalid) {
 	_backBuffer.create(_screenWidth, _screenHeight, g_system->getScreenFormat());
 }
 
-// TODO:
-// Rather than drawing the screen frame and limiting viewport to 256x128
-// why not drawing full 320x200 of the map and make frame togglable.
-// Extending/Reducing the viewport on the fly and update clipping would be better
-// than just overdraw for performance (measure).
-// For this to work, drawImage() need to support transparency or predefine frame
-// dimensions to not overdraw viewport. Don't forget to memset the backBuffer
-// after blitting in update() to remove garbage.
 void Renderer::drawImage(ImageId id) {
-	if (id == kImageTitleScreen)
-		loadPalette(kPaletteTitle);
-	else if (id == kImageScreenFrame)
-		loadPalette(kPaletteDefault);
-
-	const byte *buffer = _resMan->getImage(id);
-	_backBuffer.copyRectToSurface(buffer, _screenWidth, 0, 0, _screenWidth, _screenHeight);
+	internalDrawImage(id);
 }
 
-// TODO:
-// Add Clipping
 void Renderer::drawSprite(AnimationId id, int frame, int x, int y) {
-	const Animation *animation = _resMan->getAnimation(id);
-	const Sprite *sprite = animation->getFrame(frame);
-	byte *screenPtr = static_cast<byte *>(_backBuffer.getBasePtr(x, y));
-	int currentPixel = 0;
+	internalDrawSprite(id, frame, x, y);
+}
 
-	for (int dy = 0; dy < sprite->_height; ++dy) {
-		for (int dx = 0; dx < sprite->_scanlineWidth[dy]; ++dx) {
-			int pos = (dy + sprite->_y - animation->getCenter().y) * _screenWidth +
-					  (dx + sprite->_scanlinePosOffset[dy] - animation->getCenter().x);
-			byte pixel = sprite->_data[currentPixel >> 1];
-			if (currentPixel & 1)
-				pixel &= 0x0F;
-			else
-				pixel = (pixel >> 4) & 0x0F;
-			if (pixel)
-				screenPtr[pos] = pixel;
+void Renderer::paletteFadeIn() {
+	internalPaletteFade(kPaletteFadeIn);
+}
 
-			++currentPixel;
-		}
-	}
+void Renderer::paletteFadeOut() {
+	internalPaletteFade(kPaletteFadeOut);
+}
+
+void Renderer::paletteSlowFadeOut() {
+	internalPaletteFade(kPaletteFadeSlowOut);
 }
 
 void Renderer::update() {
@@ -123,6 +109,7 @@ void Renderer::update() {
 							   _backBuffer.w, _backBuffer.h);
 	g_system->updateScreen();
 }
+
 
 void Renderer::loadPalette(PaletteId id) {
 	if (_currentPalette == id)
@@ -145,12 +132,81 @@ void Renderer::loadPalette(PaletteId id) {
 
 	byte convertedPalette[48] = {};
 	for (int i = 0; i < 16; ++i) {
-		int color = palette[i];
-		convertedPalette[i * 3 + 2] = ((color & 0xF)) * 16;
-		convertedPalette[i * 3 + 1] = ((color & 0xF0) >> 4) * 16;
-		convertedPalette[i * 3 + 0] = ((color & 0xF00) >> 8) * 16;
+		byte *dest = &convertedPalette[i * 3];
+		convertPaletteToRGB(palette[i], dest, dest + 1, dest + 2);
 	}
 	g_system->getPaletteManager()->setPalette(convertedPalette, 0, 16);
+}
+
+// TODO:
+// Rather than drawing the screen frame and limiting viewport to 256x128
+// why not drawing full 320x200 of the map and make frame togglable.
+// Extending/Reducing the viewport on the fly and update clipping would be better
+// than just overdraw for performance (measure).
+// For this to work, drawImage() need to support transparency or predefine frame
+// dimensions to not overdraw viewport. Don't forget to memset the backBuffer
+// after blitting in update() to remove garbage.
+void Renderer::internalDrawImage(ImageId id) {
+	if (id == kImageTitleScreen)
+		loadPalette(kPaletteTitle);
+	else if (id == kImageScreenFrame)
+		loadPalette(kPaletteDefault);
+
+	const byte *buffer = _resMan->getImage(id);
+	_backBuffer.copyRectToSurface(buffer, _screenWidth, 0, 0, _screenWidth, _screenHeight);
+}
+
+// TODO:
+// Add Clipping
+void Renderer::internalDrawSprite(AnimationId id, int frame, int x, int y) {
+	const Animation *animation = _resMan->getAnimation(id);
+	const Sprite *sprite = animation->getFrame(frame);
+	byte *screenPtr = static_cast<byte *>(_backBuffer.getBasePtr(x, y));
+	int currentPixel = 0;
+
+	for (int dy = 0; dy < sprite->_height; ++dy) {
+		for (int dx = 0; dx < sprite->_scanlineWidth[dy]; ++dx) {
+			int pos = (dy + sprite->_y - animation->getCenter().y) * _screenWidth +
+					  (dx + sprite->_scanlinePosOffset[dy] - animation->getCenter().x);
+			byte pixel = sprite->_data[currentPixel >> 1];
+			if (currentPixel & 1)
+				pixel &= 0x0F;
+			else
+				pixel = (pixel >> 4) & 0x0F;
+			if (pixel)
+				screenPtr[pos] = pixel;
+
+			++currentPixel;
+		}
+	}
+}
+
+// INFO: Right now this will block until fading is done.
+void Renderer::internalPaletteFade(PaletteFadeType type) {
+	byte tmpPalette[16 * 3];
+	int colorMultiplier = (type == kPaletteFadeIn) ? 0 : 15;
+	int colorMultiplierEnd = (type == kPaletteFadeIn) ? 15: 0;
+	int colorMultiplierStep = (type == kPaletteFadeIn) ? 1 : -1;
+
+	for (; colorMultiplier != colorMultiplierEnd; colorMultiplier += colorMultiplierStep) {
+		g_system->getPaletteManager()->grabPalette(tmpPalette, 0, 16);
+		for (int i = 0; i < 16; ++i) {
+			if (fadePalette[i] != -1) {
+				byte *dest = &tmpPalette[i * 3];
+				convertPaletteToRGB(fadePalette[i], dest, dest + 1, dest + 2);
+				dest[0] = (dest[0] * colorMultiplier / 16);
+				dest[1] = (dest[1] * colorMultiplier / 16);
+				dest[2] = (dest[2] * colorMultiplier / 16);
+			}
+		}
+		g_system->getPaletteManager()->setPalette(tmpPalette, 0, 16);
+		update();
+
+		if (type == kPaletteFadeSlowOut)
+			g_system->delayMillis(28 * 4); // one 'jiffy' = 1 / (72.8 Hz * 4)
+		else
+			g_system->delayMillis(15 * 4);
+	}
 }
 
 }
