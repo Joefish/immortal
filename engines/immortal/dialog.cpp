@@ -86,8 +86,8 @@ void Dialog::reset() {
  * as little non-render state as possible.
  * At what x value is it necessary to line break the text? -- Scan word length and check if it fits
  * The following are tokens for render behavior that should better be handled in the logic
- * 		=	end of string, fade in if TEXTFADEIN
- * 		@	end of string, wait for OKAY and fade in if TEXTFADEIN
+ * 		=	end of string
+ * 		@	end of string, wait for OKAY
  * 		*n	wait for n cycles, then clear screen
  * 		&	line break
  * 		^	center penx
