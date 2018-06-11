@@ -95,6 +95,7 @@ void Dialog::nextChar() {
  * advance the animation during update? Probably not. Instead, confine the Renderer to rendering and store
  * as little non-render state as possible.
  * At what x value is it necessary to line break the text? -- Scan word length and check if it fits
+ * Difference between fast and slow scroll?
  * The following are tokens for render behavior that should better be handled in the logic
  * 		=	end of string
  * 		@	end of string, wait for OKAY
