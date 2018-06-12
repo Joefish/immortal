@@ -144,7 +144,7 @@ void Logic::runDialog() {
 }
 
 void Logic::runGame() {
-	_screen->drawImage(kImageScreenFrame);
+	_screen->clear();
 	_screen->drawSprite(kAnimationWizardWalking, 0, 80, 80);
 }
 
@@ -165,7 +165,7 @@ void Logic::loadDialog(DialogId id) {
 	// Different music for intro, sleep and default
 	// Draw health meter as well
 	_dialog.load(id);
-	_screen->drawImage(kImageScreenFrame);
+	_screen->clear();
 	if (id == kDialogIntro)
 		_music->play(kMusicIntro);
 }

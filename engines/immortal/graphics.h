@@ -50,6 +50,7 @@ public:
 	void paletteFadeIn();
 	void paletteFadeOut();
 	void paletteSlowFadeOut();
+	void clear();
 	void update();
 
 public:

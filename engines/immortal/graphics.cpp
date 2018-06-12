@@ -104,6 +104,10 @@ void Renderer::paletteSlowFadeOut() {
 	internalPaletteFade(kPaletteFadeSlowOut);
 }
 
+void Renderer::clear() {
+	drawImage(kImageScreenFrame);
+}
+
 void Renderer::update() {
 	g_system->copyRectToScreen(_backBuffer.getPixels(), _backBuffer.pitch, 0, 0,
 							   _backBuffer.w, _backBuffer.h);

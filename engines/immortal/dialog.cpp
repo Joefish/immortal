@@ -109,8 +109,8 @@ void Dialog::nextChar() {
  * 		~n	continue printing string ID n
  * 		{n	wait for n cycles
  * 		}	do automatic line and page breaks
- * 		[	page break with delay of 140
- * 		]	delay 40
+ * 		[	page break with delay of 490ms
+ * 		]	delay 140ms
  * 		$	print the number passed to text_print in ACC
  * 		(	backquote
  * 		<	fast text
