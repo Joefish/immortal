@@ -127,6 +127,7 @@ void Logic::runDialog() {
 		if (keyPressed || _timer.elapsedTime() > _dialog.getDelay()) {
 			_timer.stop();
 			_dialog.nextChar();
+			_lastDialogToken = kDialogTokenInvalid;
 		}
 		break;
 	case kDialogTokenEndOfStringOk:
