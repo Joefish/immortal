@@ -128,7 +128,8 @@ DialogToken Dialog::update(bool keyPressed) {
 	switch (*_text) {
 	// handle in logic
 	case kDialogTokenEndOfString:
-		_delay = 2500;
+		_screen->clear();
+		_cursorPos = _cursorOrigin;
 		return kDialogTokenDelay;
 
 	case kDialogTokenDelay140:
