@@ -138,6 +138,9 @@ void Logic::runDialog() {
 	case kDialogTokenLoadNextString:
 		// TODO: Add support for 'follwoing string' in dialogText
 		break;
+	case kDialogTokenStringTerminator:
+
+		break;
 	default:
 		_lastDialogToken = _dialog.update(keyPressed);
 		break;
