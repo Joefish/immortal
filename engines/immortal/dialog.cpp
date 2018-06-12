@@ -59,6 +59,7 @@ const int Dialog::_charCopyright = 24;
 const int Dialog::_charTrademark = 25;
 const int Dialog::_charBlank = 26;
 const int Dialog::_scrollingDelay = 100;
+const int Dialog::_delayInMs = (1 / 72.8) * 1000;
 
 Dialog::Dialog(Renderer *screen)
 	: _screen(screen) {
@@ -126,18 +127,17 @@ void Dialog::nextChar() {
  */
 DialogToken Dialog::update(bool keyPressed) {
 	switch (*_text) {
-	// handle in logic
 	case kDialogTokenEndOfString:
 		_screen->clear();
 		_cursorPos = _cursorOrigin;
 		return kDialogTokenDelay;
 
-	case kDialogTokenDelay140:
-		_delay = 140;
+	case kDialogTokenDelay40:
+		_delay = 40 * _delayInMs;
 		return kDialogTokenDelay;
 
 	case kDialogTokenDelayAndPageBreak:
-		_delay = 490;
+		_delay = 140 * _delayInMs;
 		return kDialogTokenDelay;
 
 	case kDialogTokenDelay:
@@ -148,7 +148,7 @@ DialogToken Dialog::update(bool keyPressed) {
 			++_text;
 		}
 		--_text;
-		_delay *= 3.5; 	// conversion from 'jiffies' to ms
+		_delay *= _delayInMs;
 		return kDialogTokenDelay;
 
 	case kDialogTokenDelayAndClear:

@@ -32,6 +32,7 @@ namespace Immortal {
 class Renderer;
 
 enum DialogId {
+	kDialogNone = -1,
 	kDialogIntro,
 	kDialogNewGame,
 	kDialogNum
@@ -58,7 +59,7 @@ enum DialogToken {
 	kDialogTokenApostrophy = '+',
 	kDialogTokenBackquote = '(',
 	kDialogTokenDelay = '{',
-	kDialogTokenDelay140 = ']',
+	kDialogTokenDelay40 = ']',
 	kDialogTokenCenterCursorX = '^',
 	kDialogTokenAutoLineAndPageBreaks = '}'
 };
@@ -92,6 +93,7 @@ private:
 	static const int _charCopyright;
 	static const int _charTrademark;
 	static const int _charBlank;
+	static const int _delayInMs;
 
 	Renderer *_screen;
 	const char *_text;
