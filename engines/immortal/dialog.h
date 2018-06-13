@@ -77,7 +77,7 @@ private:
 	void printText();
 	void newline();
 
-private:
+public:
 	static const Common::Point _cursorOrigin;
 	static const Common::Point _buttonYes;
 	static const Common::Point _buttonNo;
@@ -95,6 +95,7 @@ private:
 	static const int _charBlank;
 	static const int _delayInMs;
 
+private:
 	Renderer *_screen;
 	const char *_text;
 	Common::Point _cursorPos;
