@@ -30,6 +30,7 @@ namespace Immortal {
 // TODO:
 // Change Intro string depending on game version
 // Substitute \x27 with '\''
+// Substitute placeholder with int (see kDialogKoorsString)
 static const char *dialogText[kDialogNum] = {
 	// kDialogIntro
 	"\\   Electronic Arts presents&&       The Immortal\x19&&&&     \x18 1991 Will Harvey|]]]]]]]]\\]="
@@ -260,7 +261,8 @@ static const char *dialogText[kDialogNum] = {
 };
 
 const Common::Point Dialog::_cursorOrigin(40, 24);
-// button pos relative to viewport
+// TODO:
+// button pos relative to viewport. Look close at source what's going on here..
 const Common::Point Dialog::_buttonNo(40 - 32, 100 - 12);
 const Common::Point Dialog::_buttonYes(214 - 32, 100 - 12);
 const int Dialog::_iconWidth = 64;
