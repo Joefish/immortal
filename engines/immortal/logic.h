@@ -80,10 +80,14 @@ private:
 
 	Dialog _dialog;
 	DialogToken _lastDialogToken;
+	bool _buttonNoSelected;
+	bool _buttonYesSelected;
 	Timer _timer;
 	LogicState _logicState;
 	int64 _timeInit;
 	bool _keyState[kKeyNum];
+	// TODO: just temporary. Camera is centered on wizard (all the time?)
+	Common::Point _cameraPos;
 };
 
 }
