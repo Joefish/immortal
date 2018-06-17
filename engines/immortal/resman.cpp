@@ -354,9 +354,8 @@ Common::Error ResourceManager::loadLibrary(const char *filename) {
 			convertImage(prevElement);
 		else if (Common::matchString(prevElement->_name, "*.ANM"))
 			convertAnimation(prevElement);
-		else if (Common::matchString(prevElement->_name, "MAZE.CMP")){
-			// TODO
-		}
+		else if (Common::matchString(prevElement->_name, "MAZE.CMP"))
+			convertMap(prevElement);
 
 		SWAP(prevElement, currentElement);
 	}
@@ -535,6 +534,18 @@ Common::Error ResourceManager::convertAnimation(AssetFile *assetFile) {
 	return Common::kNoError;
 }
 
+Common::Error ResourceManager::convertMap(AssetFile *assetFile) {
+	int decodedSize;
+	byte *buffer = decodeFile(assetFile->_data.get(), assetFile->_size, &decodedSize);
+	Common::MemoryReadStream stream(buffer, decodedSize, DisposeAfterUse::YES);
+
+	stream.read(_mazeMap._indexMap, sizeof(_mazeMap._indexMap));
+	stream.read(_mazeMap._tileMap, sizeof(_mazeMap._tileMap));
+	stream.read(_mazeMap._tileBitmap, sizeof(_mazeMap._tileBitmap));
+
+	return Common::kNoError;
+}
+
 const MusicData *ResourceManager::getMusic(MusicId id) {
 	return &_musicContainer[id];
 }
@@ -545,6 +556,10 @@ const byte *ResourceManager::getImage(ImageId id) {
 
 const Animation *ResourceManager::getAnimation(AnimationId id) {
 	return &_animationContainer[id];
+}
+
+const Map *ResourceManager::getMap() {
+	return &_mazeMap;
 }
 
 /**

@@ -375,6 +375,25 @@ private:
 	Common::Array<Sprite> _data;
 };
 
+struct Map {
+	static const int _numTiles = 146;
+	static const int _tileWidth = 8;
+	static const int _tileHeight = 8;
+	static const int _tilesScreenWidth = 34;
+	static const int _tilesScreenHeight = 18;
+	// TODO:
+	// Email says structure is "160x128 byte array of small map indicies" (SIMAZE.CMP)
+	// Is structure compatible or is this reason for corruption/disorder of tiles
+	// at end of map?
+	static const int _numIndicesX = 20;
+	static const int _numIndicesY = 128;
+	static const int _numStamps = 1892;
+
+	byte _indexMap[_numIndicesY][_numIndicesX];
+	byte _tileMap[_numTiles][_tileWidth * _tileHeight / 2];
+	byte _tileBitmap[_numStamps][_tileWidth * _tileHeight / 2];
+};
+
 
 class ResourceManager {
 struct AssetFile {
@@ -389,15 +408,17 @@ public:
 	const byte *getImage(ImageId id);
 	const MusicData *getMusic(MusicId id);
 	const Animation *getAnimation(AnimationId id);
+	const Map *getMap();
 
 private:
 	Common::Error loadLibrary(const char *filename);
 	Common::Error convertImage(AssetFile *assetFile);
 	Common::Error convertAnimation(AssetFile *assetFile);
 	Common::Error convertMusic(AssetFile *assetFile);
+	Common::Error convertMap(AssetFile *assetFile);
 
 private:
-	Common::ScopedPtr<byte> _mazeMap;
+	Map _mazeMap;
 	Common::ScopedPtr<byte> _imageContainer[kImageNum];
 	Animation _animationContainer[kAnimationNum];
 	MusicData _musicContainer[kMusicNum];
