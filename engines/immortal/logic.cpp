@@ -64,6 +64,7 @@ void Logic::init() {
 }
 
 void Logic::update() {
+	pollInput();
 	handleInput();
 
 	switch (_logicState) {
@@ -85,7 +86,7 @@ void Logic::update() {
 	}
 }
 
-void Logic::handleInput() {
+void Logic::pollInput() {
 	Common::Event event;
 	while (g_system->getEventManager()->pollEvent(event)) {
 		switch (event.type) {
@@ -108,6 +109,31 @@ void Logic::handleInput() {
 		default:
 			break;
 		}
+	}
+}
+
+void Logic::handleInput() {
+	if (isKeyPressed(kKeyLeft)) {
+
+	}
+	if (isKeyPressed(kKeyRight)) {
+
+	}
+	if (isKeyPressed(kKeyUp)) {
+
+	}
+	if (isKeyPressed(kKeyDown)) {
+
+	}
+	if (isKeyPressed(kKeyAttack)) {
+
+	}
+	if (isKeyPressed(kKeyStart)) {
+
+	}
+	if (isKeyPressed(kKeyQuit)) {
+		// TODO: Quit dialog; if yes, send shouldQuit event
+		g_system->quit();
 	}
 }
 

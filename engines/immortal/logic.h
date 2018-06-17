@@ -67,6 +67,7 @@ private:
 	void runGame();
 	void runPause();
 
+	void pollInput();
 	void handleInput();
 	bool isKeyPressed(KeyState key);
 	void setState(LogicState state);
