@@ -201,7 +201,7 @@ void Logic::runDialog() {
 
 void Logic::runGame() {
 	_screen->clear();
-	_screen->drawSprite(kAnimationWizardWalking, 0, 80, 80);
+	_screen->drawMap(_cameraPos.x, _cameraPos.y);
 }
 
 void Logic::runPause() {

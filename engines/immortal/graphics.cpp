@@ -114,6 +114,56 @@ void Renderer::update() {
 	g_system->updateScreen();
 }
 
+void Renderer::drawMap(int x, int y) {
+	const Map *map = _resMan->getMap();
+
+	// set index map for current position
+	for (int dy = 0; dy < Map::_tilesScreenHeight; ++dy) {
+		for (int dx = 0; dx < Map::_tilesScreenWidth; ++dx) {
+			int indexX = (x + dx) / 8;
+			int indexY = (y + dy) / 4;
+			int tileIndex = map->_indexMap[indexX][indexY];
+			int offset = tileIndex * 64; // shouldn't that be tileW*tileH/2 == 32?
+
+			// TODO:
+			// this is getting ridiculous.. maybe convert in resman in easier
+			// to handle format. But for now just get it running
+			int cy = (y + dy) % 4;
+			for (; cy < 4; ++cy) {
+				int cx = (x + dx) % 8;
+				// see 'offset' comment
+				const byte *tileIndexForSmallMaps = &map->_tileMap[0][0] + offset;
+				tileIndexForSmallMaps += cy * 8 + cx;
+				for (; cx < 8; ++cx) {
+					int tmp = *tileIndexForSmallMaps;
+					_currentIndexMap[x][y] = (tmp << 8) | tmp;
+				}
+			}
+		}
+	}
+
+	drawMapTile(x + _viewportPos.x, y + _viewportPos.y, &map->_tileBitmap[0][0]);
+}
+
+// INFO: In MAZE.CMP are 146 tiles of 8x8 16 color
+void Renderer::drawMapTile(int x, int y, const byte *tileBitmap) {
+	// TODO: name constants
+	byte *backBuffer = static_cast<byte *>(_backBuffer.getBasePtr(x, y));
+	for (int dy = 0; dy < Map::_tilesScreenHeight; ++dy) {
+		for (int dx = 0; dx < Map::_tilesScreenWidth; ++dx) {
+			int offset = (_currentIndexMap[dx][dy] & 0x07FF);
+			const byte *pixelData = &tileBitmap[offset * 32];
+			for (int pixelY = 0; pixelY < 8; ++pixelY) {
+				for (int pixelX = 0; pixelX < 4; ++pixelX) {
+					byte *screenPtr = backBuffer + (pixelY * _screenWidth + pixelX);
+					*(screenPtr + 0) = *pixelData >> 4;
+					*(screenPtr + 1) = *pixelData++ & 0x0F;
+				}
+			}
+		}
+	}
+}
+
 
 void Renderer::loadPalette(PaletteId id) {
 	if (_currentPalette == id)

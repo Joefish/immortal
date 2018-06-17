@@ -47,6 +47,7 @@ public:
 	Renderer(ResourceManager *resMan);
 	void drawImage(ImageId id);
 	void drawSprite(AnimationId id, int frame, int x, int y);
+	void drawMap(int x, int y);
 	void paletteFadeIn();
 	void paletteFadeOut();
 	void paletteSlowFadeOut();
@@ -65,6 +66,7 @@ public:
 private:
 	static void convertPaletteToRGB(int palColor, byte *red, byte *green, byte *blue);
 	void loadPalette(PaletteId id);
+	void drawMapTile(int x, int y, const byte *tileBitmap);
 	void internalDrawImage(ImageId id);
 	void internalDrawSprite(AnimationId id, int frame, int x, int y);
 	void internalPaletteFade(PaletteFadeType type);
@@ -72,6 +74,7 @@ private:
 	ResourceManager *_resMan;
 	Graphics::Surface _backBuffer;
 	PaletteId _currentPalette;
+	int _currentIndexMap[Map::_tilesScreenHeight][Map::_tilesScreenWidth];
 };
 
 }
