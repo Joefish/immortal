@@ -390,7 +390,7 @@ struct Map {
 	static const int _numStamps = 1892;
 
 	byte _indexMap[_numIndicesY][_numIndicesX];
-	byte _tileMap[_numTiles][_tileWidth * _tileHeight / 2];
+	byte _tileMap[_numTiles][_tileWidth * _tileHeight];
 	byte _tileBitmap[_numStamps][_tileWidth * _tileHeight / 2];
 };
 
