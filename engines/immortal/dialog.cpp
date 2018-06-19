@@ -207,7 +207,7 @@ static const char *dialogText[kDialogNum] = {
 	// kDialogGoesAway
 	"_}She is hurt and upset when she finds you don+t have her ring or won+t give it to her. She scurries back into the hole. The hole is too small for you to follow.&@",
 	// kDialogGiveHerRing
-	"_}`Oh sir, can you help me,+ the girl pleads. `I was kidnapped and dragged down here. All the man would say is `Mordamir+s orders.+ I ~',GIVE",
+//	"_}`Oh sir, can you help me,+ the girl pleads. `I was kidnapped and dragged down here. All the man would say is `Mordamir+s orders.+ I ~", kDialogGive2,
 	// kDialogGive2
 	"escaped using a ring my father gave me, but now I+ve lost it. Did you find it?+%",
 	// kDialogMadKingText
@@ -216,10 +216,10 @@ static const char *dialogText[kDialogNum] = {
 	"_}You are an impostor!]]]]=",
 	// kDialogMadKing3Text
 	"_}Old man, do you remember me? I am king of the goblins. You didn+t give me the water. You left me to die after you took the key from me. Now you will pay.]]]]=",
-	// kDialogDream1
-	"_}Ah, a rest is exactly what you need right now. You quickly fall into a deep, dream filled sleep...[Vivid images of a beautiful enchanted city pass by. All the city people are young. There are ~',DREAM1p",
+	// kDialogDream1P1
+//	"_}Ah, a rest is exactly what you need right now. You quickly fall into a deep, dream filled sleep...[Vivid images of a beautiful enchanted city pass by. All the city people are young. There are ~", DREAM1P2,
 	// kDialogDream1P2
-	"fountains all around, water everywhere. A huge wall surrounds the city, sealing it from the outside world...[Suddenly the images go black. A face appears... Mordamir!]][ ~',DREAM1P",
+//	"fountains all around, water everywhere. A huge wall surrounds the city, sealing it from the outside world...[Suddenly the images go black. A face appears... Mordamir!]][ ~", DREAM1P3,
 	// kDialogDream1P3
 	"He is different from how you remember him. His gentle features are now withered. His kind eyes, now cold and sunken, seem to look through you with a dark, penetrating stare. You wake rejuvenated, but disturbed.]]]]]=",
 	// kDialogHowToGetOut
@@ -258,6 +258,217 @@ static const char *dialogText[kDialogNum] = {
 	", below.&&=",
 	// kDialogCertCheckSixth
 	"No, that+s not it.&One more try.]]]]="
+	// kDialogDream1
+//	"}_The straw is a small but welcome comfort in your first day+s travel. As you drift into an uneasy slumber, you begin to wonder about Mordamir. How long has he been held prisoner? Where?~", d1d2
+	// kDialogD1D2
+	" You finally fall asleep dreaming about adventures that lie ahead.]]]=",
+	// kDialogPhantDescription
+//	"_}An image of the old wizard Mordamir leaps from the candle and begins to speak,[(Dunric, you have come~", WIZTEXT2,
+	// kDialogWizardText2
+//	" to save me. I am in the dungeons far below. I know I can count on you.+[~", WIZTEXT3,
+	// kDialogWizardText3
+	"This explains your old teacher+s mysterious disappearance, but there is one thing strange about the message...[Your name is not Dunric. ]]]]=",
+	// kDialogDunricDescription
+	"}The body of a fighter. Look for possessions?%",
+	// kDialogUlindorString0
+//	"_}You have come to save Mordamir, have you? He is held prisoner many levels below. There is a hidden passage way. That is all I can tell you.[~", ULINSTRING1,
+	// kDialogUlindorString1
+	"Without another word, the man hands you a key and runs out the door.]]]]=",
+	// kDialogGuardNote
+	"_}Beware of shades. They are dangerous, invisible creatures that like darkness. Under firelight they cast a shadow by which you can detect and avoid them.@"
+	// kDialogDunricRingDescription
+	"}You find a ring. There is a name inscribed on the band: Dunric!&@"
+	// kDialogDunricRingString
+//	"#", kAnimationIconRing, "dunric+s@"
+	// kDialogUlindorString2
+//	"_}`We are even now, wizard. Here, you will need this.+ ~", ULINSTRING3,
+	// kDialogUlindorString3
+	"He hands you a musty red carpet. (It is dangerous to step even one foot in the next two rooms. After that, the exit is just down three ladders.+ With that advice, he turns and walks briskly away.@",
+	// kDialogDreamLevel2
+	"_}When you clear your mind of the day+s troubles, you start to think about the goblins. [They appear to be rational. Perhaps you can reach some agreement with them.]]]="
+	// kDialogWarning
+	"}Stop! I forbid you to come any closer. Go back.@",
+	// kDialogThrowTrn
+	"Throw it here?%",
+	// kDialogThrowTrn2
+	"The knife lands near the troll.]]]=",
+	// kDialogDreamLevel3
+	"_}The poison from the spores must have killed the goblin king. But now he is alive! There is something very magical in these dungeons.]]]=",
+	// kDialogCoffeeDescription
+	"A coffee pot? @",
+	// kDialogCoffeeString
+//	"#",swordFRAME," coffee@", // why 'swordFrame'? there are a few ids that don't fit the description..
+	// kDialogGimmeCoffee
+	"_}(Hey, what+s this?&&The wizard![Brett, I told you someone would find us.[Wake up, Mike and Ian. We+ve got a visitor.[Listen wizard, Mike needs some coffee in the morning. Got any?+%",
+	// kDialogNoCoffee
+	"_}(Don+t try to fool me, I wrote this game. You know what happens to fibbers?+]]]=",
+	// kDialogRefuseCoffee
+	"_}(Well, toodle-oo then. We+ve got some sleep to catch. This game took ages to write.+]]]=",
+	// kDialogYesCoffee
+	"_}(Now there+s a good sport. How many hit points should we give him, a million? Okay, fifteen. Good luck, guy.+]]]=",
+	// kDialogDragNote
+	"_}Notice: Flying lizards can be trained just after they hatch. Use bait.]]]=",
+	// kDialogDream5
+//	"_}After your last dream, you have some apprehension about falling asleep, but physical exhaustion prevails. [You imagine a dragon. No, many dragons. You appear to be seeing some kind of peaceful dragon civilization. ~", DREAM1p2x,
+	// kDialogDream1P2X
+//	"It is underground, in dungeons that look vaguely familiar. You get a strange sense of- it+s difficult to pinpoint- eternity. It feels as if ~", DREAM1P3y,
+	// kDialogDream1P3Y
+	"the civilization has existed since the beginning of time.]]]]]=",
+	// kDialogGeigerDescription
+//	"_}You find a strange device and instructions:[(Worm danger in room after flying lizards! The only safe path is left, down, right, down, left, down, right, up, right, down. ~", gdesc2,
+	// kDialogGeigerDescription2
+	"Sensor pitch changes when you step off the path. Sensor only lasts 30 seconds.+[@"
+	// kDialogGeigerString
+//	"#", kAnimationIconSporesBag, "sensor@"
+	// kDialogEggString
+//	"#", kAnimationIconBook,"  egg@"
+	// kDialogEggDescription
+	"You find a large egg.&@",
+	// kDialogEggCracks
+	"_}Suddenly the egg you are carrying shakes violently. A crack develops. A red bird-like creature pushes its way out of the shell.]]]=",
+	// kDialogCrackEgg
+	"}The egg is warm. It feels like something inside is moving. Crack it open?%",
+	// kDialogEatEgg
+	"_}A wiry fetus spills out. It looks like some kind of a bird, but there are no feathers.[Eat it?%",
+	// kDialogGeigerWorks
+	"The device starts to&ping quiety.]]]=",
+	// kDialogFlameThrowDescription
+	"}You find a weak fireball spell, good for one minute of constant use. @",
+	// kDialogFlameThrowString
+//	"#", kAnimationIconScroll, "fireballs@",
+	// kDialogMerchantXDescription
+	"_}Greetings, old friend! I+ll sell you the potion you need. Sixty gold pieces. Take it?+%",
+	// kDialogGoblinTalk
+	"_}(My patrol leader wants to talk to you. Follow me.+ [He walks out the door.]]]]=",
+	// kDialogPlanTalk
+//	"_}We need your help. [Long ago, in the Age of Dragons, there was a great spring in these dungeons, a Fountain of Youth. ~", plan2,
+	// kDialogPlan2
+//	"But that was long ago. Now only a trickle of enchanted water flows, and a norlac -water monster- blocks our access to it altogether. ~", plan3,
+	// kDialogPlan3
+//	"The norlac also blocks your access to the deepest level. You see, we both need the monster killed. We have a plan... [The water drains into a whirlpool which is powerful enough to drown the norlac if he got caught in it. ~", plan4,
+	// kDialogPlan4
+	"There is a sluice gate at the other end of the tunnel. We need you to distract the norlac so we can open the gate to flush him down the whirlpool. [Somehow, you must get to the access. [Good luck. We are counting on you.+]]]]]=",
+	// kDialogHasSpiders
+	"It looks like there is&something crawling under&the latch. Open it anyway?%",
+	// kDialogPourHere
+	"Pour it out here?%",
+	// kDialogPourOnChest
+	"Pour it out on the chest?%",
+	// kDialogAlcoholDescription
+	"You find a bottle of&alcohol. @",
+	// kDialogAlcoholString
+//	"#", vaseBIGFRAME, "  alcohol@",
+	// kDialogLevitateDescription
+	"_}You find a spell of levitation and a note: Don+t step on cobwebs or egg sacks. Use levitation to get through the hall of webs.][@",
+	// kDialogLevitateString
+//	"#", kAnimationIconScroll, "levitate@",
+	// kDialogDream6
+	"_}The goblins you met on the last level had asked you to help them flush a monster out of their water supply. But where is their water supply? You sense as you approach the next level that water is near...]]]=",
+	// kDialogDream7
+//	"_}It is difficult to get to sleep. What visions are in store for you now? You unwillingly fall asleep thinking about the city of fountains you dreamt of three long days ago... ~", DREAM1p2xw,
+	// kDialogDream1P2XW
+//	"[You are inside a room, at a meeting between city officials and wizards. The officials want water access. They are planning a seige. The wizards are arguing over a weapon they have created. ]]~", DREAM1P3yw,
+	// kDialogDream1P2YW
+//	"There is some problem with it. [The dream changes.]]][You see a wall of fire. Now, in the flames, you see men attacking dragons. There is a flash. All are dead. You see another attack. Defending himself, a dragon ~", dreamxxy,
+	// kDialogdreamXXY
+	"incinerates the army, but then another flash kills him instantly. Armies block the exits of the dungeons, trapping the dragons inside. One escapes...]]]]]=",
+	// kDialogNotHere3
+	"This is to be thrown, but&not here.@",
+	// kDialogNotHere2
+	"Not here.@",
+	// kDialogDownVortexString
+	"_}You hear a voice... Could you be dreaming?[You remember the raging current of the vortex pulling you toward a hole in the floor.[But now it is quiet.]] Time has passed... You sense that someone or something is nearby.]]]=",
+	// kDialogDunricString7
+//	"_}As you approach, the man lifts his head. He seems to know you.]][(I am Dunric,+ he falters, (I sent my servant to warn you. Mordamir isn+t a prisoner...~", dunstring8,
+	// kDialogDunricString8
+	"[He kidnapped my daughter... He is manipulating... you... If I had my ring I could... but... my servant...+]]]=",
+	// kDialogGiveDunricRing
+	"Give Dunric his ring?%",
+	// kDialogDunricTransaction
+	"_}Dunric pauses, then lowers his head. Three spells appear in front of you: Body Statue, Magnetic hands, and Sonic protection. Dunric doesn+t raise his head again.]]]=",
+	// kDialogUlindorString7
+	"_}You found Dunric, did you? What did he tell you? He told you about Mordamir, didn+t he? Then I+ll have to kill you.]]]=",
+	// kDialogNurseText
+	"}_You wake up remembering the kind touch of the goblin who revived you with water from the Fountain. Or was she just a dream?]]]=",
+	// kDialogAntiString
+//	"#", kAnimationIconScroll, "  sonic@",
+	// kDialogBlinkDescription
+//	"#", kAnimationIconScroll, "$ blinks@",
+	// kDialogBlinkString
+	"You find a blink spell, good&for multiple uses.&@",
+	// kDialogTractorString
+//	"#", kAnimationIconScroll,"magnetic@",
+	// kDialogBronzeString
+//	"#", kAnimationIconScroll,"$ statue@",
+	// kDialogImmunityDescription
+//	"#", kAnimationIconScroll,"fire prot.@",
+	// kDialogImmunityString
+	"You find spell of fire&protection, good for three&seconds. @",
+	// kDialogCoinDescription
+	"You find a shiny, reflective&amulet. There are runes on&one side. @",
+	// kDialogCoinString
+//	"#", COINBIGFRAME, " amulet@",
+	// kDialogHoldItUp
+	"Hold it up to the light here?%",
+	// kDialogReadRunes
+	"Read the runes here?%",
+	// kDialogMordamirString1
+	"_}(Fool! Read the words! I+ve waited a thousand years for this. Read the words!]]][Fine, then I+ll just take back my amulet. I have other students who will come. Prepare to die.+]]]=",
+	// kDialogMordamirString2
+//	"_}You have no more defenses, my student. [What a pity I wasted so much time on you. You don+t think you made it here on your own, do you? Look at me. Do I remind you of a merchant, perhaps? ~", mord3d,
+	// kDialogMordamir3D
+//	"Who do you think left you those chests?~", mord3,
+	// kDialogMoradamir3
+//	"[Do you even know why I summoned you? One thousand years ago, I created this amulet to kill the dragons that governed the Fountain of Youth. But this one escaped. He came back and destroyed my city. ~", mord4,
+	// kDialogMordamir4
+//	"I was the sole survivor. Now I have returned to reclaim the fountain that gave me a thousand years of life.[You were to kill the dragon for me. You see, the power the amulet takes to kill a dragon ~", mord5,
+	// kDialogMordamir5
+	"will also kill the one using it. So I can+t attack the dragon myself. But as long as I have this amulet, the dragon won+t attack me.]]]=",
+	// kDialogGoodbye
+	"Now you will die.]]]]=",
+	// kDialogEndText
+//	"}_The journey out of the dungeons takes two days, but with Ana by your side, time seems unimportant. The water invigorates you with new youth, and you discover a new spring to your walk.~", etxx,
+	// kDialogEtXX
+//	" As you travel, your thoughts return to Mordamir and the dragon. They were alike, in a way, each the only~", et2,
+	// kDialogEt2
+	" survivor of a civilization destroyed by the other more than a thousand years ago. They were an equal match also, and it seems strange that you would tilt the balance of a conflict forged so long ago...]]]]=",
+	// kDialogEndText2
+//	"}_The journey out of the dungeons takes two days.  As you travel, your thoughts return to Mordamir and the dragon. They were alike, in a way, each the only~", et2p,
+	// kDialogEt2P
+	" survivor of a civilization destroyed by the other more than a thousand years ago. They were an equal match also, and it seems strange that you would tilt the balance of a conflict forged so long ago...]]]]=",
+
+
+	// Definitions that are stored in strings as well but are not dialog text
+	#if 0
+	<DIRTSPOTS1>,<1>
+	<level1Ladders>,<2,0>
+	<ROOM5TRAPS>,<0,80H,0,0,0,0,0,5>
+	<ROOM8TRAPS>,<0,80H,0,0,0,0,0,3>
+	<ROOM7TRAPS>,<0,80H,15,5,3,0,0,0>
+	<DIRTSPOTS2>,<1>
+	<level12Ladders>,<4,0>
+	<GEMSPOTS>,<roomc,12,3,0>
+	<level3spikes>,<3>
+	<goblinKeyGoal>,<r2_d,0a8H,64H>
+	<level3Ladders>,<12,-1>
+	<turretsL2Rd>,<2,256-10>
+	<turretsL2Rc>,<2,256-10>
+	<wallsL2R0>,<1,256-64,0,2,1,0,1,0>
+	<wallsL2R5>,<1,256-64,0,1,1,1,2,0>
+	<wallsL2R9>,<1,256-64,0,0,0,0,1,0>
+	<level4Ladders>,<10,0>
+	<turretsL2R5>,<16,0>
+	<turretsL2R0>,<17,0>
+	<wallsL2Rf>,<1,256-32,0,1,0,0,0,0>
+	<level5spikes>,<10>
+	<shrinkholegoal>,<r5_2>
+	<level5Ladders>,<8,2>
+	<level6Ladders>,<8,-1>
+	<bubbles>,<23>
+	<level7Ladders>,<6,-1>
+	<dragonTRAPS>,<0,80H,0,0,0,0,0,1>
+	<level8Ladders>,<2,-1>
+	#endif
 };
 
 const Common::Point Dialog::_cursorOrigin(40, 24);
