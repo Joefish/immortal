@@ -41,8 +41,6 @@ struct DialogData {
 
 // TODO:
 // Change Intro string depending on game version
-// Substitute \x27 with '\''
-// Substitute placeholder with int (see kDialogKoorsString)
 static const DialogData dialog[kDialogNum] = {
 	// kDialogIntro
 	DialogData("\\   Electronic Arts presents&&       The Immortal\x19&&&&"
@@ -602,7 +600,6 @@ void Dialog::nextChar() {
 
 /**
  * TODO:
- * Add pre/post render offset table for lower ASCII chars
  * Is position even needed or should the renderer know about Dialog layouts and depending on the type
  * advance the animation during update? Probably not. Instead, confine the Renderer to rendering and store
  * as little non-render state as possible.
