@@ -529,7 +529,7 @@ void Dialog::nextChar() {
  * The following are tokens for render behavior that should better be handled in the logic
  * 		=	end of string
  * 		@	end of string, wait for OKAY
- * 		*n	wait for n cycles, then clear screen
+ * 		*n	wait for n cycles, then clear screen	-- not used
  * 		&	line break
  * 		^	center penx
  * 		#n	draw icon number n
@@ -537,7 +537,7 @@ void Dialog::nextChar() {
  * 		+	apostrophy
  * 		_	print the string in slow text
  * 		~n	continue printing string ID n
- * 		{n	wait for n cycles
+ * 		{n	wait for n cycles						-- not used
  * 		}	do automatic line and page breaks
  * 		[	page break with delay of 490ms
  * 		]	delay 140ms
