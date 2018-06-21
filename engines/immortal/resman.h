@@ -124,6 +124,7 @@ enum ImageId {
 
 // TODO: Check all sprites as files from source differ from release
 enum AnimationId {
+	kAnimationNone = -1,
 	// GENERAL1
 	kAnimationTunnelFalling,
 	kAnimationTorchFire,
