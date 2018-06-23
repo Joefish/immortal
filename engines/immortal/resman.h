@@ -378,21 +378,20 @@ private:
 
 struct Map {
 	static const int _numTiles = 146;
-	static const int _tileWidth = 8;
-	static const int _tileHeight = 8;
-	static const int _tilesScreenWidth = 34;
-	static const int _tilesScreenHeight = 18;
-	// TODO:
-	// Email says structure is "160x128 byte array of small map indicies" (SIMAZE.CMP)
-	// Is structure compatible or is this reason for corruption/disorder of tiles
-	// at end of map?
-	static const int _numIndicesX = 20;
-	static const int _numIndicesY = 128;
-	static const int _numStamps = 1892;
+	static const int _numStamps = 1892;	// 8x8 tiles
+	static const int _tileMapWidth = 20;
+	static const int _tileMapHeight = 128;
+	static const int _stampsPerViewportW = 34;
+	static const int _stampsPerViewportH = 18;
+	static const int _stampWidth = 8;
+	static const int _stampHeight = 8;
+	static const int _stampStride = _stampWidth * _stampHeight / 2;
+	static const int _stampsPerTileW = 64 / _stampWidth;
+	static const int _stampsPerTileH = 32 / _stampHeight;
 
-	byte _indexMap[_numIndicesY][_numIndicesX];
-	byte _tileMap[_numTiles][_tileWidth * _tileHeight];
-	byte _tileBitmap[_numStamps][_tileWidth * _tileHeight / 2];
+	byte _tileMap[_tileMapHeight][_tileMapWidth];
+	uint16 _stampMap[_numTiles][_stampsPerTileW * _stampsPerTileH];
+	byte _bitmap[_numStamps][_stampStride];
 };
 
 

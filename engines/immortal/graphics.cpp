@@ -115,56 +115,61 @@ void Renderer::update() {
 }
 
 void Renderer::drawMap(int x, int y) {
+	assert((x >= 0) && (y >= 0));
 	const Map *map = _resMan->getMap();
-
-	// set index map for current position
-	for (int dy = 0; dy < Map::_tilesScreenHeight; ++dy) {
-		for (int dx = 0; dx < Map::_tilesScreenWidth; ++dx) {
-			int indexX = (x + dx) / 8;
-			int indexY = (y + dy) / 4;
-			int tileIndex = map->_indexMap[indexX][indexY];
-			int offset = tileIndex * 64;
-
-			// TODO:
-			// this is getting ridiculous.. maybe convert in resman in easier
-			// to handle format. But for now just get it running
-			int cy = (y + dy) % 4;
-			for (; cy < 4; ++cy) {
-				int cx = (x + dx) % 8;
-				const byte *tileIndexForSmallMaps = &map->_tileMap[0][0] + offset;
-				tileIndexForSmallMaps += cy * 8 + cx;
-				for (; cx < 8; ++cx) {
-					int index1 = *tileIndexForSmallMaps++;
-					int index2 = *tileIndexForSmallMaps++;
-					_currentIndexMap[x][y] = (index1 << 8) | index2;
-					++dx;
-					if (dx >= Map::_tilesScreenWidth)
-						break;
-				}
-
-				++dy;
-				if (dy >= Map::_tilesScreenHeight)
-					break;
-			}
-		}
-	}
-
-	drawMapTile(x + _viewportPos.x, y + _viewportPos.y, &map->_tileBitmap[0][0]);
+	generateCurrentMapView(x, y, map);
+	drawMap(map->_bitmap);
 }
 
-// INFO: In MAZE.CMP are 146 tiles of 8x8 16 color
-void Renderer::drawMapTile(int x, int y, const byte *tileBitmap) {
-	// TODO: name constants
-	byte *backBuffer = static_cast<byte *>(_backBuffer.getPixels());
-	for (int dy = 0; dy < Map::_tilesScreenHeight; ++dy) {
-		for (int dx = 0; dx < Map::_tilesScreenWidth; ++dx) {
-			int offset = (_currentIndexMap[dx][dy] & 0x07FF);
-			const byte *pixelData = &tileBitmap[offset * 32];
-			for (int pixelY = 0; pixelY < Map::_tileHeight; ++pixelY) {
-				for (int pixelX = 0; pixelX < Map::_tileWidth / 2; ++pixelX) {
-					byte *screenPtr = backBuffer + (pixelY * _screenWidth + pixelX);
+// INFO: Tiles are 64x32, consisting of 8x4 stamps
+//       Stamps are 8x8
+void Renderer::generateCurrentMapView(int mapX, int mapY, const Map *map) {
+	for (int stampY = 0; stampY < Map::_stampsPerViewportH;
+		 stampY += Map::_stampsPerTileH - ((mapY + stampY) % Map::_stampsPerTileH)) {
+		int stampOriginY = stampY;
+		for (int stampX = 0; stampX < Map::_stampsPerViewportW;
+			 stampX += Map::_stampsPerTileW - ((mapX + stampX) % Map::_stampsPerTileW)) {
+			int stampOriginX = stampX;
+			int tileIndexX = (mapX + stampX) / Map::_stampsPerTileW;
+			int tileIndexY = (mapY + stampY) / Map::_stampsPerTileH;
+			int tileIndex = map->_tileMap[tileIndexY][tileIndexX];
+
+			for (int dy = (mapY + stampY) % Map::_stampsPerTileH;
+				 dy < Map::_stampsPerTileH; ++dy) {
+				int dx = (mapX + stampX) % Map::_stampsPerTileW;
+				const uint16 *stampIndex = &map->_stampMap[tileIndex][0];
+				stampIndex += (dy * Map::_stampsPerTileW + dx);
+
+				for (; dx < Map::_stampsPerTileW; ++dx) {
+					_currentMap[stampY][stampX] = *stampIndex++;
+					if (++stampX >= Map::_stampsPerViewportW)
+						break;
+				}
+				stampX = stampOriginX;
+				if (++stampY >= Map::_stampsPerViewportH)
+					break;
+			}
+			stampY = stampOriginY;
+		}
+	}
+}
+
+void Renderer::drawMap(const byte bitmap[Map::_numStamps][Map::_stampStride]) {
+	byte *backBuffer = static_cast<byte *>(_backBuffer.getBasePtr(_viewportPos.x, _viewportPos.y));
+
+	for (int stampY = 0; stampY < Map::_stampsPerViewportH; ++stampY) {
+		for (int stampX = 0; stampX < Map::_stampsPerViewportW; ++stampX) {
+			int stampAbsOrigin = (stampY * Map::_stampHeight * _screenWidth) +
+								 (stampX * Map::_stampWidth);
+			int offset = _currentMap[stampY][stampX] & 0x07FF;
+			const byte *pixelData = &bitmap[offset][0];
+
+			for (int pixelY = 0; pixelY < Map::_stampHeight; ++pixelY) {
+				for (int pixelX = 0; pixelX < Map::_stampWidth; pixelX += 2, ++pixelData) {
+					byte *screenPtr = backBuffer + stampAbsOrigin +
+									  (pixelY * _screenWidth + pixelX);
 					*(screenPtr + 0) = *pixelData >> 4;
-					*(screenPtr + 1) = *pixelData++ & 0x0F;
+					*(screenPtr + 1) = *pixelData & 0x0F;
 				}
 			}
 		}

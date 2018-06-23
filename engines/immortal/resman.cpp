@@ -539,9 +539,11 @@ Common::Error ResourceManager::convertMap(AssetFile *assetFile) {
 	byte *buffer = decodeFile(assetFile->_data.get(), assetFile->_size, &decodedSize);
 	Common::MemoryReadStream stream(buffer, decodedSize, DisposeAfterUse::YES);
 
-	stream.read(_mazeMap._indexMap, sizeof(_mazeMap._indexMap));
 	stream.read(_mazeMap._tileMap, sizeof(_mazeMap._tileMap));
-	stream.read(_mazeMap._tileBitmap, sizeof(_mazeMap._tileBitmap));
+	for (int tile = 0; tile < Map::_numTiles; ++tile)
+		for (int stamp = 0; stamp < (Map::_stampsPerTileW * Map::_stampsPerTileH); ++stamp)
+			_mazeMap._stampMap[tile][stamp] = stream.readUint16BE();
+	stream.read(_mazeMap._bitmap, sizeof(_mazeMap._bitmap));
 
 	return Common::kNoError;
 }

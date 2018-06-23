@@ -66,7 +66,8 @@ public:
 private:
 	static void convertPaletteToRGB(int palColor, byte *red, byte *green, byte *blue);
 	void loadPalette(PaletteId id);
-	void drawMapTile(int x, int y, const byte *tileBitmap);
+	void generateCurrentMapView(int mapX, int mapY, const Map *map);
+	void drawMap(const byte bitmap[Map::_numStamps][Map::_stampStride]);
 	void internalDrawImage(ImageId id);
 	void internalDrawSprite(AnimationId id, int frame, int x, int y);
 	void internalPaletteFade(PaletteFadeType type);
@@ -74,7 +75,7 @@ private:
 	ResourceManager *_resMan;
 	Graphics::Surface _backBuffer;
 	PaletteId _currentPalette;
-	int _currentIndexMap[Map::_tilesScreenHeight][Map::_tilesScreenWidth];
+	uint16 _currentMap[Map::_stampsPerViewportH][Map::_stampsPerViewportW];
 };
 
 }
