@@ -8,6 +8,7 @@ MODULE_OBJS :=  \
 	immortal.o \
 	logic.o \
 	resman.o \
+	rooms.o \
 	sound.o \
 	timer.o
 
