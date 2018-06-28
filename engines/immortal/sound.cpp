@@ -49,7 +49,7 @@ MusicPlayer::~MusicPlayer() {
 }
 
 void MusicPlayer::send(uint32 msg) {
-	// TODO: Instrument conversion is not working correctly (still sounds better than not doing it)	:w
+	// TODO: Instrument conversion is not working correctly (still sounds better than not doing it)
 	byte channel = msg & 0x0F;
 	bool isControllerEvent = ((msg & 0xF0) == 0xC0);
 

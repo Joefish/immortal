@@ -606,32 +606,32 @@ void Dialog::nextChar() {
  * At what x value is it necessary to line break the text? -- Scan word length and check if it fits
  * Difference between fast and slow scroll?
  * The following are tokens for render behavior that should better be handled in the logic
- * 		=	end of string
- * 		@	end of string, wait for OKAY
- * 		*n	wait for n cycles, then clear screen	-- not used
- * 		&	line break
- * 		^	center penx
- * 		#n	draw icon number n
- * 		%	end of string, return yes/no
- * 		+	apostrophy
- * 		_	print the string in slow text
- * 		~n	continue printing string ID n
- * 		{n	wait for n cycles						-- not used
- * 		}	do automatic line and page breaks
- * 		[	page break with delay of 490ms
- * 		]	delay 140ms
- * 		$	print the number passed to text_print in ACC
- * 		(	backquote
- * 		<	fast text
- * 		>	no format
- * 		|	do fadein
- *		\	fadeout
- *		/	slow fadeout
+ *      =       end of string
+ *      @       end of string, wait for OKAY
+ *      *n      wait for n cycles, then clear screen    -- not used
+ *      &       line break
+ *      ^       center penx
+ *      #n      draw icon number n
+ *      %       end of string, return yes/no
+ *      +       apostrophy
+ *      _       print the string in slow text
+ *      ~n      continue printing string ID n
+ *      {n      wait for n cycles                       -- not used
+ *      }       do automatic line and page breaks
+ *      [       page break with delay of 490ms
+ *      ]       delay 140ms
+ *      $       print the number passed to text_print in ACC
+ *      (       backquote
+ *      <       fast text
+ *      >       no format
+ *      |       do fadein
+ *      \       fadeout
+ *      /       slow fadeout
  *
  * @brief Dialog::update iterates over the dialog text one char at a time
  * @return kDialogRCNotFinished if there are still chars left to print.
- * 		   kDialogRCYes/No/Ok represent what button was selected.
- * 		   For dialog without buttons we just return Ok as well.
+ *         kDialogRCYes/No/Ok represent what button was selected.
+ *         For dialog without buttons we just return Ok as well.
  */
 DialogToken Dialog::update(bool keyPressed) {
 	switch (*_text) {

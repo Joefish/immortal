@@ -378,7 +378,7 @@ private:
 
 struct Map {
 	static const int _numTiles = 146;
-	static const int _numStamps = 1892;	// 8x8 tiles
+	static const int _numStamps = 1892;     // 8x8 tiles
 	static const int _tileMapWidth = 20;
 	static const int _tileMapHeight = 128;
 	static const int _stampsPerViewportW = 34;

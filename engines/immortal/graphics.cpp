@@ -28,10 +28,10 @@
 namespace Immortal {
 
 static const int titlePalette[16] = {
-	0x0000, 0x0007,	0x0363,	0x00AA,
-	0x0A00, 0x0999,	0x090A,	0x0CBB,
-	0x0555,	0x085F,	0x0995,	0x05FF,
-	0x0F33,	0x0B6F,	0x0CC4,	0x0FFF
+	0x0000, 0x0007, 0x0363, 0x00AA,
+	0x0A00, 0x0999, 0x090A, 0x0CBB,
+	0x0555, 0x085F, 0x0995, 0x05FF,
+	0x0F33, 0x0B6F, 0x0CC4, 0x0FFF
 };
 static const int defaultPalette[16] = {
 	0x0000, 0x0743, 0x0B75, 0x0322,
@@ -69,7 +69,7 @@ const int Renderer::_screenHeight = 200;
 const int Renderer::_viewportWidth = 256;
 const int Renderer::_viewportHeight = 128;
 const int Renderer::_frameWidth = 32;
-const int Renderer::_frameHeight = 20;	// 12 px frame + 8 px health bar
+const int Renderer::_frameHeight = 20;  // 12 px frame + 8 px health bar
 const Common::Point Renderer::_viewportPos(Renderer::_frameWidth, Renderer::_frameHeight);
 
 void Renderer::convertPaletteToRGB(int palColor, byte *red, byte *green, byte *blue) {
