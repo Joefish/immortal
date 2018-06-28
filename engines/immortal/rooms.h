@@ -36,11 +36,26 @@ enum LevelId {
 	kLevelId8
 };
 
+enum DoorOrientation {
+	kDoorLeft,
+	kDoorRight
+};
+
 struct Room {
 	int _x;
 	int _y;
 	int _flags; // depending on usage, convert to less ambiguous method
 };
+
+struct Door {
+	int _x;
+	int _y;
+	const Room *_teleportFrom;
+	const Room *_teleportTo;
+	bool _isLocked;
+	DoorOrientation _orientation;
+};
+
 
 class Level {
 	static const Room _level1Room[];
@@ -51,6 +66,14 @@ class Level {
 	static const Room _level6Room[];
 	static const Room _level7Room[];
 	static const Room _level8Room[];
+	static const Door _level1Door[];
+	static const Door _level2Door[];
+	static const Door _level3Door[];
+	static const Door _level4Door[];
+	static const Door _level5Door[];
+	static const Door _level6Door[];
+	static const Door _level7Door[];
+	static const Door _level8Door[];
 
 	// TODO: Rename rooms once reference is not needed anymore (like for doors)
 	static const Room *_room1_0;
@@ -110,8 +133,6 @@ class Level {
 	static const Room *_room8_0;
 	static const Room *_room8_1;
 	static const Room *_room8_2;
-	// TODO:
-	// objects, doors, ..
 };
 
 }

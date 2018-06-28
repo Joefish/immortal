@@ -104,6 +104,65 @@ const Room Level::_level8Room[] = {
 	{ 832, 416, 0},
 };
 
+const Door Level::_level1Door[] = {
+	{ 704, 224, Level::_room1_5, Level::_room1_8, false, kDoorLeft},
+	{ 576, 352, Level::_room1_A, Level::_room1_5,  true, kDoorRight},
+	{ 704,  96, Level::_room1_8, Level::_room1_7, false, kDoorRight},
+	{ 960, 128, Level::_room1_F, Level::_room1_7, false, kDoorRight},
+	{1088, 160, Level::_room1_9, Level::_room1_F, false, kDoorRight},
+	{1088, 320, Level::_room1_E, Level::_room1_9, false, kDoorRight},
+	{ 896, 416, Level::_room1_A, Level::_room1_9, false, kDoorRight},
+};
+
+const Door Level::_level2Door[] = {
+	{  64, 224, Level::_room1_1, Level::_room1_0, false, kDoorRight},
+	{ 256, 224, Level::_room1_1, Level::_room1_0, false, kDoorLeft},
+	{ 384, 128, Level::_room1_0, Level::_room1_6, false, kDoorLeft},
+	{  64, 416, Level::_room1_2, Level::_room1_1, false, kDoorLeft},
+	{ 320, 448, Level::_room1_4, Level::_room1_1, false, kDoorRight},
+	{ 192, 608, Level::_room1_2, Level::_room1_3, false, kDoorLeft},
+	{ 320, 576, Level::_room1_3, Level::_room1_4, false, kDoorLeft},
+	{ 448, 640, Level::_room1_3, Level::_room1_B, false, kDoorLeft},
+	{ 640, 608, Level::_room1_B, Level::_room1_A, false, kDoorRight},
+	{ 832, 640, Level::_room1_B, Level::_room1_C,  true, kDoorLeft},
+};
+
+const Door Level::_level3Door[] = {
+	{ 832, 448, Level::_room2_C, Level::_room2_7, false, kDoorRight},
+	{ 896, 576, Level::_room2_F, Level::_room2_C, false, kDoorRight},
+	{ 448, 704, Level::_room2_E, Level::_room2_D,  true, kDoorRight},
+	{1088, 576, Level::_room2_F, Level::_room2_C, false, kDoorLeft},
+};
+
+const Door Level::_level4Door[] = {
+	{  64, 256, Level::_room2_5, Level::_room2_0, false, kDoorRight},
+	{ 384,  96, Level::_room2_1, Level::_room2_0, false, kDoorRight},
+	{ 320, 384, Level::_room2_9, Level::_room2_5, false, kDoorLeft},
+};
+
+const Door Level::_level5Door[] = {
+	{ 768, 384, Level::_room5_7, Level::_room5_5, false, kDoorRight},
+	{ 896, 320, Level::_room5_0, Level::_room5_8, false, kDoorRight},
+	{ 960, 128, Level::_room5_1, Level::_room5_0, false, kDoorRight},
+	{1088, 416, Level::_room5_1, Level::_room5_0, false, kDoorRight},
+	{ 640, 196, Level::_room5_5, Level::_room5_4,  true, kDoorLeft},
+};
+
+// TODO: Missing Doors..
+#if 0
+const Door Level::_level6Door[] = {
+
+};
+
+const Door Level::_level7Door[] = {
+
+};
+
+const Door Level::_level8Door[] = {
+
+};
+#endif
+
 const Room *Level::_room1_0 = &Level::_level2Room[0];
 const Room *Level::_room1_1 = &Level::_level2Room[1];
 const Room *Level::_room1_2 = &Level::_level2Room[2];
