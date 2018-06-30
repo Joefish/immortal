@@ -430,7 +430,7 @@ Common::Error ResourceManager::convertMusic(AssetFile *assetFile) {
 	int midiLength = decodeSize - headerSize + 1;
 	// The header is 22 bytes + 1 byte for delta time of the first event
 	byte midiHeader[23] = "MThd\x00\x00\x00\x06\x00\x00\x00\x01\x00\x22"
-						  "MTrk\x00\x00\x00\x00";
+	                      "MTrk\x00\x00\x00\x00";
 	dest->_size = sizeof(midiHeader) + midiLength;
 	byte *convertedBuffer = new byte[dest->_size];
 	byte *it = convertedBuffer;
@@ -634,13 +634,13 @@ void Animation::setInfo(int centerX, int centerY, int numFrames) {
 }
 
 Sprite::Sprite()
-	: _x(0)
-	, _y(0)
-	, _width(0)
-	, _height(0)
-	, _minScanlineOffset(0)
-	, _remap(0)
-	, _data(nullptr) {
+    : _x(0)
+    , _y(0)
+    , _width(0)
+    , _height(0)
+    , _minScanlineOffset(0)
+    , _remap(0)
+    , _data(nullptr) {
 }
 
 Sprite::~Sprite() {

@@ -28,7 +28,7 @@
 namespace Immortal {
 
 Console::Console(ImmortalEngine *vm)
-	: _vm(vm) {
+    : _vm(vm) {
 }
 
 }

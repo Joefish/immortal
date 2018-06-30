@@ -41,12 +41,12 @@
 namespace Immortal {
 
 ImmortalEngine::ImmortalEngine(OSystem *syst)
-	: Engine(syst)
-	, _resMan(nullptr)
-	, _midiPlayer(nullptr)
-	, _screen(nullptr)
-	, _console(nullptr)
-	, _logic(nullptr) {
+    : Engine(syst)
+    , _resMan(nullptr)
+    , _midiPlayer(nullptr)
+    , _screen(nullptr)
+    , _console(nullptr)
+    , _logic(nullptr) {
 	DebugMan.addDebugChannel(kDebugGeneral, "general", "Immortal general debug channel");
 }
 
