@@ -24,200 +24,233 @@
 
 namespace Immortal {
 
-const Room Level::_level1Room[] = {
-	{ 384, 256, 0},
-	{ 512,  64, 0},
-	{ 640, 160, 0},
-	{ 768, 224, 0},
-	{ 512, 416, 0},
-	{ 960, 512, 0},
-	{1024, 352, 0},
-	{ 896,  64, 0}
-};
+// TODO: Rename rooms once reference is not needed anymore (like for doors)
+static const Room _room1_0 = {   0,  64, 0};
+static const Room _room1_1 = {   0, 256, 0};
+static const Room _room1_2 = {   0, 480, 0};
+static const Room _room1_3 = { 128, 512, 0};
+static const Room _room1_4 = { 256, 480, 0};
+static const Room _room1_5 = { 384, 256, 0};
+static const Room _room1_6 = { 320,  64, 0};
+static const Room _room1_7 = { 512,  64, 0};
+static const Room _room1_8 = { 640, 160, 0};
+static const Room _room1_9 = { 768, 224, 0};
+static const Room _room1_A = { 512, 416, 0};
+static const Room _room1_B = { 448, 640, 0};
+static const Room _room1_C = { 768, 608, 0};
+static const Room _room1_D = { 960, 512, 0};
+static const Room _room1_E = {1024, 352, 0};
+static const Room _room1_F = { 896,  64, 0};
+static const Room _room2_0 = {   0,  64, 0};
+static const Room _room2_1 = { 384, 128, 0};
+static const Room _room2_2 = { 576,  64, 0};
+static const Room _room2_3 = { 768, 192, 0};
+static const Room _room2_4 = { 960, 128, 0};
+static const Room _room2_5 = {   0, 256, 0};
+static const Room _room2_6 = { 448, 224, 0};
+static const Room _room2_7 = { 640, 320, 0};
+static const Room _room2_8 = { 960, 224, 0};
+static const Room _room2_9 = {   0, 448, 0};
+static const Room _room2_A = { 256, 416, 0};
+static const Room _room2_B = { 448, 512, 0};
+static const Room _room2_C = { 832, 448, 0};
+static const Room _room2_D = { 128, 640, 0};
+static const Room _room2_E = { 448, 672, 0};
+static const Room _room2_F = { 768, 608, 0};
+static const Room _room5_0 = { 896, 320, 0};
+static const Room _room5_1 = { 960, 480, 0};
+static const Room _room5_2 = { 960, 128, 0};
+static const Room _room5_3 = {   0, 512, 0};
+static const Room _room5_4 = { 512, 128, 0};
+static const Room _room5_5 = { 512, 224, 0};
+static const Room _room5_6 = {  64, 128, 0};
+static const Room _room5_7 = { 704, 448, 0};
+static const Room _room5_8 = { 768, 256, 0};
+static const Room _room5_9 = {   0, 768, 0};
+static const Room _room5_A = { 896, 864, 0};
+static const Room _room6_0 = { 896, 768, 0};
+static const Room _room6_1 = { 896, 640, 0};
+static const Room _room6_2 = { 448, 896, 0};
+static const Room _room6_3 = {   0, 192, 0};
+// INFO: _room6_4 missing on purpose
+static const Room _room6_5 = { 256, 800, 0};
+static const Room _room6_6 = { 448, 704, 0};
+static const Room _room6_7 = { 704, 832, 0};
+static const Room _room6_8 = { 896, 864, 0};
+static const Room _room6_9 = { 128, 896, 0};
+static const Room _room6_A = {   0, 512, 0};
+static const Room _room8_0 = {  64, 704, 0};
+static const Room _room8_1 = { 448, 704, 0};
+static const Room _room8_2 = { 832, 416, 0};
 
-const Room Level::_level2Room[] = {
-	{   0,  64, 0},
-	{   0, 256, 0},
-	{   0, 480, 0},
-	{ 128, 512, 0},
-	{ 256, 480, 0},
-	{ 320,  64, 0},
-	{ 448, 640, 0},
-	{ 768, 608, 0}
-};
 
-const Room Level::_level3Room[] = {
-	{ 576,  64, 0},
-	{ 640, 320, 0},
-	{ 960, 224, 0},
-	{ 256, 416, 0},
-	{ 448, 512, 0},
-	{ 832, 448, 0},
-	{ 128, 640, 0},
-	{ 448, 672, 0},
-	{ 768, 608, 0}
-};
+void Level::loadLevel(int level) {
+	switch (level) {
+	case 1:
+		initLevel1();
+		break;
+	case 2:
+		initLevel2();
+		break;
+	case 3:
+		initLevel3();
+		break;
+	case 4:
+		initLevel4();
+		break;
+	case 5:
+		initLevel5();
+		break;
+	case 6:
+		initLevel6();
+		break;
+	case 7:
+		initLevel7();
+		break;
+	case 8:
+		initLevel8();
+		break;
+	default:
+		break;
+	}
+}
 
-const Room Level::_level4Room[] = {
-	{   0,  64, 0},
-	{ 384, 128, 0},
-	{ 768, 192, 0},
-	{ 960, 128, 0},
-	{   0, 256, 0},
-	{ 448, 224, 0},
-	{   0, 448, 0},
-};
+void Level::initLevel1() {
+	_rooms.clear();
+	_doors.clear();
 
-const Room Level::_level5Room[] = {
-	{ 896, 320, 0},
-	{ 960, 480, 0},
-	{ 960, 128, 0},
-	{   0, 512, 0},
-	{ 512, 128, 0},
-	{ 512, 224, 0},
-	{  64, 128, 0},
-	{ 704, 448, 0},
-	{ 768, 256, 0},
-	{   0, 768, 0},
-	{ 896, 864, 0},
-};
+	_rooms.push_back(_room1_5); // room with invisible enemies
+	_rooms.push_back(_room1_7);
+	_rooms.push_back(_room1_8);
+	_rooms.push_back(_room1_9);
+	_rooms.push_back(_room1_A);
+	_rooms.push_back(_room1_D);
+	_rooms.push_back(_room1_E);
+	_rooms.push_back(_room1_F);
 
-const Room Level::_level6Room[] = {
-	{ 896, 768, 0},
-	{ 896, 640, 0},
-	{ 448, 896, 0},
-	{   0, 192, 0},
-	{ 448, 704, 0},
-};
+	_doors.push_back(Door( 704, 224, &_room1_5, &_room1_8, false, kDoorLeft));
+	_doors.push_back(Door( 576, 352, &_room1_A, &_room1_5,  true, kDoorRight));
+	_doors.push_back(Door( 704,  96, &_room1_8, &_room1_7, false, kDoorRight));
+	_doors.push_back(Door( 960, 128, &_room1_F, &_room1_7, false, kDoorRight));
+	_doors.push_back(Door(1088, 160, &_room1_9, &_room1_F, false, kDoorRight));
+	_doors.push_back(Door(1088, 320, &_room1_E, &_room1_9, false, kDoorRight));
+	_doors.push_back(Door( 896, 416, &_room1_A, &_room1_9, false, kDoorRight));
+}
 
-const Room Level::_level7Room[] = {
-	{ 256, 800, 0},
-	{ 704, 832, 0},
-	{ 896, 864, 0},
-	{ 128, 896, 0},
-	{   0, 512, 0},
-};
+void Level::initLevel2() {
+	_rooms.clear();
+	_doors.clear();
 
-const Room Level::_level8Room[] = {
-	{  64, 704, 0},
-	{ 448, 704, 0},
-	{ 832, 416, 0},
-};
+	_rooms.push_back(_room1_0);
+	_rooms.push_back(_room1_1);
+	_rooms.push_back(_room1_2);
+	_rooms.push_back(_room1_3);
+	_rooms.push_back(_room1_4);
+	_rooms.push_back(_room1_6);
+	_rooms.push_back(_room1_B);
+	_rooms.push_back(_room1_C);
+	_doors.push_back(Door(  64, 224, &_room1_1, &_room1_0, false, kDoorRight));
+	_doors.push_back(Door( 256, 224, &_room1_1, &_room1_0, false, kDoorLeft));
+	_doors.push_back(Door( 384, 128, &_room1_0, &_room1_6, false, kDoorLeft));
+	_doors.push_back(Door(  64, 416, &_room1_2, &_room1_1, false, kDoorLeft));
+	_doors.push_back(Door( 320, 448, &_room1_4, &_room1_1, false, kDoorRight));
+	_doors.push_back(Door( 192, 608, &_room1_2, &_room1_3, false, kDoorLeft));
+	_doors.push_back(Door( 320, 576, &_room1_3, &_room1_4, false, kDoorLeft));
+	_doors.push_back(Door( 448, 640, &_room1_3, &_room1_B, false, kDoorLeft));
+	_doors.push_back(Door( 640, 608, &_room1_B, &_room1_A, false, kDoorRight));
+	_doors.push_back(Door( 832, 640, &_room1_B, &_room1_C,  true, kDoorLeft));
+}
 
-const Door Level::_level1Door[] = {
-	{ 704, 224, Level::_room1_5, Level::_room1_8, false, kDoorLeft},
-	{ 576, 352, Level::_room1_A, Level::_room1_5,  true, kDoorRight},
-	{ 704,  96, Level::_room1_8, Level::_room1_7, false, kDoorRight},
-	{ 960, 128, Level::_room1_F, Level::_room1_7, false, kDoorRight},
-	{1088, 160, Level::_room1_9, Level::_room1_F, false, kDoorRight},
-	{1088, 320, Level::_room1_E, Level::_room1_9, false, kDoorRight},
-	{ 896, 416, Level::_room1_A, Level::_room1_9, false, kDoorRight},
-};
+void Level::initLevel3() {
+	_rooms.clear();
+	_doors.clear();
 
-const Door Level::_level2Door[] = {
-	{  64, 224, Level::_room1_1, Level::_room1_0, false, kDoorRight},
-	{ 256, 224, Level::_room1_1, Level::_room1_0, false, kDoorLeft},
-	{ 384, 128, Level::_room1_0, Level::_room1_6, false, kDoorLeft},
-	{  64, 416, Level::_room1_2, Level::_room1_1, false, kDoorLeft},
-	{ 320, 448, Level::_room1_4, Level::_room1_1, false, kDoorRight},
-	{ 192, 608, Level::_room1_2, Level::_room1_3, false, kDoorLeft},
-	{ 320, 576, Level::_room1_3, Level::_room1_4, false, kDoorLeft},
-	{ 448, 640, Level::_room1_3, Level::_room1_B, false, kDoorLeft},
-	{ 640, 608, Level::_room1_B, Level::_room1_A, false, kDoorRight},
-	{ 832, 640, Level::_room1_B, Level::_room1_C,  true, kDoorLeft},
-};
+	_rooms.push_back(_room2_2);
+	_rooms.push_back(_room2_7);
+	_rooms.push_back(_room2_8);
+	_rooms.push_back(_room2_A);
+	_rooms.push_back(_room2_B);
+	_rooms.push_back(_room2_C);
+	_rooms.push_back(_room2_D);
+	_rooms.push_back(_room2_E);
+	_rooms.push_back(_room2_F);
+	_doors.push_back(Door( 832, 448, &_room2_C, &_room2_7, false, kDoorRight));
+	_doors.push_back(Door( 896, 576, &_room2_F, &_room2_C, false, kDoorRight));
+	_doors.push_back(Door( 448, 704, &_room2_E, &_room2_D,  true, kDoorRight));
+	_doors.push_back(Door(1088, 576, &_room2_F, &_room2_C, false, kDoorLeft));
+}
 
-const Door Level::_level3Door[] = {
-	{ 832, 448, Level::_room2_C, Level::_room2_7, false, kDoorRight},
-	{ 896, 576, Level::_room2_F, Level::_room2_C, false, kDoorRight},
-	{ 448, 704, Level::_room2_E, Level::_room2_D,  true, kDoorRight},
-	{1088, 576, Level::_room2_F, Level::_room2_C, false, kDoorLeft},
-};
+void Level::initLevel4() {
+	_rooms.clear();
+	_doors.clear();
 
-const Door Level::_level4Door[] = {
-	{  64, 256, Level::_room2_5, Level::_room2_0, false, kDoorRight},
-	{ 384,  96, Level::_room2_1, Level::_room2_0, false, kDoorRight},
-	{ 320, 384, Level::_room2_9, Level::_room2_5, false, kDoorLeft},
-};
+	_rooms.push_back(_room2_0);
+	_rooms.push_back(_room2_1);
+	_rooms.push_back(_room2_3);
+	_rooms.push_back(_room2_4);
+	_rooms.push_back(_room2_5);
+	_rooms.push_back(_room2_6);
+	_rooms.push_back(_room2_9);
+	_doors.push_back(Door(  64, 256, &_room2_5, &_room2_0, false, kDoorRight));
+	_doors.push_back(Door( 384,  96, &_room2_1, &_room2_0, false, kDoorRight));
+	_doors.push_back(Door( 320, 384, &_room2_9, &_room2_5, false, kDoorLeft));
+}
 
-const Door Level::_level5Door[] = {
-	{ 768, 384, Level::_room5_7, Level::_room5_5, false, kDoorRight},
-	{ 896, 320, Level::_room5_0, Level::_room5_8, false, kDoorRight},
-	{ 960, 128, Level::_room5_1, Level::_room5_0, false, kDoorRight},
-	{1088, 416, Level::_room5_1, Level::_room5_0, false, kDoorRight},
-	{ 640, 196, Level::_room5_5, Level::_room5_4,  true, kDoorLeft},
-};
+void Level::initLevel5() {
+	_rooms.clear();
+	_doors.clear();
+
+	_rooms.push_back(_room5_0);
+	_rooms.push_back(_room5_1);
+	_rooms.push_back(_room5_2);
+	_rooms.push_back(_room5_3);
+	_rooms.push_back(_room5_4);
+	_rooms.push_back(_room5_5);
+	_rooms.push_back(_room5_6);
+	_rooms.push_back(_room5_7);
+	_rooms.push_back(_room5_8);
+	_rooms.push_back(_room5_9);
+	_rooms.push_back(_room5_A);
+	_doors.push_back(Door( 768, 384, &_room5_7, &_room5_5, false, kDoorRight));
+	_doors.push_back(Door( 896, 320, &_room5_0, &_room5_8, false, kDoorRight));
+	_doors.push_back(Door( 960, 128, &_room5_1, &_room5_0, false, kDoorRight));
+	_doors.push_back(Door(1088, 416, &_room5_1, &_room5_0, false, kDoorRight));
+	_doors.push_back(Door( 640, 196, &_room5_5, &_room5_4,  true, kDoorLeft));
+
+}
 
 // TODO: Missing Doors..
-#if 0
-const Door Level::_level6Door[] = {
+void Level::initLevel6() {
+	_rooms.clear();
+	_doors.clear();
 
-};
+	_rooms.push_back(_room6_0);
+	_rooms.push_back(_room6_1);
+	_rooms.push_back(_room6_2);
+	_rooms.push_back(_room6_3);
+	_rooms.push_back(_room6_6);
+}
 
-const Door Level::_level7Door[] = {
+// TODO: Missing Doors..
+void Level::initLevel7() {
+	_rooms.clear();
+	_doors.clear();
 
-};
+	_rooms.push_back(_room6_5);
+	_rooms.push_back(_room6_7);
+	_rooms.push_back(_room6_8);
+	_rooms.push_back(_room6_9);
+	_rooms.push_back(_room6_A);
+}
 
-const Door Level::_level8Door[] = {
+// TODO: Missing Doors..
+void Level::initLevel8() {
+	_rooms.clear();
+	_doors.clear();
 
-};
-#endif
-
-const Room *Level::_room1_0 = &Level::_level2Room[0];
-const Room *Level::_room1_1 = &Level::_level2Room[1];
-const Room *Level::_room1_2 = &Level::_level2Room[2];
-const Room *Level::_room1_3 = &Level::_level2Room[3];
-const Room *Level::_room1_4 = &Level::_level2Room[4];
-const Room *Level::_room1_5 = &Level::_level1Room[0];
-const Room *Level::_room1_6 = &Level::_level2Room[5];
-const Room *Level::_room1_7 = &Level::_level1Room[1];
-const Room *Level::_room1_8 = &Level::_level1Room[2];
-const Room *Level::_room1_9 = &Level::_level1Room[3];
-const Room *Level::_room1_A = &Level::_level1Room[4];
-const Room *Level::_room1_B = &Level::_level2Room[6];
-const Room *Level::_room1_C = &Level::_level2Room[7];
-const Room *Level::_room1_D = &Level::_level1Room[5];
-const Room *Level::_room1_E = &Level::_level1Room[6];
-const Room *Level::_room1_F = &Level::_level1Room[7];
-const Room *Level::_room2_0 = &Level::_level4Room[0];
-const Room *Level::_room2_1 = &Level::_level4Room[1];
-const Room *Level::_room2_2 = &Level::_level3Room[0];
-const Room *Level::_room2_3 = &Level::_level4Room[2];
-const Room *Level::_room2_4 = &Level::_level4Room[3];
-const Room *Level::_room2_5 = &Level::_level4Room[4];
-const Room *Level::_room2_6 = &Level::_level4Room[5];
-const Room *Level::_room2_7 = &Level::_level3Room[1];
-const Room *Level::_room2_8 = &Level::_level3Room[2];
-const Room *Level::_room2_9 = &Level::_level4Room[6];
-const Room *Level::_room2_A = &Level::_level3Room[3];
-const Room *Level::_room2_B = &Level::_level3Room[4];
-const Room *Level::_room2_C = &Level::_level3Room[5];
-const Room *Level::_room2_D = &Level::_level3Room[6];
-const Room *Level::_room2_E = &Level::_level3Room[7];
-const Room *Level::_room2_F = &Level::_level3Room[8];
-const Room *Level::_room5_0 = &Level::_level5Room[0];
-const Room *Level::_room5_1 = &Level::_level5Room[1];
-const Room *Level::_room5_2 = &Level::_level5Room[2];
-const Room *Level::_room5_3 = &Level::_level5Room[3];
-const Room *Level::_room5_4 = &Level::_level5Room[4];
-const Room *Level::_room5_5 = &Level::_level5Room[5];
-const Room *Level::_room5_6 = &Level::_level5Room[6];
-const Room *Level::_room5_7 = &Level::_level5Room[7];
-const Room *Level::_room5_8 = &Level::_level5Room[8];
-const Room *Level::_room5_9 = &Level::_level5Room[9];
-const Room *Level::_room5_A = &Level::_level5Room[10];
-const Room *Level::_room6_0 = &Level::_level6Room[0];
-const Room *Level::_room6_1 = &Level::_level6Room[1];
-const Room *Level::_room6_2 = &Level::_level6Room[2];
-const Room *Level::_room6_3 = &Level::_level6Room[3];
-const Room *Level::_room6_5 = &Level::_level7Room[0];
-const Room *Level::_room6_6 = &Level::_level6Room[4];
-const Room *Level::_room6_7 = &Level::_level7Room[1];
-const Room *Level::_room6_8 = &Level::_level7Room[2];
-const Room *Level::_room6_9 = &Level::_level7Room[3];
-const Room *Level::_room6_A = &Level::_level7Room[4];
-const Room *Level::_room8_0 = &Level::_level8Room[0];
-const Room *Level::_room8_1 = &Level::_level8Room[1];
-const Room *Level::_room8_2 = &Level::_level8Room[2];
+	_rooms.push_back(_room8_0);
+	_rooms.push_back(_room8_1);
+	_rooms.push_back(_room8_2);
+}
 
 }

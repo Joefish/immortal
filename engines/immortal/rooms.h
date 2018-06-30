@@ -23,6 +23,10 @@
 #ifndef IMMORTAL_ROOMS_H
 #define IMMORTAL_ROOMS_H
 
+#include "common/array.h"
+
+#include "immortal/entity.h"
+
 namespace Immortal {
 
 enum LevelId {
@@ -41,13 +45,25 @@ enum DoorOrientation {
 	kDoorRight
 };
 
-struct Room {
+class Room {
+public:
 	int _x;
 	int _y;
 	int _flags; // depending on usage, convert to less ambiguous method
 };
 
-struct Door {
+class Door {
+public:
+	Door(int x, int y, const Room *teleportFrom, const Room *teleportTo, bool isLocked,
+	     DoorOrientation orientation)
+	    : _x(x)
+	    , _y(y)
+	    , _teleportFrom(teleportFrom)
+	    , _teleportTo(teleportTo)
+	    , _isLocked(isLocked)
+	    , _orientation(orientation) {
+	}
+
 	int _x;
 	int _y;
 	const Room *_teleportFrom;
@@ -58,81 +74,22 @@ struct Door {
 
 
 class Level {
-	static const Room _level1Room[];
-	static const Room _level2Room[];
-	static const Room _level3Room[];
-	static const Room _level4Room[];
-	static const Room _level5Room[];
-	static const Room _level6Room[];
-	static const Room _level7Room[];
-	static const Room _level8Room[];
-	static const Door _level1Door[];
-	static const Door _level2Door[];
-	static const Door _level3Door[];
-	static const Door _level4Door[];
-	static const Door _level5Door[];
-	static const Door _level6Door[];
-	static const Door _level7Door[];
-	static const Door _level8Door[];
+public:
+	void loadLevel(int level);
 
-	// TODO: Rename rooms once reference is not needed anymore (like for doors)
-	static const Room *_room1_0;
-	static const Room *_room1_1;
-	static const Room *_room1_2;
-	static const Room *_room1_3;
-	static const Room *_room1_4;
-	static const Room *_room1_5;
-	static const Room *_room1_6;
-	static const Room *_room1_7;
-	static const Room *_room1_8;
-	static const Room *_room1_9;
-	static const Room *_room1_A;
-	static const Room *_room1_B;
-	static const Room *_room1_C;
-	static const Room *_room1_D;
-	static const Room *_room1_E;
-	static const Room *_room1_F;
-	static const Room *_room2_0;
-	static const Room *_room2_1;
-	static const Room *_room2_2;
-	static const Room *_room2_3;
-	static const Room *_room2_4;
-	static const Room *_room2_5;
-	static const Room *_room2_6;
-	static const Room *_room2_7;
-	static const Room *_room2_8;
-	static const Room *_room2_9;
-	static const Room *_room2_A;
-	static const Room *_room2_B;
-	static const Room *_room2_C;
-	static const Room *_room2_D;
-	static const Room *_room2_E;
-	static const Room *_room2_F;
-	static const Room *_room5_0;
-	static const Room *_room5_1;
-	static const Room *_room5_2;
-	static const Room *_room5_3;
-	static const Room *_room5_4;
-	static const Room *_room5_5;
-	static const Room *_room5_6;
-	static const Room *_room5_7;
-	static const Room *_room5_8;
-	static const Room *_room5_9;
-	static const Room *_room5_A;
-	static const Room *_room6_0;
-	static const Room *_room6_1;
-	static const Room *_room6_2;
-	static const Room *_room6_3;
-	// INFO: _room6_4 missing on purpose
-	static const Room *_room6_5;
-	static const Room *_room6_6;
-	static const Room *_room6_7;
-	static const Room *_room6_8;
-	static const Room *_room6_9;
-	static const Room *_room6_A;
-	static const Room *_room8_0;
-	static const Room *_room8_1;
-	static const Room *_room8_2;
+private:
+	void initLevel1();
+	void initLevel2();
+	void initLevel3();
+	void initLevel4();
+	void initLevel5();
+	void initLevel6();
+	void initLevel7();
+	void initLevel8();
+
+public:
+	Common::Array<Room> _rooms;
+	Common::Array<Door> _doors;
 };
 
 }
