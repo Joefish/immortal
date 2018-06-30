@@ -30,6 +30,7 @@
 namespace Immortal {
 
 class Renderer {
+private:
 	enum PaletteId {
 		kPaletteInvalid,
 		kPaletteDefault,

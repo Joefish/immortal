@@ -394,14 +394,14 @@ struct Map {
 	byte _bitmap[_numStamps][_stampStride];
 };
 
-
 class ResourceManager {
-struct AssetFile {
-	char _name[13];
-	int _size;
-	int _offset;
-	Common::ScopedPtr<byte> _data;
-};
+private:
+	struct AssetFile {
+		char _name[13];
+		int _size;
+		int _offset;
+		Common::ScopedPtr<byte> _data;
+	};
 
 public:
 	ResourceManager();
