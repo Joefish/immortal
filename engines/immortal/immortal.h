@@ -43,10 +43,10 @@ public:
 	virtual Common::Error run();
 
 public:
-	Console *_console;
 	ResourceManager *_resMan;
 	MusicPlayer *_midiPlayer;
 	Renderer *_screen;
+	Console *_console;
 	Logic *_logic;
 	Audio::SoundHandle _soundHandle;
 };
