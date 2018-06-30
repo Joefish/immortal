@@ -170,7 +170,7 @@ enum AnimationId {
 	kAnimationChestOpen,
 	kAnimationRing,
 	kAnimationDagger,
-	kAnimationSlainWarrior,
+	kAnimationErek,
 	kAnimationIconCoffee,
 	kAnimationSpiderEgg,
 	kAnimationIconButtonYesInactive,

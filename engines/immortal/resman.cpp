@@ -100,7 +100,7 @@ static const AnimationInfo infoGeneral2[] = {
 	{kAnimationChestOpen,                   4,  1,  1},
 	{kAnimationRing,                        4,  2,  2},
 	{kAnimationDagger,                      4,  3,  3},
-	{kAnimationSlainWarrior,                4,  4,  4},
+	{kAnimationErek,                        4,  4,  4},
 	{kAnimationIconCoffee,                  4,  5,  5},
 	{kAnimationSpiderEgg,                   4,  6,  6},
 	{kAnimationIconButtonYesInactive,       4,  7,  7},
