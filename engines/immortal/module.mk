@@ -3,6 +3,7 @@ MODULE := engines/immortal
 MODULE_OBJS :=  \
 	console.o   \
 	dialog.o \
+	entity.o \
 	detection.o \
 	graphics.o \
 	immortal.o \
