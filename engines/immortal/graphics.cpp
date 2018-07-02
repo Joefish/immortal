@@ -40,10 +40,10 @@ static const int defaultPalette[16] = {
 	0x0781, 0x0FFF, 0x0000, 0x0999
 };
 static const int fadePalette[16] = {
-		-1, 0x0743, 0x0B75, 0x0322,
-		-1,     -1,     -1,     -1,
-		-1,     -1,     -1, 0x0FB6,
-		-1,     -1,     -1,     -1
+	    -1, 0x0743, 0x0B75, 0x0322,
+	    -1,     -1,     -1,     -1,
+	    -1,     -1,     -1, 0x0FB6,
+	    -1,     -1,     -1,     -1
 };
 static const int whitecmap[16] = {
 	0x0000, 0x0FFF, 0x0FFF, 0x0FFF,
@@ -79,8 +79,8 @@ void Renderer::convertPaletteToRGB(int palColor, byte *red, byte *green, byte *b
 }
 
 Renderer::Renderer(ResourceManager *resMan)
-	: _resMan(resMan)
-	, _currentPalette(kPaletteInvalid) {
+    : _resMan(resMan)
+    , _currentPalette(kPaletteInvalid) {
 	_backBuffer.create(_screenWidth, _screenHeight, g_system->getScreenFormat());
 }
 
@@ -110,7 +110,7 @@ void Renderer::clear() {
 
 void Renderer::update() {
 	g_system->copyRectToScreen(_backBuffer.getPixels(), _backBuffer.pitch, 0, 0,
-							   _backBuffer.w, _backBuffer.h);
+	                           _backBuffer.w, _backBuffer.h);
 	g_system->updateScreen();
 }
 
@@ -125,17 +125,17 @@ void Renderer::drawMap(int x, int y) {
 //       Stamps are 8x8
 void Renderer::generateCurrentMapView(int mapX, int mapY, const Map *map) {
 	for (int stampY = 0; stampY < Map::_stampsPerViewportH;
-		 stampY += Map::_stampsPerTileH - ((mapY + stampY) % Map::_stampsPerTileH)) {
+	     stampY += Map::_stampsPerTileH - ((mapY + stampY) % Map::_stampsPerTileH)) {
 		int stampOriginY = stampY;
 		for (int stampX = 0; stampX < Map::_stampsPerViewportW;
-			 stampX += Map::_stampsPerTileW - ((mapX + stampX) % Map::_stampsPerTileW)) {
+		     stampX += Map::_stampsPerTileW - ((mapX + stampX) % Map::_stampsPerTileW)) {
 			int stampOriginX = stampX;
 			int tileIndexX = (mapX + stampX) / Map::_stampsPerTileW;
 			int tileIndexY = (mapY + stampY) / Map::_stampsPerTileH;
 			int tileIndex = map->_tileMap[tileIndexY][tileIndexX];
 
 			for (int dy = (mapY + stampY) % Map::_stampsPerTileH;
-				 dy < Map::_stampsPerTileH; ++dy) {
+			     dy < Map::_stampsPerTileH; ++dy) {
 				int dx = (mapX + stampX) % Map::_stampsPerTileW;
 				const uint16 *stampIndex = &map->_stampMap[tileIndex][0];
 				stampIndex += (dy * Map::_stampsPerTileW + dx);
@@ -160,14 +160,14 @@ void Renderer::drawMap(const byte bitmap[Map::_numStamps][Map::_stampStride]) {
 	for (int stampY = 0; stampY < Map::_stampsPerViewportH; ++stampY) {
 		for (int stampX = 0; stampX < Map::_stampsPerViewportW; ++stampX) {
 			int stampAbsOrigin = (stampY * Map::_stampHeight * _screenWidth) +
-								 (stampX * Map::_stampWidth);
+			                     (stampX * Map::_stampWidth);
 			int offset = _currentMap[stampY][stampX] & 0x07FF;
 			const byte *pixelData = &bitmap[offset][0];
 
 			for (int pixelY = 0; pixelY < Map::_stampHeight; ++pixelY) {
 				for (int pixelX = 0; pixelX < Map::_stampWidth; pixelX += 2, ++pixelData) {
 					byte *screenPtr = backBuffer + stampAbsOrigin +
-									  (pixelY * _screenWidth + pixelX);
+					                  (pixelY * _screenWidth + pixelX);
 					*(screenPtr + 0) = *pixelData >> 4;
 					*(screenPtr + 1) = *pixelData & 0x0F;
 				}
@@ -232,8 +232,8 @@ void Renderer::internalDrawSprite(AnimationId id, int frame, int x, int y) {
 
 	for (int dy = 0; dy < sprite->_height; ++dy) {
 		for (int dx = 0; dx < sprite->_scanlineWidth[dy]; ++dx) {
-			int pos = (dy + sprite->_y - animation->getCenter().y) * _screenWidth +
-					  (dx + sprite->_scanlinePosOffset[dy] - animation->getCenter().x);
+			int pos = (dy + sprite->_y - centerY) * _screenWidth +
+			          (dx + sprite->_scanlinePosOffset[dy] - centerX);
 			byte pixel = sprite->_data[currentPixel >> 1];
 			if (currentPixel & 1)
 				pixel &= 0x0F;

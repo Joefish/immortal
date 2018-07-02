@@ -43,18 +43,18 @@ static const Common::KeyCode keyMap[kKeyNum] = {
 };
 
 Logic::Logic(ImmortalEngine *vm)
-	: _console(vm->_console)
-	, _resMan(vm->_resMan)
-	, _music(vm->_midiPlayer)
-	, _screen(vm->_screen)
-	, _keyState()
-	, _logicState(kLogicStartup)
-	, _timeInit(vm->_system->getMillis())
-	, _lastDialogToken(kDialogTokenInvalid)
-	, _buttonNoSelected(false)
-	, _buttonYesSelected(false)
-	, _cameraPos(0, 0)
-	, _dialog(vm->_screen) {
+    : _console(vm->_console)
+    , _resMan(vm->_resMan)
+    , _music(vm->_midiPlayer)
+    , _screen(vm->_screen)
+    , _keyState()
+    , _logicState(kLogicStartup)
+    , _timeInit(vm->_system->getMillis())
+    , _lastDialogToken(kDialogTokenInvalid)
+    , _buttonNoSelected(false)
+    , _buttonYesSelected(false)
+    , _cameraPos(0, 0)
+    , _dialog(vm->_screen) {
 }
 
 // TODO:
@@ -92,7 +92,7 @@ void Logic::pollInput() {
 		switch (event.type) {
 		case Common::EVENT_KEYDOWN:
 			if (event.kbd.keycode == Common::KEYCODE_d &&
-				(event.kbd.flags & Common::KBD_CTRL)) {
+			    (event.kbd.flags & Common::KBD_CTRL)) {
 				_console->attach();
 			}
 			for (int i = 0; i < kKeyNum; ++i) {
