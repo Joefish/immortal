@@ -172,11 +172,11 @@ void Logic::runDialog() {
 		}
 
 		AnimationId buttonNo = _buttonNoSelected ? kAnimationIconButtonNoActive :
-												   kAnimationIconButtonNoInactive;
+		                                           kAnimationIconButtonNoInactive;
 		AnimationId buttonYes = _buttonYesSelected ? kAnimationIconButtonYesActive :
-													 kAnimationIconButtonYesInactive;
-		_screen->drawSprite(buttonNo, 0, _dialog._buttonNo.x, _dialog._buttonNo.y);
-		_screen->drawSprite(buttonYes, 0, _dialog._buttonYes.x, _dialog._buttonYes.y);
+		                                             kAnimationIconButtonYesInactive;
+//		_screen->drawSprite(buttonNo, 0, _dialog._buttonNo.x, _dialog._buttonNo.y);
+//		_screen->drawSprite(buttonYes, 0, _dialog._buttonYes.x, _dialog._buttonYes.y);
 		// TODO:
 		// PLEASE fix this already! Once the map renderer is running get on it
 		// Also why are the buttons position off but other sprites and letters

@@ -360,20 +360,10 @@ struct Sprite {
 	byte *_data;
 };
 
-class Animation {
-public:
-	Common::Point getCenter() const;
-	Common::Point getPos(int frame) const;
-	const Sprite *getFrame(int frame) const;
-	int getNumFrames() const;
-	void setFrame(int frame, int x, int y, int width, int height, byte *buffer);
-	void setInfo(int centerX, int centerY, int numFrames);
-
-private:
+struct SpritePack {
 	int _centerX;
 	int _centerY;
-	int _numFrames;
-	Common::Array<Sprite> _data;
+	Common::Array<Sprite> _sprite;
 };
 
 struct Map {
@@ -405,22 +395,23 @@ private:
 
 public:
 	ResourceManager();
-	const byte *getImage(ImageId id);
-	const MusicData *getMusic(MusicId id);
-	const Animation *getAnimation(AnimationId id);
+	const byte *getImage(ImageId id) const;
+	const MusicData *getMusic(MusicId id) const;
+	const Sprite *getSprite(FileId fileId, int pack, int sprite) const;
+	Common::Point getSpritePackCenter(FileId fileId, int pack) const;
 	const Map *getMap();
 
 private:
 	Common::Error loadLibrary(const char *filename);
 	Common::Error convertImage(AssetFile *assetFile);
-	Common::Error convertAnimation(AssetFile *assetFile);
+	Common::Error convertSpritePacks(AssetFile *assetFile);
 	Common::Error convertMusic(AssetFile *assetFile);
 	Common::Error convertMap(AssetFile *assetFile);
 
 private:
 	Map _mazeMap;
 	Common::ScopedPtr<byte> _imageContainer[kImageNum];
-	Animation _animationContainer[kAnimationNum];
+	Common::Array<SpritePack> _spriteContainer[kFileAnimationNum];
 	MusicData _musicContainer[kMusicNum];
 };
 

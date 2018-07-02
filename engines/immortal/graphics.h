@@ -46,8 +46,9 @@ private:
 
 public:
 	Renderer(ResourceManager *resMan);
+	void drawChar(char c, int x, int y);
 	void drawImage(ImageId id);
-	void drawSprite(AnimationId id, int frame, int x, int y);
+	void drawSprite(FileId fileId, int pack, int frame, int x, int y);
 	void drawMap(int x, int y);
 	void paletteFadeIn();
 	void paletteFadeOut();
@@ -70,7 +71,7 @@ private:
 	void generateCurrentMapView(int mapX, int mapY, const Map *map);
 	void drawMap(const byte bitmap[Map::_numStamps][Map::_stampStride]);
 	void internalDrawImage(ImageId id);
-	void internalDrawSprite(AnimationId id, int frame, int x, int y);
+	void internalDrawSprite(const Sprite *sprite, int x, int y, int centerX, int centerY);
 	void internalPaletteFade(PaletteFadeType type);
 
 	ResourceManager *_resMan;

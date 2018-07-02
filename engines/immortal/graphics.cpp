@@ -88,8 +88,14 @@ void Renderer::drawImage(ImageId id) {
 	internalDrawImage(id);
 }
 
-void Renderer::drawSprite(AnimationId id, int frame, int x, int y) {
-	internalDrawSprite(id, frame, x, y);
+void Renderer::drawSprite(FileId fileId, int pack, int frame, int x, int y) {
+	const Sprite *sprite = _resMan->getSprite(fileId, pack, frame);
+	Common::Point spriteCenter = _resMan->getSpritePackCenter(fileId, pack);
+	internalDrawSprite(sprite, x, y, spriteCenter.x, spriteCenter.y);
+}
+
+void Renderer::drawChar(char c, int x, int y) {
+	drawSprite(kFileGeneral2, 0, c, x, y);
 }
 
 void Renderer::paletteFadeIn() {
@@ -224,9 +230,7 @@ void Renderer::internalDrawImage(ImageId id) {
 
 // TODO:
 // Add Clipping
-void Renderer::internalDrawSprite(AnimationId id, int frame, int x, int y) {
-	const Animation *animation = _resMan->getAnimation(id);
-	const Sprite *sprite = animation->getFrame(frame);
+void Renderer::internalDrawSprite(const Sprite *sprite, int x, int y, int centerX, int centerY) {
 	byte *screenPtr = static_cast<byte *>(_backBuffer.getBasePtr(x, y));
 	int currentPixel = 0;
 

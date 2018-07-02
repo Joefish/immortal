@@ -761,7 +761,7 @@ void Dialog::printText() {
 	if (Common::isUpper(*_text))
 		_cursorPos.x += 8;
 
-	_screen->drawSprite(kAnimationSymbols, *_text, _cursorPos.x, _cursorPos.y);
+	_screen->drawChar(*_text, _cursorPos.x, _cursorPos.y);
 
 	switch (*_text) {
 	case '\'':
