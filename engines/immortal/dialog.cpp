@@ -46,7 +46,7 @@ static const DialogData dialog[kDialogNum] = {
 	DialogData("\\   Electronic Arts presents&&       The Immortal\x19&&&&"
 	           "     \x18 1991 Will Harvey|]]]]]]]]\\]="
 	           "          written by&&         Will Harvey&         Ian Gooding&"
-	           "Michael Marcantel&       Brett G. Durrett&        Douglas Fulton|]]]]]]]/="
+	           "      Michael Marcantel&       Brett G. Durrett&        Douglas Fulton|]]]]]]]/="
 #if 0
 	           "&&      Amiga version by&&       Brett G. Durrett&]]]]]]]="
 	           "&&       Atari version by&&      Brett G. Durrett&]]]]]]]="
