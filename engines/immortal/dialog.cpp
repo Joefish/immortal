@@ -28,14 +28,14 @@
 namespace Immortal {
 
 struct DialogData {
-	DialogData(const char *text, AnimationId iconId = kAnimationNone, DialogId nextPage = kDialogNone)
+	DialogData(const char *text, SpriteId iconId = kSpriteNone, DialogId nextPage = kDialogNone)
 	    : _text(text)
 	    , _iconId(iconId)
 	    , _nextPage(nextPage) {
 	}
 
 	const char *_text;
-	AnimationId _iconId;
+	SpriteId _iconId;
 	DialogId _nextPage;
 };
 
@@ -57,7 +57,7 @@ static const DialogData dialog[kDialogNum] = {
 	// kDialogPartyString
 	DialogData("Ken Hurley and Rick &Rutkowski want you to &have this silver bullet.@"),
 	// kDialogKoorsString
-	DialogData("#  beer@", kAnimationKoorsLight),
+	DialogData("#  beer@", kSpriteKoorsLight),
 	// kDialogBeerManString
 	DialogData("You feel invinicible now.@"),
 	// kDialogKoorsOpen
@@ -72,7 +72,7 @@ static const DialogData dialog[kDialogNum] = {
 	// kDialogMapText2
 	DialogData("This room is on the map.&Look at the picture.@"),
 	// kDialogSwordString
-	DialogData("# sword@", kAnimationIconSword),
+	DialogData("# sword@", kSpriteIconSword),
 	// kDialogSwordDescription
 	DialogData("You find an Elven sword of&combat agility. Take it?@"),
 	// kDialogBonesText1
@@ -82,7 +82,7 @@ static const DialogData dialog[kDialogNum] = {
 	// kDialogBonesText3
 	DialogData("}You notice something that looks wet and green under the pile. Search further?%"),
 	// kDialogDustOfComplaisanceString
-	DialogData("#  dust@", kAnimationIconBait),
+	DialogData("#  dust@", kSpriteIconBaitBag),
 	// kDialogDustOfComplaisanceDescription
 	DialogData("}You find a bag containing Dust of Complaisance.&@"),
 	// kDialogOpenBag
@@ -95,9 +95,9 @@ static const DialogData dialog[kDialogNum] = {
 	// kDialogSmithText2
 	DialogData("_}Let me help you. Take this gem. There you go. Good luck.]]]]="),
 	// kDialogCarpetString
-	DialogData("#carpet@", kAnimationIconCarpet),
+	DialogData("#carpet@", kSpriteIconCarpet),
 	// kDialogBombString
-	DialogData("# bomb@", kAnimationIconBomb),
+	DialogData("# bomb@", kSpriteIconBomb),
 	// kDialogBombDesc
 	DialogData("A gas bomb that goblins&use to paralyze trolls.&@"),
 	// kDialogPickItUp
@@ -107,7 +107,7 @@ static const DialogData dialog[kDialogNum] = {
 	// kDialogOtherString
 	DialogData(" other@"),
 	// kDialogChestKeyString
-	DialogData("#  key@", kAnimationIconKey),
+	DialogData("#  key@", kSpriteIconKey),
 	// kDialogChestKeyDescription
 	DialogData("A key to a chest.&@"),
 	// kDialogOpenChestDescription
@@ -123,9 +123,9 @@ static const DialogData dialog[kDialogNum] = {
 	// kDialogBadChestDescription, kDialogCantUnlockDoor
 	DialogData("It+s locked and you don+t&have the key.@"),
 	// kDialogGoldString
-	DialogData("#$0 gold@", kAnimationIconMoneybag),
+	DialogData("#$0 gold@", kSpriteIconGoldBag),
 	// kDialogFindGoldString
-	DialogData("You find $0 gold pieces.&&^#@", kAnimationIconGold),
+	DialogData("You find $0 gold pieces.&&^#@", kSpriteIconGold),
 	// kDialogNullString
 	DialogData("@"),
 	// kDialogNotHere
@@ -147,7 +147,7 @@ static const DialogData dialog[kDialogNum] = {
 	// kDialogNoteDescription
 	DialogData("You find a note.&@"),
 	// kDialogNoteString
-	DialogData("#  note@", kAnimationIconLetter),
+	DialogData("#  note@", kSpriteIconLetter),
 	// kDialogLootBodyDescription
 	DialogData("He+s dead.&Look for possessions?%"),
 	// kDialogNotEnough
@@ -159,31 +159,31 @@ static const DialogData dialog[kDialogNum] = {
 	// kDialogWormFoodDescription
 	DialogData("You find a bag of bait.&@"),
 	// kDialogWormFoodString
-	DialogData("#   bait@", kAnimationIconBait),
+	DialogData("#   bait@", kSpriteIconBaitBag),
 	// kDialogStoneDescription
 	DialogData("You find a stone. @"),
 	// kDialogStoneString
-	DialogData("# stone@", kAnimationIconStone),
+	DialogData("# stone@", kSpriteIconStone),
 	// kDialogGemDescription
 	DialogData("You find a red gem.&@"),
 	// kDialogGemString
-	DialogData("#  gem@", kAnimationIconRuby),
+	DialogData("#  gem@", kSpriteIconRuby),
 	// kDialogFireballDescription
 	DialogData("You find a book with&fireball spells.&@"),
 	// kDialogFireballString
-	DialogData("#$ shots@", kAnimationIconScroll),
+	DialogData("#$ shots@", kSpriteIconScroll),
 	// kDialogDeathMapDescription
 	DialogData("You find a map warning&you about pit traps.&@"),
 	// kDialogDeathMapString
-	DialogData("#  map@", kAnimationIconMap),
+	DialogData("#  map@", kSpriteIconMap),
 	// kDialogBootsString
-	DialogData("#   oil@", kAnimationIconBottle),
+	DialogData("#   oil@", kSpriteIconBottle),
 	// kDialogUseBootString
 	DialogData("You try it out but notice&as you walk that the leather&is quickly drying out.@"),
 	// kDialogCharmDescription
 	DialogData("}You find a scroll with a charm spell to use on will o+ the wisps.&@"),
 	// kDialogCharmString
-	DialogData("# charm@", kAnimationIconScroll),
+	DialogData("# charm@", kSpriteIconScroll),
 	// kDialogUseCharmString
 	DialogData("}This charms the will o+ the wisps to follow you. Read the spell again to turn them against your enemies.@"),
 	// kDialogWaterOpen
@@ -199,34 +199,34 @@ static const DialogData dialog[kDialogNum] = {
 	// kDialogMuscleDescription
 	DialogData("You find a potion,&Magic Muscle.&@"),
 	// kDialogMuscleString
-	DialogData("#  potion@", kAnimationIconBottle),
+	DialogData("#  potion@", kSpriteIconBottle),
 	// kDialogSbDescription
 	DialogData("You find a bottle.&@"),
 	// kDialogSbString
-	DialogData("#  bottle@", kAnimationIconBottle),
+	DialogData("#  bottle@", kSpriteIconBottle),
 	// kDialogFaceString
-	DialogData("#protean@", kAnimationIconRing),
+	DialogData("#protean@", kSpriteIconRing),
 	// kDialogFaceDescription
 	DialogData("You find a Protean Ring.&@"),
 	// kDialogTrndescription
 	DialogData("You find a troll ritual knife,&used to declare a fight to&the death. @"),
 	// kDialogTrnString
-	DialogData("# knife@", kAnimationIconDagger),
+	DialogData("# knife@", kSpriteIconDagger),
 	// kDialogInvisDescription
 	DialogData("_}It is a fine woman+s garment. Folded inside is a ring with the words, "
 	           "[`To Ana, so harm will never find you. Love, Dunric.+ @"),
 	// kDialogGoodLuckDescription
 	DialogData("You find a small, well&crafted ring. @"),
 	// kDialogAnaRingString
-	DialogData("#from ana@", kAnimationIconRing),
+	DialogData("#from ana@", kSpriteIconRing),
 	// kDialogInvisString
-	DialogData("#  ana+s@", kAnimationIconRing),
+	DialogData("#  ana+s@", kSpriteIconRing),
 	// kDialogGoesAway
 	DialogData("_}She is hurt and upset when she finds you don+t have her ring or won+t give it to her. "
 	           "She scurries back into the hole. The hole is too small for you to follow.&@"),
 	// kDialogGiveHerRing
 	DialogData("_}`Oh sir, can you help me,+ the girl pleads. `I was kidnapped and dragged down here. "
-	           "All the man would say is `Mordamir+s orders.+ I ~", kAnimationNone, kDialogGive2),
+	           "All the man would say is `Mordamir+s orders.+ I ~", kSpriteNone, kDialogGive2),
 	// kDialogGive2
 	DialogData("escaped using a ring my father gave me, but now I+ve lost it. Did you find it?+%"),
 	// kDialogMadKingText
@@ -240,10 +240,10 @@ static const DialogData dialog[kDialogNum] = {
 	// kDialogDream1P1
 	DialogData("_}Ah, a rest is exactly what you need right now. You quickly fall into a deep, dream filled sleep..."
 	           "[Vivid images of a beautiful enchanted city pass by. All the city people are young. There are ~",
-	           kAnimationNone, kDialogDream1P2),
+	           kSpriteNone, kDialogDream1P2),
 	// kDialogDream1P2
 	DialogData("fountains all around, water everywhere. A huge wall surrounds the city, sealing it from the outside world..."
-	           "[Suddenly the images go black. A face appears... Mordamir!]][ ~", kAnimationNone, kDialogDream1P3),
+	           "[Suddenly the images go black. A face appears... Mordamir!]][ ~", kSpriteNone, kDialogDream1P3),
 	// kDialogDream1P3
 	DialogData("He is different from how you remember him. His gentle features are now withered. "
 	           "His kind eyes, now cold and sunken, seem to look through you with a dark, penetrating stare. "
@@ -255,7 +255,7 @@ static const DialogData dialog[kDialogNum] = {
 	// kDialogRestartString
 	DialogData("Start over?%"),
 	// kDialogSporesString
-	DialogData("# spores@", kAnimationIconSporesBag),
+	DialogData("# spores@", kSpriteIconSporesBag),
 	// kDialogSporesDescription
 	DialogData("You find a sack of bad&smelling spores.&@"),
 	// kDialogRequestPlayDisk
@@ -289,14 +289,14 @@ static const DialogData dialog[kDialogNum] = {
 	// kDialogDream1
 	DialogData("}_The straw is a small but welcome comfort in your first day+s travel. "
 	           "As you drift into an uneasy slumber, you begin to wonder about Mordamir. "
-	           "How long has he been held prisoner? Where?~", kAnimationNone, kDialogD1D2),
+	           "How long has he been held prisoner? Where?~", kSpriteNone, kDialogD1D2),
 	// kDialogD1D2
 	DialogData(" You finally fall asleep dreaming about adventures that lie ahead.]]]="),
 	// kDialogPhantDescription
 	DialogData("_}An image of the old wizard Mordamir leaps from the candle and begins to speak,"
-	           "[(Dunric, you have come~", kAnimationNone, kDialogWizardText2),
+	           "[(Dunric, you have come~", kSpriteNone, kDialogWizardText2),
 	// kDialogWizardText2
-	DialogData(" to save me. I am in the dungeons far below. I know I can count on you.+[~", kAnimationNone, kDialogWizardText3),
+	DialogData(" to save me. I am in the dungeons far below. I know I can count on you.+[~", kSpriteNone, kDialogWizardText3),
 	// kDialogWizardText3
 	DialogData("This explains your old teacher+s mysterious disappearance, "
 	           "but there is one thing strange about the message...[Your name is not Dunric. ]]]]="),
@@ -304,7 +304,7 @@ static const DialogData dialog[kDialogNum] = {
 	DialogData("}The body of a fighter. Look for possessions?%"),
 	// kDialogUlindorString0
 	DialogData("_}You have come to save Mordamir, have you? He is held prisoner many levels below. "
-	           "There is a hidden passage way. That is all I can tell you.[~", kAnimationNone, kDialogUlindorString1),
+	           "There is a hidden passage way. That is all I can tell you.[~", kSpriteNone, kDialogUlindorString1),
 	// kDialogUlindorString1
 	DialogData("Without another word, the man hands you a key and runs out the door.]]]]="),
 	// kDialogGuardNote
@@ -313,9 +313,9 @@ static const DialogData dialog[kDialogNum] = {
 	// kDialogDunricRingDescription
 	DialogData("}You find a ring. There is a name inscribed on the band: Dunric!&@"),
 	// kDialogDunricRingString
-	DialogData("#dunric+s@", kAnimationIconRing),
+	DialogData("#dunric+s@", kSpriteIconRing),
 	// kDialogUlindorString2
-	DialogData("_}`We are even now, wizard. Here, you will need this.+ ~", kAnimationNone, kDialogUlindorString3),
+	DialogData("_}`We are even now, wizard. Here, you will need this.+ ~", kSpriteNone, kDialogUlindorString3),
 	// kDialogUlindorString3
 	DialogData("He hands you a musty red carpet. (It is dangerous to step even one foot in the next two rooms. "
 	           "After that, the exit is just down three ladders.+ With that advice, he turns and walks briskly away.@"),
@@ -334,7 +334,7 @@ static const DialogData dialog[kDialogNum] = {
 	// kDialogCoffeeDescription
 	DialogData("A coffee pot? @"),
 	// kDialogCoffeeString
-	DialogData("# coffee@", kAnimationIconCoffee), // why 'swordFrame'? there are a few ids that don't fit the description..
+	DialogData("# coffee@", kSpriteIconCoffee), // why 'swordFrame'? there are a few ids that don't fit the description..
 	// kDialogGimmeCoffee
 	DialogData("_}(Hey, what+s this?&&The wizard![Brett, I told you someone would find us.[Wake up, Mike and Ian. "
 	           "We+ve got a visitor.[Listen wizard, Mike needs some coffee in the morning. Got any?+%"),
@@ -349,23 +349,23 @@ static const DialogData dialog[kDialogNum] = {
 	// kDialogDream5
 	DialogData("_}After your last dream, you have some apprehension about falling asleep, but physical exhaustion prevails. "
 	           "[You imagine a dragon. No, many dragons. You appear to be seeing some kind of peaceful dragon civilization. ~",
-	           kAnimationNone, kDialogDream1P2X),
+	           kSpriteNone, kDialogDream1P2X),
 	// kDialogDream1P2X
 	DialogData("It is underground, in dungeons that look vaguely familiar. "
 	           "You get a strange sense of- it+s difficult to pinpoint- eternity. It feels as if ~",
-	           kAnimationNone, kDialogDream1P3Y),
+	           kSpriteNone, kDialogDream1P3Y),
 	// kDialogDream1P3Y
 	DialogData("the civilization has existed since the beginning of time.]]]]]="),
 	// kDialogGeigerDescription
 	DialogData("_}You find a strange device and instructions:[(Worm danger in room after flying lizards! "
 	           "The only safe path is left, down, right, down, left, down, right, up, right, down. ~",
-	           kAnimationNone, kDialogGeigerDescription2),
+	           kSpriteNone, kDialogGeigerDescription2),
 	// kDialogGeigerDescription2
 	DialogData("Sensor pitch changes when you step off the path. Sensor only lasts 30 seconds.+[@"),
 	// kDialogGeigerString
-	DialogData("#sensor@", kAnimationIconSporesBag),
+	DialogData("#sensor@", kSpriteIconSporesBag),
 	// kDialogEggString
-	DialogData("#  egg@", kAnimationIconBook),
+	DialogData("#  egg@", kSpriteIconBook),
 	// kDialogEggDescription
 	DialogData("You find a large egg.&@"),
 	// kDialogEggCracks
@@ -380,21 +380,21 @@ static const DialogData dialog[kDialogNum] = {
 	// kDialogFlameThrowDescription
 	DialogData("}You find a weak fireball spell, good for one minute of constant use. @"),
 	// kDialogFlameThrowString
-	DialogData("#fireballs@", kAnimationIconScroll),
+	DialogData("#fireballs@", kSpriteIconScroll),
 	// kDialogMerchantXDescription
 	DialogData("_}Greetings, old friend! I+ll sell you the potion you need. Sixty gold pieces. Take it?+%"),
 	// kDialogGoblinTalk
 	DialogData("_}(My patrol leader wants to talk to you. Follow me.+ [He walks out the door.]]]]="),
 	// kDialogPlanTalk
 	DialogData("_}We need your help. [Long ago, in the Age of Dragons, there was a great spring in these dungeons, "
-	           "a Fountain of Youth. ~", kAnimationNone, kDialogPlan2),
+	           "a Fountain of Youth. ~", kSpriteNone, kDialogPlan2),
 	// kDialogPlan2
 	DialogData("But that was long ago. Now only a trickle of enchanted water flows, "
-	           "and a norlac -water monster- blocks our access to it altogether. ~", kAnimationNone, kDialogPlan3),
+	           "and a norlac -water monster- blocks our access to it altogether. ~", kSpriteNone, kDialogPlan3),
 	// kDialogPlan3
 	DialogData("The norlac also blocks your access to the deepest level. You see, we both need the monster killed. "
 	           "We have a plan... [The water drains into a whirlpool which is powerful enough to drown the norlac if he got caught in it. ~",
-	           kAnimationNone, kDialogPlan4),
+	           kSpriteNone, kDialogPlan4),
 	// kDialogPlan4
 	DialogData("There is a sluice gate at the other end of the tunnel. We need you to distract the norlac "
 	           "so we can open the gate to flush him down the whirlpool. [Somehow, you must get to the access. "
@@ -408,27 +408,27 @@ static const DialogData dialog[kDialogNum] = {
 	// kDialogAlcoholDescription
 	DialogData("You find a bottle of&alcohol. @"),
 	// kDialogAlcoholString
-	DialogData("#  alcohol@", kAnimationIconBottle),
+	DialogData("#  alcohol@", kSpriteIconBottle),
 	// kDialogLevitateDescription
 	DialogData("_}You find a spell of levitation and a note: Don+t step on cobwebs or egg sacks. "
 	           "Use levitation to get through the hall of webs.][@"),
 	// kDialogLevitateString
-	DialogData("#levitate@", kAnimationIconScroll),
+	DialogData("#levitate@", kSpriteIconScroll),
 	// kDialogDream6
 	DialogData("_}The goblins you met on the last level had asked you to help them flush a monster out of their water supply. "
 	           "But where is their water supply? You sense as you approach the next level that water is near...]]]="),
 	// kDialogDream7
 	DialogData("_}It is difficult to get to sleep. What visions are in store for you now? "
 	           "You unwillingly fall asleep thinking about the city of fountains you dreamt of three long days ago... ~",
-	           kAnimationNone, kDialogDream1P2XW),
+	           kSpriteNone, kDialogDream1P2XW),
 	// kDialogDream1P2XW
 	DialogData("[You are inside a room, at a meeting between city officials and wizards. The officials want water access. "
 	           "They are planning a seige. The wizards are arguing over a weapon they have created. ]]~",
-	           kAnimationNone, kDialogDream1P2YW),
+	           kSpriteNone, kDialogDream1P2YW),
 	// kDialogDream1P2YW
 	DialogData("There is some problem with it. [The dream changes.]]][You see a wall of fire. "
 	           "Now, in the flames, you see men attacking dragons. There is a flash. All are dead. You see another attack. "
-	           "Defending himself, a dragon ~", kAnimationNone, kDialogdreamXXY),
+	           "Defending himself, a dragon ~", kSpriteNone, kDialogdreamXXY),
 	// kDialogdreamXXY
 	DialogData("incinerates the army, but then another flash kills him instantly. "
 	           "Armies block the exits of the dungeons, trapping the dragons inside. One escapes...]]]]]="),
@@ -442,7 +442,7 @@ static const DialogData dialog[kDialogNum] = {
 	           "You sense that someone or something is nearby.]]]="),
 	// kDialogDunricString7
 	DialogData("_}As you approach, the man lifts his head. He seems to know you.]][(I am Dunric,+ he falters, "
-	           "(I sent my servant to warn you. Mordamir isn+t a prisoner...~", kAnimationNone, kDialogDunricString8),
+	           "(I sent my servant to warn you. Mordamir isn+t a prisoner...~", kSpriteNone, kDialogDunricString8),
 	// kDialogDunricString8
 	DialogData("[He kidnapped my daughter... He is manipulating... you... If I had my ring I could... but... my servant...+]]]="),
 	// kDialogGiveDunricRing
@@ -457,23 +457,23 @@ static const DialogData dialog[kDialogNum] = {
 	DialogData("}_You wake up remembering the kind touch of the goblin who revived you with water from the Fountain. "
 	           "Or was she just a dream?]]]="),
 	// kDialogAntiString
-	DialogData("#  sonic@", kAnimationIconScroll),
+	DialogData("#  sonic@", kSpriteIconScroll),
 	// kDialogBlinkDescription
-	DialogData("#$ blinks@", kAnimationIconScroll),
+	DialogData("#$ blinks@", kSpriteIconScroll),
 	// kDialogBlinkString
 	DialogData("You find a blink spell, good&for multiple uses.&@"),
 	// kDialogTractorString
-	DialogData("#magnetic@", kAnimationIconScroll),
+	DialogData("#magnetic@", kSpriteIconScroll),
 	// kDialogBronzeString
-	DialogData("#$ statue@", kAnimationIconScroll),
+	DialogData("#$ statue@", kSpriteIconScroll),
 	// kDialogImmunityDescription
-	DialogData("#fire prot.@", kAnimationIconScroll),
+	DialogData("#fire prot.@", kSpriteIconScroll),
 	// kDialogImmunityString
 	DialogData("You find spell of fire&protection, good for three&seconds. @"),
 	// kDialogAmuletDescription
 	DialogData("You find a shiny, reflective&amulet. There are runes on&one side. @"),
 	// kDialogAmuletString
-	DialogData("# amulet@", kAnimationIconAmulet),
+	DialogData("# amulet@", kSpriteIconAmulet),
 	// kDialogHoldItUp
 	DialogData("Hold it up to the light here?%"),
 	// kDialogReadRunes
@@ -484,17 +484,17 @@ static const DialogData dialog[kDialogNum] = {
 	// kDialogMordamirString2
 	DialogData("_}You have no more defenses, my student. [What a pity I wasted so much time on you. "
 	           "You don+t think you made it here on your own, do you? Look at me. Do I remind you of a merchant, perhaps? ~",
-	           kAnimationNone, kDialogMordamir3D),
+	           kSpriteNone, kDialogMordamir3D),
 	// kDialogMordamir3D
-	DialogData("Who do you think left you those chests?~", kAnimationNone, kDialogMordamir3),
+	DialogData("Who do you think left you those chests?~", kSpriteNone, kDialogMordamir3),
 	// kDialogMordamir3
 	DialogData("[Do you even know why I summoned you? One thousand years ago, I created this amulet to kill the dragons "
 	           "that governed the Fountain of Youth. But this one escaped. He came back and destroyed my city. ~",
-	           kAnimationNone, kDialogMordamir4),
+	           kSpriteNone, kDialogMordamir4),
 	// kDialogMordamir4
 	DialogData("I was the sole survivor. Now I have returned to reclaim the fountain that gave me a thousand years of life."
 	           "[You were to kill the dragon for me. You see, the power the amulet takes to kill a dragon ~",
-	           kAnimationNone, kDialogMordamir5),
+	           kSpriteNone, kDialogMordamir5),
 	// kDialogMordamir5
 	DialogData("will also kill the one using it. So I can+t attack the dragon myself. "
 	           "But as long as I have this amulet, the dragon won+t attack me.]]]="),
@@ -503,16 +503,16 @@ static const DialogData dialog[kDialogNum] = {
 	// kDialogEndText
 	DialogData("}_The journey out of the dungeons takes two days, but with Ana by your side, time seems unimportant. "
 	           "The water invigorates you with new youth, and you discover a new spring to your walk.~",
-	           kAnimationNone, kDialogEtXX),
+	           kSpriteNone, kDialogEtXX),
 	// kDialogEtXX
 	DialogData(" As you travel, your thoughts return to Mordamir and the dragon. "
-	           "They were alike, in a way, each the only~", kAnimationNone, kDialogEt2),
+	           "They were alike, in a way, each the only~", kSpriteNone, kDialogEt2),
 	// kDialogEt2
 	DialogData(" survivor of a civilization destroyed by the other more than a thousand years ago. "
 	           "They were an equal match also, and it seems strange that you would tilt the balance of a conflict forged so long ago...]]]]="),
 	// kDialogEndText2
 	DialogData("}_The journey out of the dungeons takes two days.  As you travel, your thoughts return to Mordamir and the dragon. "
-	           "They were alike, in a way, each the only~", kAnimationNone, kDialogEt2P),
+	           "They were alike, in a way, each the only~", kSpriteNone, kDialogEt2P),
 	// kDialogEt2P
 	DialogData(" survivor of a civilization destroyed by the other more than a thousand years ago. They were an equal match also, "
 	           "and it seems strange that you would tilt the balance of a conflict forged so long ago...]]]]="),

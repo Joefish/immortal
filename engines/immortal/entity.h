@@ -170,12 +170,12 @@ public:
 	static const EntityState kStateEngageable       = 1UL << 39;
 
 public:
-	Entity(int x, int y, AnimationId defaultSprite, EntityType type,
+	Entity(int x, int y, SpriteId defaultSprite, EntityType type,
 	       EntityState state, int parameter);
 
 	int _x;
 	int _y;
-	AnimationId _defaultSprite;
+	SpriteId _defaultSprite;
 	EntityType _type;
 	EntityState _state;
 	int _parameter;

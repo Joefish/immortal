@@ -139,65 +139,65 @@ void Level::initLevel1() {
 	_object.reserve(_rooms.size());
 	Common::Array<Entity> *roomObjects = nullptr;
 	roomObjects = &_object[0];   // room1_5
-	roomObjects->push_back(Entity(0, 0, kAnimationNone, kEntityTypeTrap,
+	roomObjects->push_back(Entity(0, 0, kSpriteNone, kEntityTypeTrap,
 	                              Entity::kStateRunning | Entity::kStateInvisible, 42)); // TODO: id to 'room5traps'
-	roomObjects->push_back(Entity(459, 379, kAnimationRing, kEntityTypeAmulet,
+	roomObjects->push_back(Entity(459, 379, kSpriteRing, kEntityTypeAmulet,
 	                              Entity::kStateNone, 5));
-	roomObjects->push_back(Entity(446, 327, kAnimationScroll, kEntityTypeWispCharm,
+	roomObjects->push_back(Entity(446, 327, kSpriteScroll, kEntityTypeWispCharm,
 	                              Entity::kStateNone, 0));
 
 	roomObjects = &_object[1];   // room1_7
-	roomObjects->push_back(Entity(145, 138, kAnimationNone, kEntityTypeTrap,
+	roomObjects->push_back(Entity(145, 138, kSpriteNone, kEntityTypeTrap,
 	                              Entity::kStateRunning | Entity::kStateInvisible, 42)); // TODO: id to 'room7traps'
 
 	roomObjects = &_object[2];   // room1_8
-	roomObjects->push_back(Entity(0, 0, kAnimationNone, kEntityTypeTrap,
+	roomObjects->push_back(Entity(0, 0, kSpriteNone, kEntityTypeTrap,
 	                              Entity::kStateRunning | Entity::kStateInvisible, 42)); // TODO: id to 'room8traps'
 
 	roomObjects = &_object[3];   // room1_9
-	roomObjects->push_back(Entity(1052, 309, kAnimationErek, kEntityTypeErek,
+	roomObjects->push_back(Entity(1052, 309, kSpriteErek, kEntityTypeErek,
 	                              Entity::kStateChest | Entity::kStateOnGround, 0));
-	roomObjects->push_back(Entity(0, 0, kAnimationScroll, kEntityTypeFireballScroll,
+	roomObjects->push_back(Entity(0, 0, kSpriteScroll, kEntityTypeFireballScroll,
 	                              Entity::kStateUsesFireButton, 3));
-	roomObjects->push_back(Entity(128, 464, kAnimationRing, kEntityTypeDunricRing,
+	roomObjects->push_back(Entity(128, 464, kSpriteRing, kEntityTypeDunricRing,
 	                              Entity::kStateNone, 0));
-	roomObjects->push_back(Entity(837, 421, kAnimationChestClosed, kEntityTypeChest,
+	roomObjects->push_back(Entity(837, 421, kSpriteChestClosed, kEntityTypeChest,
 	                              Entity::kStateChest, 0));
-	roomObjects->push_back(Entity(0, 0, kAnimationScroll, kEntityTypeDeathMap,
+	roomObjects->push_back(Entity(0, 0, kSpriteScroll, kEntityTypeDeathMap,
 	                              Entity::kStateNone, 0));
-	roomObjects->push_back(Entity(597, 457, kAnimationBottle, kEntityTypeWater,
+	roomObjects->push_back(Entity(597, 457, kSpriteBottle, kEntityTypeWater,
 	                              Entity::kStateNone, 0));
-	roomObjects->push_back(Entity(0, 0, kAnimationIconSporesBag, kEntityTypeSpores,
+	roomObjects->push_back(Entity(0, 0, kSpriteIconSporesBag, kEntityTypeSpores,
 	                              Entity::kStateNone, 0));
-	roomObjects->push_back(Entity(0, 0, kAnimationNone, kEntityTypeBait,
+	roomObjects->push_back(Entity(0, 0, kSpriteNone, kEntityTypeBait,
 	                              Entity::kStateNone, 0));
-	roomObjects->push_back(Entity(205, 158, kAnimationIconKey, kEntityTypeChestKey,
+	roomObjects->push_back(Entity(205, 158, kSpriteIconKey, kEntityTypeChestKey,
 	                              Entity::kStateNone, 0));
 
 	roomObjects = &_object[4];   // room1_A
-	roomObjects->push_back(Entity(671, 461, kAnimationNone, kEntityTypeHay,
+	roomObjects->push_back(Entity(671, 461, kSpriteNone, kEntityTypeHay,
 	                              Entity::kStateRunning | Entity::kStateInvisible, 0));
-	roomObjects->push_back(Entity(780, 508, kAnimationNone, kEntityTypeBeam,
+	roomObjects->push_back(Entity(780, 508, kSpriteNone, kEntityTypeBeam,
 	                              Entity::kStateRunning | Entity::kStateInvisible, 0));
-	roomObjects->push_back(Entity(700, 480, kAnimationNone, kEntityTypeTeleport2,
+	roomObjects->push_back(Entity(700, 480, kSpriteNone, kEntityTypeTeleport2,
 	                              Entity::kStateRunning | Entity::kStateInvisible, 42)); // TODO: 'roomd' Id as parm
 
 	roomObjects = &_object[5];   // room1_D
-	roomObjects->push_back(Entity(1150, 560, kAnimationNone, kEntityTypeTeleport2,
+	roomObjects->push_back(Entity(1150, 560, kSpriteNone, kEntityTypeTeleport2,
 	                              Entity::kStateRunning | Entity::kStateInvisible, 42)); // TODO: 'rooma' Id as parm
-	roomObjects->push_back(Entity(205, 158, kAnimationKoorsLight, kEntityTypeCoors,
+	roomObjects->push_back(Entity(205, 158, kSpriteKoorsLight, kEntityTypeCoors,
 	                              Entity::kStateNone, 0));
 
 	roomObjects = &_object[6];   // room1_E
-	roomObjects->push_back(Entity(1184, 426, kAnimationTable, kEntityTypeMordamirPhantasm, Entity::kStateNone, 0));
-	roomObjects->push_back(Entity( 145, 138, kAnimationNone, kEntityTypeGold, Entity::kStateRunning, 2));
+	roomObjects->push_back(Entity(1184, 426, kSpriteTable, kEntityTypeMordamirPhantasm, Entity::kStateNone, 0));
+	roomObjects->push_back(Entity( 145, 138, kSpriteNone, kEntityTypeGold, Entity::kStateRunning, 2));
 
 	roomObjects = &_object[7];   // room1_F
-	roomObjects->push_back(Entity(1192, 109, kAnimationGold, kEntityTypeGoldPile,
+	roomObjects->push_back(Entity(1192, 109, kSpriteGold, kEntityTypeGoldPile,
 	                              Entity::kStateOnGround, 3));
-	roomObjects->push_back(Entity(0, 0, kAnimationNone, kEntityTypeDoorKey,
+	roomObjects->push_back(Entity(0, 0, kSpriteNone, kEntityTypeDoorKey,
 	                              Entity::kStateNone, 42));     // TODO: parm: room5 + 16 * roomA
-	roomObjects->push_back(Entity(0, 0, kAnimationNone, kEntityTypeNote,
+	roomObjects->push_back(Entity(0, 0, kSpriteNone, kEntityTypeNote,
 	                              Entity::kStateNone, 42));     // TODO: id to guardnote
 }
 
