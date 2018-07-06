@@ -136,7 +136,7 @@ void Level::initLevel1() {
 	_doors.push_back(Door(1088, 320, &_room1_E, &_room1_9, false, kDoorRight));
 	_doors.push_back(Door( 896, 416, &_room1_A, &_room1_9, false, kDoorRight));
 
-	_object.reserve(_rooms.size());
+	_object.resize(_rooms.size());
 	Common::Array<Entity> *roomObjects = nullptr;
 	roomObjects = &_object[0];   // room1_5
 	roomObjects->push_back(Entity(0, 0, kSpriteNone, kEntityTypeTrap,
