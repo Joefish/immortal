@@ -48,7 +48,7 @@ public:
 	Renderer(ResourceManager *resMan);
 	void drawChar(char c, int x, int y);
 	void drawImage(ImageId id);
-	void drawSprite(FileId fileId, int pack, int frame, int x, int y);
+	void drawSprite(SpriteId id, int x, int y, int offset = 0);
 	void drawMap(int x, int y);
 	void paletteFadeIn();
 	void paletteFadeOut();

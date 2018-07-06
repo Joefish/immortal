@@ -89,15 +89,15 @@ void Renderer::drawImage(ImageId id) {
 	internalDrawImage(id);
 }
 
-void Renderer::drawSprite(FileId fileId, int pack, int frame, int x, int y) {
-	const Sprite *sprite = _resMan->getSprite(fileId, pack, frame);
-	Common::Point spriteCenter = _resMan->getSpritePackCenter(fileId, pack);
+void Renderer::drawSprite(SpriteId id, int x, int y, int offset) {
+	const SpriteInfo *info = _resMan->getSpriteInfo(id);
+	const Sprite *sprite = _resMan->getSprite(info->fileId, info->pack, info->sprite + offset);
+	Common::Point spriteCenter = _resMan->getSpritePackCenter(info->fileId, info->pack);
 	internalDrawSprite(sprite, x, y, spriteCenter.x, spriteCenter.y);
 }
 
 void Renderer::drawChar(char c, int x, int y) {
-	const SpriteInfo *info = _resMan->getSpriteInfo(kSpriteAsciiBase);
-	drawSprite(info->fileId, info->pack, info->sprite + c, x, y);
+	drawSprite(kSpriteAsciiBase, x, y, c);
 }
 
 void Renderer::paletteFadeIn() {
