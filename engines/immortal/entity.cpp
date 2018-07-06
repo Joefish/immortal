@@ -24,6 +24,15 @@
 
 namespace Immortal {
 
+Entity::Entity(int x, int y, SpriteId defaultSprite, EntityType type,
+               EntityState state, int parameter)
+    : _x(x)
+    , _y(y)
+    , _defaultSprite(defaultSprite)
+    , _type(type)
+    , _state(state)
+    , _parameter(parameter) {
+}
 
 
 }
