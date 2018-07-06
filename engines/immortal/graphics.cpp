@@ -70,7 +70,8 @@ const int Renderer::_viewportWidth = 256;
 const int Renderer::_viewportHeight = 128;
 const int Renderer::_frameWidth = 32;
 const int Renderer::_frameHeight = 20;  // 12 px frame + 8 px health bar
-const Common::Point Renderer::_viewportPos(Renderer::_frameWidth, Renderer::_frameHeight);
+const int Renderer::_viewportPosX = Renderer::_frameWidth;
+const int Renderer::_viewportPosY = Renderer::_frameHeight;
 
 void Renderer::convertPaletteToRGB(int palColor, byte *red, byte *green, byte *blue) {
 	*blue = ((palColor & 0xF)) * 16;
@@ -161,7 +162,7 @@ void Renderer::generateCurrentMapView(int mapX, int mapY, const Map *map) {
 }
 
 void Renderer::drawMap(const byte bitmap[Map::_numStamps][Map::_stampStride]) {
-	byte *backBuffer = static_cast<byte *>(_backBuffer.getBasePtr(_viewportPos.x, _viewportPos.y));
+	byte *backBuffer = static_cast<byte *>(_backBuffer.getBasePtr(_viewportPosX, _viewportPosY));
 
 	for (int stampY = 0; stampY < Map::_stampsPerViewportH; ++stampY) {
 		for (int stampX = 0; stampX < Map::_stampsPerViewportW; ++stampX) {

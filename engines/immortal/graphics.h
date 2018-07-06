@@ -61,7 +61,8 @@ public:
 	static const int _screenHeight;
 	static const int _viewportWidth;
 	static const int _viewportHeight;
-	static const Common::Point _viewportPos;
+	static const int _viewportPosX;
+	static const int _viewportPosY;
 	static const int _frameWidth;
 	static const int _frameHeight;
 

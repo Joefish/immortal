@@ -25,6 +25,7 @@
 
 #include "common/rect.h"
 
+#include "immortal/resman.h"
 #include "immortal/timer.h"
 
 namespace Immortal {
@@ -200,7 +201,7 @@ enum DialogId {
 	kDialogDream7,
 	kDialogDream1P2XW,
 	kDialogDream1P2YW,
-	kDialogdreamXXY,
+	kDialogDreamXXY,
 	kDialogNotHere3,
 	kDialogNotHere2,
 	kDialogDownVortexString,
@@ -263,6 +264,26 @@ enum DialogToken {
 };
 
 class Dialog {
+private:
+	struct DialogData {
+		DialogData()
+		    : _text(nullptr)
+		    , _iconId(kSpriteNone)
+		    , _nextPage(kDialogNone) {
+		}
+
+		DialogData(const char *text, SpriteId iconId = kSpriteNone,
+		           DialogId nextPage = kDialogNone)
+		    : _text(text)
+		    , _iconId(iconId)
+		    , _nextPage(nextPage) {
+		}
+
+		const char *_text;
+		SpriteId _iconId;
+		DialogId _nextPage;
+	};
+
 public:
 	Dialog(Renderer *screen);
 	void load(DialogId id);
@@ -276,9 +297,12 @@ private:
 	void newline();
 
 public:
-	static const Common::Point _cursorOrigin;
-	static const Common::Point _buttonYes;
-	static const Common::Point _buttonNo;
+	static const int _cursorOriginX;
+	static const int _cursorOriginY;
+	static const int _buttonYesX;
+	static const int _buttonYesY;
+	static const int _buttonNoX;
+	static const int _buttonNoY;
 	static const int _iconWidth;
 	static const int _iconHeight;
 	static const int _maxCharWidth;
@@ -300,6 +324,7 @@ private:
 	Timer _timeSinceLastUpdate;
 	int _delay;
 	bool _scrollingMode;
+	DialogData _dialog[kDialogNum];
 };
 
 }
