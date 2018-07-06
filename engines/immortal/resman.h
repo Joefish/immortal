@@ -123,67 +123,70 @@ enum ImageId {
 };
 
 enum SpriteId {
-	kSpriteNone,
+	kSpriteNone = -1,
+	kSpriteLadder,
+	kSpriteAsciiBase,
+	kSpriteGaugeLifeOn,
+	kSpriteGaugeLifeOff,
 	kSpriteMaskBezierTopLeft,
 	kSpriteMaskBezierTopRight,
 	kSpriteMaskTriangleLightLeft,
 	kSpriteMaskTriangleLightRight,
 	kSpriteMaskTriangleDarkLeft,
 	kSpriteMaskTriangleDarkRight,
-
 	kSpriteChestClosed,
 	kSpriteChestOpen,
 	kSpriteRing,
 	kSpriteDagger,
 	kSpriteErek,
+	kSpriteIconCoffee,
 	kSpriteSpiderEgg,
+	kSpriteButtonYesInactive,
+	kSpriteButtonYesActive,
+	kSpriteButtonNoInactive,
+	kSpriteButtonNoActive,
+	kSpriteInventorySelect,
+	kSpriteInventorySelectBlack,
+	kSpriteIconSword,
+	kSpriteIconBottle,
 	kSpriteBottle,
+	kSpriteIconKey,
+	kSpriteIconWormSensor,
+	kSpriteIconBaitBag,
+	kSpriteIconBook,
+	kSpriteIconDragonEgg,
 	kSpriteScroll,
+	kSpriteIconScroll,
+	kSpriteButtonOk,
 	kSpriteTable,
+	kSpriteIconGoldBag,
+	kSpriteIconMap,
+	kSpriteTrap,
 	kSpriteSkeleton,
+	kSpriteIconSporesBag,
 	kSpriteRuby,
+	kSpriteRubyShining,
 	kSpriteStone,
 	kSpriteGreenStone,
+	kSpriteIconRuby,
+	kSpriteIconStone,
 	kSpriteGold,
+	kSpriteIconLetter,
+	kSpriteIconAmulet,
+	kSpriteIconGold,
 	kSpriteDragonEgg,
 	kSpriteShadowThingy52,
+	kSpriteIconBomb,
+	kSpriteIconRing,
+	kSpriteIconDagger,
+	kSpriteIconCarpet,
 	kSpriteAna,
 	kSpriteAnaCave,
 	kSpriteThingy59,
 	kSpriteFightingGaugeExhaustion,
 	kSpriteFightingGaugeLife,
 	kSpriteKoorsLight,
-
-	// Dialog Icons
-	kSpriteIconCoffee,
-	kSpriteIconSword,
-	kSpriteIconBottle,
-	kSpriteIconKey,
-	kSpriteIconWormSensor,
-	kSpriteIconBaitBag,
-	kSpriteIconBook,
-	kSpriteIconDragonEgg,
-	kSpriteIconScroll,
-	kSpriteIconGoldBag,
-	kSpriteIconMap,
-	kSpriteIconSporesBag,
-	kSpriteIconRuby,
-	kSpriteIconStone,
-	kSpriteIconLetter,
-	kSpriteIconAmulet,
-	kSpriteIconGold,
-	kSpriteIconBomb,
-	kSpriteIconRing,
-	kSpriteIconDagger,
-	kSpriteIconCarpet,
-	kSpriteInventorySelect,
-	kSpriteInventorySelectBlack,
-
-	kSpriteButtonYesInactive,
-	kSpriteButtonYesActive,
-	kSpriteButtonNoInactive,
-	kSpriteButtonNoActive,
-	kSpriteButtonOk
+	kSpriteNum
 };
 
 // TODO: Check all sprites as files from source differ from release
@@ -209,7 +212,6 @@ enum AnimationId {
 	kAnimationSparksSmall,
 	kAnimationFiredot,
 
-	kAnimationTrapdoor,
 	kAnimationSporesGrowing,
 	kAnimationMerchant,
 	kAnimationFlash,
@@ -376,6 +378,12 @@ struct Map {
 	byte _bitmap[_numStamps][_stampStride];
 };
 
+struct SpriteInfo {
+	FileId fileId;
+	int pack;
+	int sprite;
+};
+
 class ResourceManager {
 private:
 	struct AssetFile {
@@ -390,7 +398,9 @@ public:
 	const byte *getImage(ImageId id) const;
 	const MusicData *getMusic(MusicId id) const;
 	const Sprite *getSprite(FileId fileId, int pack, int sprite) const;
+	const Sprite *getSprite(SpriteId id) const;
 	Common::Point getSpritePackCenter(FileId fileId, int pack) const;
+	const SpriteInfo *getSpriteInfo(SpriteId id) const;
 	const Map *getMap();
 
 private:

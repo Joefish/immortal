@@ -74,6 +74,84 @@ static const char *fileMap[kFileAnimationNum] = {
 	"LEVEL235.ANM"
 };
 
+static const SpriteInfo spriteInfo[kSpriteNum] = {
+	{kFileGeneral1, 3,  0},     // kSpriteLadder
+	{kFileGeneral2, 0,  0},     // kSpriteAsciiBase
+	{kFileGeneral2, 0,  1},     // kSpriteGaugeLifeOn
+	{kFileGeneral2, 0,  2},     // kSpriteGaugeLifeOff
+	{kFileGeneral2, 1,  0},     // kSpriteMaskBezierTopLeft
+	{kFileGeneral2, 1,  1},     // kSpriteMaskBezierTopRight
+	{kFileGeneral2, 2,  0},     // kSpriteMaskTriangleLightLeft
+	{kFileGeneral2, 2,  1},     // kSpriteMaskTriangleLightRight
+	{kFileGeneral2, 2,  2},     // kSpriteMaskTriangleDarkLeft
+	{kFileGeneral2, 2,  3},     // kSpriteMaskTriangleDarkRight
+	{kFileGeneral2, 4,  0},     // kSpriteChestClosed
+	{kFileGeneral2, 4,  1},     // kSpriteChestOpen
+	{kFileGeneral2, 4,  2},     // kSpriteRing
+	{kFileGeneral2, 4,  3},     // kSpriteDagger
+	{kFileGeneral2, 4,  4},     // kSpriteErek
+	{kFileGeneral2, 4,  5},     // kSpriteIconCoffee
+	{kFileGeneral2, 4,  6},     // kSpriteSpiderEgg
+	{kFileGeneral2, 4,  7},     // kSpriteButtonYesInactive
+	{kFileGeneral2, 4,  8},     // kSpriteButtonYesActive
+	{kFileGeneral2, 4,  9},     // kSpriteButtonNoInactive
+	{kFileGeneral2, 4, 10},     // kSpriteButtonNoActive
+	{kFileGeneral2, 4, 11},     // kSpriteInventorySelect
+	{kFileGeneral2, 4, 12},     // kSpriteInventorySelectBlack
+	{kFileGeneral2, 4, 13},     // kSpriteIconSword
+	{kFileGeneral2, 4, 14},     // kSpriteIconBottle
+	{kFileGeneral2, 4, 15},     // kSpriteBottle
+	{kFileGeneral2, 4, 16},     // kSpriteIconKey
+	{kFileGeneral2, 4, 17},     // kSpriteIconWormSensor
+	{kFileGeneral2, 4, 18},     // kSpriteIconBaitBag
+	{kFileGeneral2, 4, 19},     // kSpriteIconBook
+	{kFileGeneral2, 4, 20},     // kSpriteIconDragonEgg
+	{kFileGeneral2, 4, 21},     // kSpriteScroll
+	{kFileGeneral2, 4, 22},     // kSpriteIconScroll
+	{kFileGeneral2, 4, 23},     // kSpriteButtonOk
+	{kFileGeneral2, 4, 24},     // kSpriteTable
+	{kFileGeneral2, 4, 25},     // kSpriteIconGoldBag
+	{kFileGeneral2, 4, 26},     // kSpriteIconMap
+	{kFileGeneral2, 4, 27},     // kSpriteTrap
+	{kFileGeneral2, 4, 28},     // kSpriteSkeleton
+	{kFileGeneral2, 4, 29},     // kSpriteIconSporesBag
+	{kFileGeneral2, 4, 37},     // kSpriteRuby
+	{kFileGeneral2, 4, 38},     // kSpriteRubyShining
+	{kFileGeneral2, 4, 39},     // kSpriteStone
+	{kFileGeneral2, 4, 40},     // kSpriteGreenStone
+	{kFileGeneral2, 4, 41},     // kSpriteIconRuby
+	{kFileGeneral2, 4, 42},     // kSpriteIconStone
+	{kFileGeneral2, 4, 43},     // kSpriteGold
+	{kFileGeneral2, 4, 44},     // kSpriteIconLetter
+	{kFileGeneral2, 4, 49},     // kSpriteIconAmulet
+	{kFileGeneral2, 4, 50},     // kSpriteIconGold
+	{kFileGeneral2, 4, 51},     // kSpriteDragonEgg
+	{kFileGeneral2, 4, 52},     // kSpriteShadowThingy52  -- wyvern shadow?
+	{kFileGeneral2, 4, 53},     // kSpriteIconBomb
+	{kFileGeneral2, 4, 54},     // kSpriteIconRing
+	{kFileGeneral2, 4, 55},     // kSpriteIconDagger
+	{kFileGeneral2, 4, 56},     // kSpriteIconCarpet
+	{kFileGeneral2, 4, 57},     // kSpriteAna
+	{kFileGeneral2, 4, 58},     // kSpriteAnaCave
+	{kFileGeneral2, 4, 59},     // kSpriteThingy59
+	{kFileGeneral2, 4, 60},     // kSpriteFightingGaugeExhaustion
+	{kFileGeneral2, 4, 61},     // kSpriteFightingGaugeLife
+	{kFileGeneral2, 4, 62}      // kSpriteKoorsLight
+
+#if 0
+	{kFileGeneral2, 5, 0},      // kSpriteSmallFlash
+	{kFileGeneral2, 5, 1},      // kSpriteBigFlash
+	{kFileGeneral2, 6, 0},      // kSpriteWizardAmulet
+	{kFileGeneral2, 6, 1},      // kSpriteWizardNoAmulet
+	{kFileGeneral2, 6, 2},      // kSpriteWizardPetrified
+	{kFileGeneral2, 6, 3},      // kSpriteWizardAmulet2
+	// Animation
+	{kFileGeneral2, 6, 4},      // kSpriteWizardIncinerated1
+	{kFileGeneral2, 6, 5},      // kSpriteWizardIncinerated2
+	{kFileGeneral2, 6, 6}       // kSpriteWizardIncinerated3
+#endif
+};
+
 static byte *decodeFile(byte *buffer, int encodedFilesize, int *decodedFilesize);
 
 ResourceManager::ResourceManager() {
@@ -310,8 +388,12 @@ const byte *ResourceManager::getImage(ImageId id) const {
 	return _imageContainer[id].get();
 }
 
+const Sprite *ResourceManager::getSprite(SpriteId id) const {
+	const SpriteInfo *info = getSpriteInfo(id);
+	return getSprite(info->fileId, info->pack, info->sprite);
+}
+
 const Sprite *ResourceManager::getSprite(FileId fileId, int pack, int spriteNum) const {
-	// TODO: Get fileId, pack and spritenum from id
 	return &_spriteContainer[fileId][pack]._sprite[spriteNum];
 }
 
@@ -322,6 +404,10 @@ Common::Point ResourceManager::getSpritePackCenter(FileId fileId, int pack) cons
 
 const Map *ResourceManager::getMap() {
 	return &_mazeMap;
+}
+
+const SpriteInfo *ResourceManager::getSpriteInfo(SpriteId id) const {
+	return &spriteInfo[id];
 }
 
 /**

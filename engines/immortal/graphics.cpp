@@ -96,7 +96,8 @@ void Renderer::drawSprite(FileId fileId, int pack, int frame, int x, int y) {
 }
 
 void Renderer::drawChar(char c, int x, int y) {
-	drawSprite(kFileGeneral2, 0, c, x, y);
+	const SpriteInfo *info = _resMan->getSpriteInfo(kSpriteAsciiBase);
+	drawSprite(info->fileId, info->pack, info->sprite + c, x, y);
 }
 
 void Renderer::paletteFadeIn() {
