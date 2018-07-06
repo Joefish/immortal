@@ -26,8 +26,8 @@
 namespace Immortal {
 
 Timer::Timer()
-	: _timeStart(0)
-	, _running(false) {
+    : _timeStart(0)
+    , _running(false) {
 }
 
 void Timer::start() {
