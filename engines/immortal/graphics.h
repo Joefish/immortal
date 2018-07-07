@@ -49,6 +49,7 @@ public:
 	void drawChar(char c, int x, int y);
 	void drawImage(ImageId id);
 	void drawSprite(SpriteId id, int x, int y, int offset = 0);
+	void drawIcon(SpriteId id, int x, int y);
 	void drawMap(int x, int y);
 	void paletteFadeIn();
 	void paletteFadeOut();

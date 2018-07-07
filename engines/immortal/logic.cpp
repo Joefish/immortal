@@ -167,25 +167,21 @@ void Logic::runDialog() {
 			_buttonYesSelected = false;
 		}
 		if (isKeyPressed(kKeyRight)) {
-			_buttonNoSelected = true;
-			_buttonYesSelected = false;
+			_buttonNoSelected = false;
+			_buttonYesSelected = true;
 		}
 
-		SpriteId buttonNo = _buttonNoSelected ? kSpriteButtonNoActive:
-		                                           kSpriteButtonNoInactive;
-		SpriteId buttonYes = _buttonYesSelected ? kSpriteButtonYesActive:
-		                                             kSpriteButtonYesInactive;
-//		_screen->drawSprite(buttonNo, 0, _dialog._buttonNoX, _dialog._buttonNoY);
-//		_screen->drawSprite(buttonYes, 0, _dialog._buttonYesX, _dialog._buttonYesY);
+		SpriteId buttonNo = _buttonNoSelected ? kSpriteButtonNoActive
+		                                      : kSpriteButtonNoInactive;
+		SpriteId buttonYes = _buttonYesSelected ? kSpriteButtonYesActive
+		                                        : kSpriteButtonYesInactive;
+		_screen->drawIcon(buttonNo, _dialog._buttonNoX, _dialog._buttonNoY);
+		_screen->drawIcon(buttonYes, _dialog._buttonYesX, _dialog._buttonYesY);
 		// TODO:
 		// PLEASE fix this already! Once the map renderer is running get on it
 		// Also why are the buttons position off but other sprites and letters
 		// are fine to render?
-		_timer.start();
-		if (isKeyPressed(kKeyStart) || _timer.elapsedTime() > 3000) {
-			_timer.stop();
-			setState(kLogicGame);
-		}
+
 	} break;
 	case kDialogTokenLoadNextString:
 		// TODO: Add support for 'follwoing string' in dialogText

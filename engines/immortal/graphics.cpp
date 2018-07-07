@@ -88,6 +88,15 @@ void Renderer::drawSprite(SpriteId id, int x, int y, int offset) {
 	internalDrawSprite(sprite, x, y, spriteCenter.x, spriteCenter.y);
 }
 
+void Renderer::drawIcon(SpriteId id, int x, int y) {
+	const SpriteInfo *info = _resMan->getSpriteInfo(id);
+	const Sprite *sprite = _resMan->getSprite(info->fileId, info->pack, info->sprite);
+	Common::Point spriteCenter = _resMan->getSpritePackCenter(info->fileId, info->pack);
+	int iconPosX = x + (_iconWidth / 2) + _viewportPosX;
+	int iconPosY = y + (_iconHeight / 2) + _viewportPosY;
+	internalDrawSprite(sprite, iconPosX, iconPosY, spriteCenter.x, spriteCenter.y);
+}
+
 void Renderer::drawChar(char c, int x, int y) {
 	drawSprite(kSpriteAsciiBase, x, y, c);
 }
