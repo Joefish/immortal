@@ -64,14 +64,6 @@ static const int dimcmap[16] = {
 	0x0781, 0x0AAA, 0x0000, 0x0666
 };
 
-const int Renderer::_screenWidth = 320;
-const int Renderer::_screenHeight = 200;
-const int Renderer::_viewportWidth = 256;
-const int Renderer::_viewportHeight = 128;
-const int Renderer::_frameWidth = 32;
-const int Renderer::_frameHeight = 20;  // 12 px frame + 8 px health bar
-const int Renderer::_viewportPosX = Renderer::_frameWidth;
-const int Renderer::_viewportPosY = Renderer::_frameHeight;
 
 void Renderer::convertPaletteToRGB(int palColor, byte *red, byte *green, byte *blue) {
 	*blue = ((palColor & 0xF)) * 16;

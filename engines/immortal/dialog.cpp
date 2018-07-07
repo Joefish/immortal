@@ -27,28 +27,6 @@
 
 namespace Immortal {
 
-// TODO:
-// button pos relative to viewport. Look close at source what's going on here..
-const int Dialog::_cursorOriginX = 40;
-const int Dialog::_cursorOriginY = 24;
-const int Dialog::_buttonYesX = 214 - 32;
-const int Dialog::_buttonYesY = 100 - 12;
-const int Dialog::_buttonNoX = 40 - 32;
-const int Dialog::_buttonNoY = 100 - 12;
-const int Dialog::_iconWidth = 64;
-const int Dialog::_iconHeight = 48;
-const int Dialog::_maxCharWidth = 16;
-const int Dialog::_rowHeight = 16;
-const int Dialog::_rowWidthLimit = 288; // 256 px viewport + 32 px border
-const int Dialog::_maxRows = 5;
-const int Dialog::_charGaugeOff = 1;
-const int Dialog::_charGaugeOn = 2;
-const int Dialog::_charCopyright = 24;
-const int Dialog::_charTrademark = 25;
-const int Dialog::_charBlank = 26;
-const int Dialog::_scrollingDelay = 100;
-const int Dialog::_delayInMs = (1 / 72.8) * 1000;
-
 Dialog::Dialog(Renderer *screen)
     : _screen(screen)
     , _text(nullptr)

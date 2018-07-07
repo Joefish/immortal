@@ -57,14 +57,16 @@ public:
 	void update();
 
 public:
-	static const int _screenWidth;
-	static const int _screenHeight;
-	static const int _viewportWidth;
-	static const int _viewportHeight;
-	static const int _viewportPosX;
-	static const int _viewportPosY;
-	static const int _frameWidth;
-	static const int _frameHeight;
+	static const int _screenWidth = 320;
+	static const int _screenHeight = 200;
+	static const int _viewportWidth = 256;
+	static const int _viewportHeight = 128;
+	static const int _frameWidth = 32;
+	static const int _frameHeight = 20;  // 12 px frame + 8 px health bar
+	static const int _viewportPosX = _frameWidth;
+	static const int _viewportPosY = _frameHeight;
+	static const int _iconWidth = 64;
+	static const int _iconHeight = 48;
 
 private:
 	static void convertPaletteToRGB(int palColor, byte *red, byte *green, byte *blue);

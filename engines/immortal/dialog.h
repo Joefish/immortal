@@ -297,25 +297,27 @@ private:
 	void newline();
 
 public:
-	static const int _cursorOriginX;
-	static const int _cursorOriginY;
-	static const int _buttonYesX;
-	static const int _buttonYesY;
-	static const int _buttonNoX;
-	static const int _buttonNoY;
-	static const int _iconWidth;
-	static const int _iconHeight;
-	static const int _maxCharWidth;
-	static const int _maxRows;
-	static const int _rowHeight;
-	static const int _rowWidthLimit;
-	static const int _scrollingDelay;
-	static const int _charGaugeOff;
-	static const int _charGaugeOn;
-	static const int _charCopyright;
-	static const int _charTrademark;
-	static const int _charBlank;
-	static const int _delayInMs;
+	// TODO:
+	// button pos relative to viewport. Look close at source what's going on here..
+	static const int _cursorOriginX = 40;
+	static const int _cursorOriginY = 24;
+	static const int _buttonYesX = 214 - 32;
+	static const int _buttonYesY = 100 - 12;
+	static const int _buttonNoX = 40 - 32;
+	static const int _buttonNoY = 100 - 12;
+	static const int _iconWidth = 64;
+	static const int _iconHeight = 48;
+	static const int _maxCharWidth = 16;
+	static const int _rowHeight = 16;
+	static const int _rowWidthLimit = 288;  // 256 px viewport + 32 px border
+	static const int _maxRows = 5;
+	static const int _charGaugeOff = 1;
+	static const int _charGaugeOn = 2;
+	static const int _charCopyright = 24;
+	static const int _charTrademark = 25;
+	static const int _charBlank = 26;
+	static const int _scrollingDelay = 100;
+	static const int _delayInMs = (1 / 72.8) * 1000;
 
 private:
 	Renderer *_screen;
