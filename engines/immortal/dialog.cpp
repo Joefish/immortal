@@ -56,12 +56,12 @@ Dialog::Dialog(Renderer *screen)
 	_dialog[kDialogBeerManString]._text = "You feel invinicible now.@";
 	_dialog[kDialogKoorsOpen]._text = "It's 8 am! &Shotgun the beer?%";
 	_dialog[kDialogMerchantDescription]._text =
-	        "_}Greetings, friend! Come, I+ve got something you need. These parts are plagued with slime. "
-	        "You can+t venture safely without my slime oil for boots, a bargain at only 80 gold pieces.%";
+	        "_}Greetings, friend! Come, I've got something you need. These parts are plagued with slime. "
+	        "You can't venture safely without my slime oil for boots, a bargain at only 80 gold pieces.%";
 	_dialog[kDialogMerchant3Description]._text =
 	        "_}All right, 60 gold pieces for my oil. "
-	        "Rub it on your boots and slime won+t touch you. 60, friend.%";
-	_dialog[kDialogMapText1]._text = "This room isn+t on the map.&Look at the picture.@";
+	        "Rub it on your boots and slime won't touch you. 60, friend.%";
+	_dialog[kDialogMapText1]._text = "This room isn't on the map.&Look at the picture.@";
 	_dialog[kDialogMapText2]._text = "This room is on the map.&Look at the picture.@";
 	_dialog[kDialogSwordString]._text = "# sword@";
 	_dialog[kDialogSwordString]._iconId = kSpriteIconSword;
@@ -77,8 +77,8 @@ Dialog::Dialog(Renderer *screen)
 	_dialog[kDialogThrowDustOfComplaisance]._text =
 	        "}To use this dust, you throw it in the air. Do that here?%";
 	_dialog[kDialogSmithText1]._text =
-	        "_}Don+t bother me, I+m cutting a gem. Yes, you need it. No, you can+t have it. "
-	        "I wouldn+t give this gem to anyone, least of all you. Go away.]]]]=";
+	        "_}Don't bother me, I'm cutting a gem. Yes, you need it. No, you can't have it. "
+	        "I wouldn't give this gem to anyone, least of all you. Go away.]]]]=";
 	_dialog[kDialogSmithText2]._text = "_}Let me help you. Take this gem. There you go. Good luck.]]]]=";
 	_dialog[kDialogCarpetString]._text = "#carpet@";
 	_dialog[kDialogCarpetString]._iconId = kSpriteIconCarpet;
@@ -94,31 +94,31 @@ Dialog::Dialog(Renderer *screen)
 	_dialog[kDialogOpenChestDescription]._text = "The chest is open. Examine&contents?%";
 	_dialog[kDialogPutItOn]._text = "Put it on?%";
 	_dialog[kDialogDropItThen]._text = "Drop it?%";
-	_dialog[kDialogChestDescription]._text = "It+s unlocked. Open it?%";
-	_dialog[kDialogGoodChestDescription]._text = "It+s locked but you have&the key. Open it?%";
-	_dialog[kDialogBadChestDescription]._text = "It+s locked and you don+t&have the key.@";
+	_dialog[kDialogChestDescription]._text = "It's unlocked. Open it?%";
+	_dialog[kDialogGoodChestDescription]._text = "It's locked but you have&the key. Open it?%";
+	_dialog[kDialogBadChestDescription]._text = "It's locked and you don't&have the key.@";
 	_dialog[kDialogGoldString]._text = "#$0 gold@";
 	_dialog[kDialogGoldString]._iconId = kSpriteIconGoldBag;
 	_dialog[kDialogFindGoldString]._text = "You find $0 gold pieces.&&^#@";
 	_dialog[kDialogFindGoldString]._iconId = kSpriteIconGold;
 	_dialog[kDialogNullString]._text = "@";
-	_dialog[kDialogNotHere]._text = "You can+t plant them on&stone tiles.@";
-	_dialog[kDialogUnlockDoor]._text = "It+s locked but you are&able to unlock it with&the key.@";
+	_dialog[kDialogNotHere]._text = "You can't plant them on&stone tiles.@";
+	_dialog[kDialogUnlockDoor]._text = "It's locked but you are&able to unlock it with&the key.@";
 	_dialog[kDialogWeak1String]._text =
 	        "_}The king is not dead, but the poison is taking effect. When he sees you, he utters "
-	        "(Give me water... the fountain... I give you... information... peace...+ Give him water?%";
+	        "(Give me water... the fountain... I give you... information... peace...' Give him water?%";
 	_dialog[kDialogDummyWater]._text =
 	        "_}You dont have any water to give him. He mumbles something. Then silence... You find a key on his body.]]]]=";
 	_dialog[kDialogBadWizard]._text = "_}He mumbles something. Then silence... You find a key on his body.]]]]=";
 	_dialog[kDialogDiesAnyway]._text =
-	        "_}I+ll tell you how to... next level... just beyond slime... three jewels... slime... rock becomes... "
+	        "_}I'll tell you how to... next level... just beyond slime... three jewels... slime... rock becomes... "
 	        "floor... right, left, center of the... [Then silence. His hand opens, releasing a key.]]]]=";
 	_dialog[kDialogDoorKeyDescription]._text = "You find a door key.&@";
 	_dialog[kDialogNoteDescription]._text = "You find a note.&@";
 	_dialog[kDialogNoteString]._text = "#  note@";
 	_dialog[kDialogNoteString]._iconId = kSpriteIconLetter;
-	_dialog[kDialogLootBodyDescription]._text = "He+s dead.&Look for possessions?%";
-	_dialog[kDialogNotEnough]._text = "You don+t have it. Check&your inventory.@";
+	_dialog[kDialogLootBodyDescription]._text = "He's dead.&Look for possessions?%";
+	_dialog[kDialogNotEnough]._text = "You don't have it. Check&your inventory.@";
 	_dialog[kDialogGameOverString]._text = "Game Over&&Play again?@";
 	_dialog[kDialogYouWin]._text = "Congratulations!&&Play again?@";
 	_dialog[kDialogWormFoodDescription]._text = "You find a bag of bait.&@";
@@ -141,11 +141,11 @@ Dialog::Dialog(Renderer *screen)
 	_dialog[kDialogUseBootString]._text =
 	        "You try it out but notice&as you walk that the leather&is quickly drying out.@";
 	_dialog[kDialogCharmDescription]._text =
-	        "}You find a scroll with a charm spell to use on will o+ the wisps.&@";
+	        "}You find a scroll with a charm spell to use on will o' the wisps.&@";
 	_dialog[kDialogCharmString]._text = "# charm@";
 	_dialog[kDialogCharmString]._iconId = kSpriteIconScroll;
 	_dialog[kDialogUseCharmString]._text =
-	        "}This charms the will o+ the wisps to follow you. Read the spell again to turn them against your enemies.@";
+	        "}This charms the will o' the wisps to follow you. Read the spell again to turn them against your enemies.@";
 	_dialog[kDialogWaterOpen]._text = "}It looks like water. Drink it?%";
 	_dialog[kDialogDrinkIt]._text = "Drink it?%";
 	_dialog[kDialogItWorks]._text = "}It works! You are much stronger.]]]=";
@@ -165,28 +165,28 @@ Dialog::Dialog(Renderer *screen)
 	_dialog[kDialogTrnString]._text = "# knife@";
 	_dialog[kDialogTrnString]._iconId = kSpriteIconDagger;
 	_dialog[kDialogInvisDescription]._text =
-	        "_}It is a fine woman+s garment. Folded inside is a ring with the words, "
-	        "[`To Ana, so harm will never find you. Love, Dunric.+ @";
+	        "_}It is a fine woman's garment. Folded inside is a ring with the words, "
+	        "[`To Ana, so harm will never find you. Love, Dunric.' @";
 	_dialog[kDialogGoodLuckDescription]._text = "You find a small, well&crafted ring. @";
 	_dialog[kDialogAnaRingString]._text = "#from ana@";
 	_dialog[kDialogAnaRingString]._iconId = kSpriteIconRing;
-	_dialog[kDialogInvisString]._text = "#  ana+s@";
+	_dialog[kDialogInvisString]._text = "#  ana's@";
 	_dialog[kDialogInvisString]._iconId = kSpriteIconRing;
 	_dialog[kDialogGoesAway]._text =
-	        "_}She is hurt and upset when she finds you don+t have her ring or won+t give it to her. "
+	        "_}She is hurt and upset when she finds you don't have her ring or won't give it to her. "
 	        "She scurries back into the hole. The hole is too small for you to follow.&@";
 	_dialog[kDialogGiveHerRing]._text =
-	        "_}`Oh sir, can you help me,+ the girl pleads. `I was kidnapped and dragged down here. "
-	        "All the man would say is `Mordamir+s orders.+ I ~";
+	        "_}`Oh sir, can you help me,' the girl pleads. `I was kidnapped and dragged down here. "
+	        "All the man would say is `Mordamir's orders.' I ~";
 	_dialog[kDialogGiveHerRing]._nextPage = kDialogGive2;
 	_dialog[kDialogGive2]._text =
-	        "escaped using a ring my father gave me, but now I+ve lost it. Did you find it?+%";
+	        "escaped using a ring my father gave me, but now I've lost it. Did you find it?'%";
 	_dialog[kDialogMadKingText]._text =
 	        "_}We have met before, old man. Do you remember? Because you helped me, you may pass. "
 	        "But I warn you, we are at war with the trolls. Over this ladder, across the spikes, is troll territory.@";
 	_dialog[kDialogMadKing2Text]._text = "_}You are an impostor!]]]]=";
 	_dialog[kDialogMadKing3Text]._text =
-	        "_}Old man, do you remember me? I am king of the goblins. You didn+t give me the water. "
+	        "_}Old man, do you remember me? I am king of the goblins. You didn't give me the water. "
 	        "You left me to die after you took the key from me. Now you will pay.]]]]=";
 	_dialog[kDialogDream1P1]._text =
 	        "_}Ah, a rest is exactly what you need right now. You quickly fall into a deep, dream filled sleep..."
@@ -202,7 +202,7 @@ Dialog::Dialog(Renderer *screen)
 	        "You wake rejuvenated, but disturbed.]]]]]=";
 	_dialog[kDialogHowToGetOut]._text =
 	        "_}Here, take this ring in return. [I overheard the obnoxious little dwarf saying "
-	        "(Clockwise, three rings around the triangle.+ Could that be a clue to his exit puzzle? "
+	        "(Clockwise, three rings around the triangle.' Could that be a clue to his exit puzzle? "
 	        "[I must go. Goodbye.]]]]=";
 	_dialog[kDialogRestartString]._text = "Start over?%";
 	_dialog[kDialogSporesString]._text = "# spores@";
@@ -221,9 +221,9 @@ Dialog::Dialog(Renderer *screen)
 	_dialog[kDialogCertCheckFirst]._text = "fourth&letter on row =";
 	_dialog[kDialogCertCheckSecond]._text = "sixth&letter on row =";
 	_dialog[kDialogCertCheckFourth]._text = ", below.&&=";
-	_dialog[kDialogCertCheckSixth]._text = "No, that+s not it.&One more try.]]]]=";
+	_dialog[kDialogCertCheckSixth]._text = "No, that's not it.&One more try.]]]]=";
 	_dialog[kDialogDream1]._text =
-	        "}_The straw is a small but welcome comfort in your first day+s travel. "
+	        "}_The straw is a small but welcome comfort in your first day's travel. "
 	        "As you drift into an uneasy slumber, you begin to wonder about Mordamir. "
 	        "How long has he been held prisoner? Where?~";
 	_dialog[kDialogDream1]._nextPage = kDialogD1D2;
@@ -233,9 +233,9 @@ Dialog::Dialog(Renderer *screen)
 	        "[(Dunric, you have come~";
 	_dialog[kDialogPhantDescription]._nextPage = kDialogWizardText2;
 	_dialog[kDialogWizardText2]._text =
-	        " to save me. I am in the dungeons far below. I know I can count on you.+[~";
+	        " to save me. I am in the dungeons far below. I know I can count on you.'[~";
 	_dialog[kDialogWizardText2]._nextPage = kDialogWizardText3;
-	_dialog[kDialogWizardText3]._text = "This explains your old teacher+s mysterious disappearance, "
+	_dialog[kDialogWizardText3]._text = "This explains your old teacher's mysterious disappearance, "
 	           "but there is one thing strange about the message...[Your name is not Dunric. ]]]]=";
 	_dialog[kDialogDunricDescription]._text = "}The body of a fighter. Look for possessions?%";
 	_dialog[kDialogUlindorString0]._text =
@@ -249,16 +249,16 @@ Dialog::Dialog(Renderer *screen)
 	        "Under firelight they cast a shadow by which you can detect and avoid them.@";
 	_dialog[kDialogDunricRingDescription]._text =
 	        "}You find a ring. There is a name inscribed on the band: Dunric!&@";
-	_dialog[kDialogDunricRingString]._text = "#dunric+s@";
+	_dialog[kDialogDunricRingString]._text = "#dunric's@";
 	_dialog[kDialogDunricRingString]._iconId = kSpriteIconRing;
 	_dialog[kDialogUlindorString2]._text =
-	        "_}`We are even now, wizard. Here, you will need this.+ ~";
+	        "_}`We are even now, wizard. Here, you will need this.' ~";
 	_dialog[kDialogUlindorString2]._nextPage = kDialogUlindorString3;
 	_dialog[kDialogUlindorString3]._text =
 	        "He hands you a musty red carpet. (It is dangerous to step even one foot in the next two rooms. "
-	        "After that, the exit is just down three ladders.+ With that advice, he turns and walks briskly away.@";
+	        "After that, the exit is just down three ladders.' With that advice, he turns and walks briskly away.@";
 	_dialog[kDialogDreamLevel2]._text =
-	        "_}When you clear your mind of the day+s troubles, you start to think about the goblins. "
+	        "_}When you clear your mind of the day's troubles, you start to think about the goblins. "
 	        "[They appear to be rational. Perhaps you can reach some agreement with them.]]]=";
 	_dialog[kDialogWarning]._text = "}Stop! I forbid you to come any closer. Go back.@";
 	_dialog[kDialogThrowTrn]._text = "Throw it here?%";
@@ -271,15 +271,15 @@ Dialog::Dialog(Renderer *screen)
 	// why 'swordFrame'? there are a few ids that don't fit the description..
 	_dialog[kDialogCoffeeString]._iconId = kSpriteIconCoffee;
 	_dialog[kDialogGimmeCoffee]._text =
-	        "_}(Hey, what+s this?&&The wizard![Brett, I told you someone would find us.[Wake up, Mike and Ian. "
-	        "We+ve got a visitor.[Listen wizard, Mike needs some coffee in the morning. Got any?+%";
+	        "_}(Hey, what's this?&&The wizard![Brett, I told you someone would find us.[Wake up, Mike and Ian. "
+	        "We've got a visitor.[Listen wizard, Mike needs some coffee in the morning. Got any?'%";
 	_dialog[kDialogNoCoffee]._text =
-	        "_}(Don+t try to fool me, I wrote this game. You know what happens to fibbers?+]]]=";
+	        "_}(Don't try to fool me, I wrote this game. You know what happens to fibbers?']]]=";
 	_dialog[kDialogRefuseCoffee]._text =
-	        "_}(Well, toodle-oo then. We+ve got some sleep to catch. This game took ages to write.+]]]=";
+	        "_}(Well, toodle-oo then. We've got some sleep to catch. This game took ages to write.']]]=";
 	_dialog[kDialogYesCoffee]._text =
-	        "_}(Now there+s a good sport. How many hit points should we give him, a million? "
-	        "Okay, fifteen. Good luck, guy.+]]]=";
+	        "_}(Now there's a good sport. How many hit points should we give him, a million? "
+	        "Okay, fifteen. Good luck, guy.']]]=";
 	_dialog[kDialogDragNote]._text =
 	        "_}Notice: Flying lizards can be trained just after they hatch. Use bait.]]]=";
 	_dialog[kDialogDream5]._text =
@@ -288,7 +288,7 @@ Dialog::Dialog(Renderer *screen)
 	_dialog[kDialogDream5]._nextPage = kDialogDream1P2X;
 	_dialog[kDialogDream1P2X]._text =
 	        "It is underground, in dungeons that look vaguely familiar. "
-	        "You get a strange sense of- it+s difficult to pinpoint- eternity. It feels as if ~";
+	        "You get a strange sense of- it's difficult to pinpoint- eternity. It feels as if ~";
 	_dialog[kDialogDream1P2X]._nextPage = kDialogDream1P3Y;
 	_dialog[kDialogDream1P3Y]._text = "the civilization has existed since the beginning of time.]]]]]=";
 	_dialog[kDialogGeigerDescription]._text =
@@ -296,7 +296,7 @@ Dialog::Dialog(Renderer *screen)
 	        "The only safe path is left, down, right, down, left, down, right, up, right, down. ~";
 	_dialog[kDialogGeigerDescription]._nextPage = kDialogGeigerDescription2;
 	_dialog[kDialogGeigerDescription2]._text =
-	        "Sensor pitch changes when you step off the path. Sensor only lasts 30 seconds.+[@";
+	        "Sensor pitch changes when you step off the path. Sensor only lasts 30 seconds.'[@";
 	_dialog[kDialogGeigerString]._text = "#sensor@";
 	_dialog[kDialogGeigerString]._iconId = kSpriteIconSporesBag;
 	_dialog[kDialogEggString]._text = "#  egg@";
@@ -315,9 +315,9 @@ Dialog::Dialog(Renderer *screen)
 	_dialog[kDialogFlameThrowString]._text = "#fireballs@";
 	_dialog[kDialogFlameThrowString]._iconId = kSpriteIconScroll;
 	_dialog[kDialogMerchantXDescription]._text =
-	        "_}Greetings, old friend! I+ll sell you the potion you need. Sixty gold pieces. Take it?+%";
+	        "_}Greetings, old friend! I'll sell you the potion you need. Sixty gold pieces. Take it?'%";
 	_dialog[kDialogGoblinTalk]._text =
-	        "_}(My patrol leader wants to talk to you. Follow me.+ [He walks out the door.]]]]=";
+	        "_}(My patrol leader wants to talk to you. Follow me.' [He walks out the door.]]]]=";
 	_dialog[kDialogPlanTalk]._text =
 	        "_}We need your help. [Long ago, in the Age of Dragons, there was a great spring in these dungeons, "
 	        "a Fountain of Youth. ~";
@@ -333,7 +333,7 @@ Dialog::Dialog(Renderer *screen)
 	_dialog[kDialogPlan4]._text =
 	        "There is a sluice gate at the other end of the tunnel. We need you to distract the norlac "
 	        "so we can open the gate to flush him down the whirlpool. [Somehow, you must get to the access. "
-	        "[Good luck. We are counting on you.+]]]]]=";
+	        "[Good luck. We are counting on you.']]]]]=";
 	_dialog[kDialogHasSpiders]._text =
 	        "It looks like there is&something crawling under&the latch. Open it anyway?%";
 	_dialog[kDialogPourHere]._text = "Pour it out here?%";
@@ -342,7 +342,7 @@ Dialog::Dialog(Renderer *screen)
 	_dialog[kDialogAlcoholString]._text = "#  alcohol@";
 	_dialog[kDialogAlcoholString]._iconId = kSpriteIconBottle;
 	_dialog[kDialogLevitateDescription]._text =
-	        "_}You find a spell of levitation and a note: Don+t step on cobwebs or egg sacks. "
+	        "_}You find a spell of levitation and a note: Don't step on cobwebs or egg sacks. "
 	        "Use levitation to get through the hall of webs.][@";
 	_dialog[kDialogLevitateString]._text = "#levitate@";
 	_dialog[kDialogLevitateString]._iconId = kSpriteIconScroll;
@@ -372,19 +372,19 @@ Dialog::Dialog(Renderer *screen)
 	        "pulling you toward a hole in the floor.[But now it is quiet.]] Time has passed... "
 	        "You sense that someone or something is nearby.]]]=";
 	_dialog[kDialogDunricString7]._text =
-	        "_}As you approach, the man lifts his head. He seems to know you.]][(I am Dunric,+ he falters, "
-	        "(I sent my servant to warn you. Mordamir isn+t a prisoner...~";
+	        "_}As you approach, the man lifts his head. He seems to know you.]][(I am Dunric,' he falters, "
+	        "(I sent my servant to warn you. Mordamir isn't a prisoner...~";
 	_dialog[kDialogDunricString7]._nextPage = kDialogDunricString8;
 	_dialog[kDialogDunricString8]._text =
 	        "[He kidnapped my daughter... He is manipulating... you... "
-	        "If I had my ring I could... but... my servant...+]]]=";
+	        "If I had my ring I could... but... my servant...']]]=";
 	_dialog[kDialogGiveDunricRing]._text = "Give Dunric his ring?%";
 	_dialog[kDialogDunricTransaction]._text =
 	        "_}Dunric pauses, then lowers his head. Three spells appear in front of you: "
-	        "Body Statue, Magnetic hands, and Sonic protection. Dunric doesn+t raise his head again.]]]=";
+	        "Body Statue, Magnetic hands, and Sonic protection. Dunric doesn't raise his head again.]]]=";
 	_dialog[kDialogUlindorString7]._text =
-	        "_}You found Dunric, did you? What did he tell you? He told you about Mordamir, didn+t he? "
-	        "Then I+ll have to kill you.]]]=";
+	        "_}You found Dunric, did you? What did he tell you? He told you about Mordamir, didn't he? "
+	        "Then I'll have to kill you.]]]=";
 	_dialog[kDialogNurseText]._text =
 	        "}_You wake up remembering the kind touch of the goblin who revived you with water from the Fountain. "
 	        "Or was she just a dream?]]]=";
@@ -408,11 +408,11 @@ Dialog::Dialog(Renderer *screen)
 	_dialog[kDialogHoldItUp]._text = "Hold it up to the light here?%";
 	_dialog[kDialogReadRunes]._text = "Read the runes here?%";
 	_dialog[kDialogMordamirString1]._text =
-	        "_}(Fool! Read the words! I+ve waited a thousand years for this. Read the words!]]]"
-	        "[Fine, then I+ll just take back my amulet. I have other students who will come. Prepare to die.+]]]=";
+	        "_}(Fool! Read the words! I've waited a thousand years for this. Read the words!]]]"
+	        "[Fine, then I'll just take back my amulet. I have other students who will come. Prepare to die.']]]=";
 	_dialog[kDialogMordamirString2]._text =
 	        "_}You have no more defenses, my student. [What a pity I wasted so much time on you. "
-	        "You don+t think you made it here on your own, do you? Look at me. Do I remind you of a merchant, perhaps? ~";
+	        "You don't think you made it here on your own, do you? Look at me. Do I remind you of a merchant, perhaps? ~";
 	_dialog[kDialogMordamirString2]._nextPage = kDialogMordamir3D;
 	_dialog[kDialogMordamir3D]._text = "Who do you think left you those chests?~";
 	_dialog[kDialogMordamir3D]._nextPage = kDialogMordamir3;
@@ -425,8 +425,8 @@ Dialog::Dialog(Renderer *screen)
 	        "[You were to kill the dragon for me. You see, the power the amulet takes to kill a dragon ~";
 	_dialog[kDialogMordamir4]._nextPage = kDialogMordamir5;
 	_dialog[kDialogMordamir5]._text =
-	        "will also kill the one using it. So I can+t attack the dragon myself. "
-	        "But as long as I have this amulet, the dragon won+t attack me.]]]=";
+	        "will also kill the one using it. So I can't attack the dragon myself. "
+	        "But as long as I have this amulet, the dragon won't attack me.]]]=";
 	_dialog[kDialogGoodbye]._text = "Now you will die.]]]]=";
 	_dialog[kDialogEndText]._text =
 	        "}_The journey out of the dungeons takes two days, but with Ana by your side, time seems unimportant. "
