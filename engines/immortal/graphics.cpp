@@ -233,7 +233,7 @@ void Renderer::internalDrawImage(ImageId id) {
 
 // TODO:
 // Add Clipping
-void Renderer::internalDrawSprite(const Sprite *sprite, int x, int y, int centerX, int centerY) {
+void Renderer::internalDrawSprite(const Sprite *sprite, int x, int y, int centerX, int centerY, bool addDeltaX) {
 	byte *screenPtr = static_cast<byte *>(_backBuffer.getBasePtr(x, y));
 	int currentPixel = 0;
 
@@ -241,6 +241,9 @@ void Renderer::internalDrawSprite(const Sprite *sprite, int x, int y, int center
 		for (int dx = 0; dx < sprite->_scanlineWidth[dy]; ++dx) {
 			int pos = (dy + sprite->_y - centerY) * _screenWidth +
 			          (dx + sprite->_scanlinePosOffset[dy] - centerX);
+			if (addDeltaX)
+				pos += sprite->_x;
+
 			byte pixel = sprite->_data[currentPixel >> 1];
 			if (currentPixel & 1)
 				pixel &= 0x0F;

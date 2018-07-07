@@ -75,7 +75,7 @@ private:
 	void generateCurrentMapView(int mapX, int mapY, const Map *map);
 	void drawMap(const byte bitmap[Map::_numStamps][Map::_stampStride]);
 	void internalDrawImage(ImageId id);
-	void internalDrawSprite(const Sprite *sprite, int x, int y, int centerX, int centerY);
+	void internalDrawSprite(const Sprite *sprite, int x, int y, int centerX, int centerY, bool addDeltaX = false);
 	void internalPaletteFade(PaletteFadeType type);
 
 	ResourceManager *_resMan;
