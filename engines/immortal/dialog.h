@@ -290,6 +290,7 @@ public:
 	DialogToken update(bool keyPressed);
 	void nextChar();
 	int getDelay() const;
+	DialogId getId() const;
 
 private:
 	void reset();
@@ -326,6 +327,7 @@ private:
 	Timer _timeSinceLastUpdate;
 	int _delay;
 	bool _scrollingMode;
+	DialogId _id;
 	DialogData _dialog[kDialogNum];
 };
 

@@ -451,6 +451,7 @@ Dialog::Dialog(Renderer *screen)
 void Dialog::load(DialogId id) {
 	reset();
 	_text = _dialog[id]._text;
+	_id = id;
 	_timeSinceLastUpdate.start();
 }
 
@@ -460,10 +461,15 @@ void Dialog::reset() {
 	_text = nullptr;
 	_timeSinceLastUpdate.stop();
 	_scrollingMode = false;
+	_id = kDialogNone;
 }
 
 int Dialog::getDelay() const {
 	return _delay;
+}
+
+DialogId Dialog::getId() const {
+	return _id;
 }
 
 void Dialog::nextChar() {
