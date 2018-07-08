@@ -33,8 +33,11 @@ Dialog::Dialog(Renderer *screen)
     , _cursorPos(_cursorOriginX, _cursorOriginY)
     , _timeSinceLastUpdate()
     , _delay(0)
-    , _scrollingMode(false) {
+    , _scrollingMode(false)
+    , _id(kDialogNone)
+    , _passwordCharIndex(0) {
 	reset();
+	memset(_password, 0, sizeof(_password));
 
 // TODO:
 // Change Intro string depending on game version
@@ -478,6 +481,44 @@ void Dialog::nextChar() {
 	_delay = 0;
 }
 
+// Those functions are only needed when entering a password.
+// Redraws whole line on every change
+void Dialog::printChar(int c) {
+	c = tolower(c);
+	bool isHex = Common::isDigit(c) || (c >= 'a' && c <= 'f');
+	const int passwordLengthMax = ARRAYSIZE(_password) - 2;
+	if (isHex && _passwordCharIndex < passwordLengthMax) {
+		_password[_passwordCharIndex++] = c;
+		_password[_passwordCharIndex] = '-';
+
+		resetCursor();
+		newline();
+		_screen->fillRect(_cursorPos.x, _cursorPos.y,
+		                  _rowWidthLimit, _cursorPos.y + _rowHeight, 0);
+		_text = _password;
+		while (*_text)
+			update(false);
+	}
+}
+
+bool Dialog::removeChar() {
+	if (_passwordCharIndex) {
+		_password[_passwordCharIndex--] = 0;
+		_password[_passwordCharIndex] = '-';
+
+		_screen->fillRect(_cursorOriginX, _cursorPos.y,
+		                  _rowWidthLimit, _cursorPos.y + _rowHeight, 0);
+		_text = _password;
+		_cursorPos.x = _cursorOriginX;
+		while (*_text)
+			update(false);
+
+		return true;
+	} else {
+		return false;
+	}
+}
+
 /**
  * TODO:
  * Is position even needed or should the renderer know about Dialog layouts and depending on the type
@@ -655,9 +696,14 @@ void Dialog::printText() {
 	}
 }
 
+void Dialog::resetCursor() {
+	_cursorPos.x = _cursorOriginX;
+	_cursorPos.y = _cursorOriginY;
+}
+
 void Dialog::newline() {
 	_cursorPos.x = _cursorOriginX;
-	_cursorPos.y += 16;
+	_cursorPos.y += _rowHeight;
 }
 
 }

@@ -289,6 +289,8 @@ public:
 	void load(DialogId id);
 	DialogToken update(bool keyPressed);
 	void nextChar();
+	void printChar(int c);
+	bool removeChar();
 	int getDelay() const;
 	DialogId getId() const;
 
@@ -296,6 +298,7 @@ private:
 	void reset();
 	void printText();
 	void newline();
+	void resetCursor();
 
 public:
 	// TODO:
@@ -329,6 +332,8 @@ private:
 	bool _scrollingMode;
 	DialogId _id;
 	DialogData _dialog[kDialogNum];
+	char _password[18];     // 16 char password + '-' + terminator
+	int _passwordCharIndex;
 };
 
 }
