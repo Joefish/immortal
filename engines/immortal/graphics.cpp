@@ -107,10 +107,12 @@ void Renderer::paletteFadeIn() {
 
 void Renderer::paletteFadeOut() {
 	internalPaletteFade(kPaletteFadeOut);
+	clear();
 }
 
 void Renderer::paletteSlowFadeOut() {
 	internalPaletteFade(kPaletteFadeSlowOut);
+	clear();
 }
 
 void Renderer::clear() {

@@ -510,7 +510,6 @@ void Dialog::nextChar() {
 DialogToken Dialog::update(bool keyPressed) {
 	switch (*_text) {
 	case kDialogTokenEndOfString:
-		_screen->clear();
 		_cursorPos.x = _cursorOriginX;
 		_cursorPos.y = _cursorOriginY;
 		return kDialogTokenDelay;
