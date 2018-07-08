@@ -175,6 +175,10 @@ void Renderer::drawMap(const byte bitmap[Map::_numStamps][Map::_stampStride]) {
 
 			for (int pixelY = 0; pixelY < Map::_stampHeight; ++pixelY) {
 				for (int pixelX = 0; pixelX < Map::_stampWidth; pixelX += 2, ++pixelData) {
+					if (stampX * Map::_stampWidth + pixelX > _viewportWidth ||
+					    stampY * Map::_stampHeight + pixelY > _viewportHeight)
+						break;
+
 					byte *screenPtr = backBuffer + stampAbsOrigin +
 					                  (pixelY * _screenWidth + pixelX);
 					*(screenPtr + 0) = *pixelData >> 4;
