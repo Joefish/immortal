@@ -51,6 +51,7 @@ public:
 	void drawSprite(SpriteId id, int x, int y, int offset = 0);
 	void drawIcon(SpriteId id, int x, int y);
 	void drawMap(int x, int y);
+	void fillRect(int x1, int y1, int x2, int y2, int color);
 	void paletteFadeIn();
 	void paletteFadeOut();
 	void paletteSlowFadeOut();

@@ -101,6 +101,10 @@ void Renderer::drawChar(char c, int x, int y) {
 	drawSprite(kSpriteAsciiBase, x, y, c);
 }
 
+void Renderer::fillRect(int x1, int y1, int x2, int y2, int color) {
+	_backBuffer.fillRect(Common::Rect(x1, y1, x2, y2), color);
+}
+
 void Renderer::paletteFadeIn() {
 	internalPaletteFade(kPaletteFadeIn);
 }
