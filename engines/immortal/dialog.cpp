@@ -556,6 +556,12 @@ bool Dialog::removeChar() {
  */
 DialogToken Dialog::update(bool keyPressed) {
 	switch (*_text) {
+	case kDialogTokenEndOfStringOk:
+	case kDialogTokenEndOfStringYesNo:
+	case kDialogTokenLoadNextString:
+	case kDialogTokenStringTerminator:
+		return (DialogToken)*_text;
+
 	case kDialogTokenEndOfString:
 		_cursorPos.x = _cursorOriginX;
 		_cursorPos.y = _cursorOriginY;
@@ -583,11 +589,6 @@ DialogToken Dialog::update(bool keyPressed) {
 	case kDialogTokenDelayAndClear:
 		// parse number after token
 		break;
-
-	case kDialogTokenEndOfStringOk:
-	case kDialogTokenEndOfStringYesNo:
-	case kDialogTokenLoadNextString:
-		return (DialogToken)*_text;
 
 	case kDialogTokenSlowScroll:
 		_scrollingMode = true;
