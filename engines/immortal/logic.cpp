@@ -51,7 +51,7 @@ Logic::Logic(ImmortalEngine *vm)
     , _logicState(kLogicStartup)
     , _timeInit(vm->_system->getMillis())
     , _lastDialogToken(kDialogTokenInvalid)
-    , _buttonNoSelected(false)
+    , _buttonNoSelected(true)
     , _buttonYesSelected(false)
     , _cameraPos(0, 0)
     , _dialog(vm->_screen) {
@@ -99,6 +99,9 @@ void Logic::pollInput() {
 				if (event.kbd.keycode == keyMap[i])
 					_keyState[i] = true;
 			}
+			if (Common::isAlnum(event.kbd.ascii) || event.kbd.keycode == Common::KEYCODE_BACKSPACE) {
+				_keyInputBuffer.push_back(event.kbd.keycode);
+			}
 			break;
 		case Common::EVENT_KEYUP:
 			for (int i = 0; i < kKeyNum; ++i) {
@@ -113,84 +116,83 @@ void Logic::pollInput() {
 }
 
 void Logic::handleInput() {
-	if (isKeyPressed(kKeyLeft)) {
+	_keyStartAttackPressed = isKeyPressed(kKeyAttack) || isKeyPressed(kKeyStart);
 
+	if (isKeyPressed(kKeyLeft)) {
+		if (_cameraPos.x > 0)
+			--_cameraPos.x;
 	}
 	if (isKeyPressed(kKeyRight)) {
-
+		if (_cameraPos.x <= 159)
+			++_cameraPos.x;
 	}
 	if (isKeyPressed(kKeyUp)) {
-
+		if (_cameraPos.y > 0)
+			--_cameraPos.y;
 	}
 	if (isKeyPressed(kKeyDown)) {
-
+		if (_cameraPos.y <= 511)
+			++_cameraPos.y;
 	}
 	if (isKeyPressed(kKeyAttack)) {
-
+		_cameraPos.x = 0;
+		_cameraPos.y = 0;
 	}
 	if (isKeyPressed(kKeyStart)) {
 
 	}
 	if (isKeyPressed(kKeyQuit)) {
-		// TODO: Quit dialog; if yes, send shouldQuit event
-		g_system->quit();
+		if (_logicState == kLogicGame) {
+			loadDialog(kDialogExitString);
+		}
 	}
 }
 
 void Logic::runStartup() {
 	_screen->drawImage(kImageTitleScreen);
 	_timer.start();
-	if (_timer.elapsedTime() > 3000) {
+	if (_timer.elapsedTime() > 3000 || _keyStartAttackPressed) {
 		_timer.stop();
 		loadDialog(kDialogIntro);
-		setState(kLogicDialog);
 	}
 }
 
 void Logic::runDialog() {
-	bool keyPressed = isKeyPressed(kKeyAttack) || isKeyPressed(kKeyStart);
 
 	switch (_lastDialogToken) {
 	case kDialogTokenDelay:
 		_timer.start();
-		if (keyPressed || _timer.elapsedTime() > _dialog.getDelay()) {
+		if (_keyStartAttackPressed || _timer.elapsedTime() > _dialog.getDelay()) {
 			_timer.stop();
 			_dialog.nextChar();
 			_lastDialogToken = kDialogTokenInvalid;
 		}
 		break;
-	case kDialogTokenEndOfStringOk:
-		break;
-	case kDialogTokenEndOfStringYesNo: {
-		if (isKeyPressed(kKeyLeft)) {
-			_buttonNoSelected = true;
-			_buttonYesSelected = false;
-		}
-		if (isKeyPressed(kKeyRight)) {
-			_buttonNoSelected = false;
-			_buttonYesSelected = true;
-		}
 
-		SpriteId buttonNo = _buttonNoSelected ? kSpriteButtonNoActive
-		                                      : kSpriteButtonNoInactive;
-		SpriteId buttonYes = _buttonYesSelected ? kSpriteButtonYesActive
-		                                        : kSpriteButtonYesInactive;
-		_screen->drawIcon(buttonNo, _dialog._buttonNoX, _dialog._buttonNoY);
-		_screen->drawIcon(buttonYes, _dialog._buttonYesX, _dialog._buttonYesY);
-		// TODO:
-		// PLEASE fix this already! Once the map renderer is running get on it
-		// Also why are the buttons position off but other sprites and letters
-		// are fine to render?
+	case kDialogTokenEndOfStringOk: {
+		int buttonX = (_screen->_viewportWidth / 2) - (_screen->_iconWidth / 2);
+		int buttonY = _dialog._buttonNoY;
+		_screen->drawIcon(kSpriteButtonOk, buttonX, buttonY);
 
+		if (_keyStartAttackPressed)
+			setState(kLogicGame);
 	} break;
+
+	case kDialogTokenEndOfStringYesNo:
+		handleDialogYesNo();
+		break;
+
 	case kDialogTokenLoadNextString:
 		// TODO: Add support for 'follwoing string' in dialogText
+		// Test with kDialogGiveHerRing
 		break;
-	case kDialogTokenStringTerminator:
 
+	case kDialogTokenStringTerminator:
+		handleDialogEnd();
 		break;
+
 	default:
-		_lastDialogToken = _dialog.update(keyPressed);
+		_lastDialogToken = _dialog.update(_keyStartAttackPressed);
 		break;
 	}
 }
@@ -218,8 +220,86 @@ void Logic::loadDialog(DialogId id) {
 	// Draw health meter as well
 	_dialog.load(id);
 	_screen->clear();
+	_lastDialogToken = kDialogTokenInvalid;
+	setState(kLogicDialog);
+
 	if (id == kDialogIntro)
 		_music->play(kMusicIntro);
+}
+
+bool Logic::loadFromPassword(Dialog *dialog) {
+	return false;
+}
+
+void Logic::handleDialogYesNo() {
+	if (isKeyPressed(kKeyLeft)) {
+		_buttonNoSelected = true;
+		_buttonYesSelected = false;
+	}
+	if (isKeyPressed(kKeyRight)) {
+		_buttonNoSelected = false;
+		_buttonYesSelected = true;
+	}
+
+	SpriteId buttonNo = _buttonNoSelected ? kSpriteButtonNoActive
+	                                      : kSpriteButtonNoInactive;
+	SpriteId buttonYes = _buttonYesSelected ? kSpriteButtonYesActive
+	                                        : kSpriteButtonYesInactive;
+	_screen->drawIcon(buttonNo, _dialog._buttonNoX, _dialog._buttonNoY);
+	_screen->drawIcon(buttonYes, _dialog._buttonYesX, _dialog._buttonYesY);
+
+	switch (_dialog.getId()) {
+	case kDialogExitString:
+		if (_keyStartAttackPressed) {
+			if (_buttonYesSelected) {
+				g_system->quit();
+			} else if (_buttonNoSelected) {
+				setState(kLogicGame);
+			}
+		}
+		break;
+	case kDialogNewGame:
+		if (_keyStartAttackPressed) {
+			if (_buttonYesSelected) {
+				_level.loadLevel(1);
+				setState(kLogicGame);
+				_music->play(kMusic04);
+			} else if (_buttonNoSelected) {
+				loadDialog(kDialogEnterCertificate);
+			}
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+void Logic::handleDialogEnd() {
+	if (_dialog.getId() == kDialogEnterCertificate) {
+		for (int *it = _keyInputBuffer.begin(); it < _keyInputBuffer.end(); ++it) {
+			int key = *it;
+			if (Common::isAlnum(key))
+				_dialog.printChar(key);
+			else if (key == Common::KEYCODE_BACKSPACE)
+				_dialog.removeChar();
+			else if (key == Common::KEYCODE_RETURN)
+				loadFromPassword(&_dialog);
+		}
+		_keyInputBuffer.clear();
+
+		if (isKeyPressed(kKeyQuit))
+			loadDialog(kDialogNewGame);
+	} else if (_dialog.getId() == kDialogIntro) {
+		loadDialog(kDialogNewGame);
+		_lastDialogToken = kDialogTokenInvalid;
+	} else {
+		_timer.start();
+		if (_keyStartAttackPressed || _timer.elapsedTime() > 3000) {
+			_timer.stop();
+			_dialog.nextChar();
+			_lastDialogToken = kDialogTokenInvalid;
+		}
+	}
 }
 
 }

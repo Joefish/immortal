@@ -27,6 +27,7 @@
 #include "common/events.h"
 
 #include "immortal/dialog.h"
+#include "immortal/rooms.h"
 #include "immortal/timer.h"
 
 namespace Immortal {
@@ -72,6 +73,9 @@ private:
 	bool isKeyPressed(KeyState key);
 	void setState(LogicState state);
 	void loadDialog(DialogId id);
+	bool loadFromPassword(Dialog *dialog);
+	void handleDialogYesNo();
+	void handleDialogEnd();
 
 private:
 	Console *_console;
@@ -83,10 +87,13 @@ private:
 	DialogToken _lastDialogToken;
 	bool _buttonNoSelected;
 	bool _buttonYesSelected;
+	Common::Array<int> _keyInputBuffer;
 	Timer _timer;
 	LogicState _logicState;
 	int64 _timeInit;
 	bool _keyState[kKeyNum];
+	bool _keyStartAttackPressed;
+	Level _level;
 	// TODO: just temporary. Camera is centered on wizard (all the time?)
 	Common::Point _cameraPos;
 };
