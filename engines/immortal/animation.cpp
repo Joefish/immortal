@@ -24,29 +24,11 @@
 
 namespace Immortal {
 
-/*
- * 	kFileCache8         -- Rescue (Ana/Goblin)
- * 	kFileLevel1
- * 	kFileLevel123
- * 	kFileLevel134
- * 	kFileLevel147       -- Ulindor
- * 	kFileLevel1N8
- * 	kFileLevel1T5       -- Worm Attack
- * 	kFileLevel1T7       -- Sleeping
- * 	kFileLevel2
- * 	kFileLevel2N3
- * 	kFileLevel2N5       -- Slime
- * 	kFileLevel2T4       -- Flame trap
- * 	kFileLevel3         -- Spikes
- * 	kFileLevel4         -- Ana
- * 	kFileLevel5         -- Wyvern and Developers
- * 	kFileLevel6
- * 	kFileLevel7P1       -- Norlac
- * 	kFileLevel7P2       -- Norlac
- * 	kFileLevel8P1
- * 	kFileLevel8P2
- * 	kFileLevel235       -- Wizard melting (slime)
- */
+// INFO:
+// Constants in AnimationInfo differ from the source because the compression
+// algorithm apparently changed mid development and also changed the order
+// of the sprites. Thus before drawing a sprite there's a lookup table that
+// adjusts the values accordingly...
 
 // TODO: Remove once Animation structure is implemented (current level data?)
 static const int placeholder = 0;

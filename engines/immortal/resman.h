@@ -189,7 +189,6 @@ enum SpriteId {
 	kSpriteNum
 };
 
-// TODO: Check all sprites as files from source differ from release
 enum AnimationId {
 	kAnimationNone = -1,
 	kAnimationMordamirPhantom,
