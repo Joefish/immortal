@@ -133,11 +133,11 @@ static const AnimationInfo mordamirLight1 = {
 };
 
 // amulet from wizard to mordamir
-static const int mordamirTractorFrames[] = {
+static const int mordamirTractorAmuletFrames[] = {
 	28, 29, 30, 31, 31, 31, 31, 31, 31, 32, 0, -1
 };
-static const AnimationInfo mordamirTractor = {
-	kAnimationMordamirTractorAmulet, (FileId)placeholder, placeholder, 1, mordamirTractorFrames
+static const AnimationInfo mordamirTractorAmulet = {
+	kAnimationMordamirTractorAmulet, (FileId)placeholder, placeholder, 1, mordamirTractorAmuletFrames
 };
 
 static const int mordamirAttackSonicFrames[] = {
@@ -147,11 +147,11 @@ static const AnimationInfo mordamirAttackSonic = {
 	kAnimationMordamirAttackSonic, (FileId)placeholder, placeholder, 1, mordamirAttackSonicFrames
 };
 
-static const int mordamirWraithFrames[] = {
+static const int mordamirAttackWraithFrames[] = {
 	53, 53, 53, 54, 54, 54, 55, 55, 55, 0, -1
 };
-static const AnimationInfo mordamirWraith = {
-	kAnimationMordamirAttackWraith, (FileId)placeholder, placeholder, 1, mordamirWraithFrames
+static const AnimationInfo mordamirAttackWraith = {
+	kAnimationMordamirAttackWraith, (FileId)placeholder, placeholder, 1, mordamirAttackWraithFrames
 };
 
 static const int mordamirWaitFrames[] = {
@@ -245,7 +245,7 @@ static const AnimationInfo norlacBubbles1 = {
 static const int bloodSplatterLeftFrames[] = {
 	0, 1, 2, -1
 };
-static const AnimationInfo bloodSplatter = {
+static const AnimationInfo bloodSplatterLeft = {
 	kAnimationBloodSplatterLeft, kFileGeneral2, 3, 1,bloodSplatterLeftFrames
 };
 
@@ -460,6 +460,66 @@ static const int norlacDownFrames[] = {
 };
 static const AnimationInfo norlacDown = {
 	kAnimationNorlacDown, kFileLevel7P1, 1, 1, mordamirFireFrames
+};
+
+
+static const AnimationInfo animationList[kAnimationNum] = {
+	flameFlicker0,
+	flameFlicker1,
+	flameFlicker2,
+	flameNormal0,
+	flameNormal1,
+	flameNormal2,
+	flameOut,
+	flameCandleFlicker,
+	flameCandleLeap,
+	flameCandleJump,
+	flameCandleSway,
+	flameCandleBurst,
+	wizardShrink,
+	wizardGrow,
+	wizardFire0,
+	wizardFire1,
+	wizardSparksLeft,
+	wizardSparksRight,
+	wizardSparksCenter,
+	anaDisappears,
+	anaGlimpse,
+	norlacBubbles0,
+	norlacBubbles1,
+	norlacDown,
+	mordamirIncinerated,
+	mordamirPhantom,
+	mordamirAppears,
+	mordamirLight0,
+	mordamirLight1,
+	mordamirTractorAmulet,
+	mordamirAttackSonic,
+	mordamirAttackWraith,
+	mordamirWait,
+	mordamirTalk,
+	mordamirFire,
+	mordamirDeath,
+	postLight,
+	postTalk,
+	lightning,
+	attackShort,
+	attackLong,
+	attackWait,
+	recoil,
+	bloodSplatterLeft,
+	bloodSplatterRight,
+	turretBarrelLeft,
+	turretBarrelRight,
+	turretSkullLeft,
+	turretSkullRight,
+	knife,
+	fireball0,
+	arrow,
+	miniBall,
+	bigSparks,
+	floorTileSink,
+	spikeSmall,
 };
 
 }
