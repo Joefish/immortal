@@ -81,9 +81,11 @@ void Renderer::drawImage(ImageId id) {
 	internalDrawImage(id);
 }
 
-void Renderer::drawSprite(SpriteId id, int x, int y, int offset) {
+void Renderer::drawSprite(SpriteId id, int x, int y, int offsetFrame, int offsetPack) {
 	const SpriteInfo *info = _resMan->getSpriteInfo(id);
-	const Sprite *sprite = _resMan->getSprite(info->fileId, info->pack, info->sprite + offset);
+	int pack = info->pack + offsetPack;
+	int frame = info->sprite + offsetFrame;
+	const Sprite *sprite = _resMan->getSprite(info->fileId, pack, frame);
 	Common::Point spriteCenter = _resMan->getSpritePackCenter(info->fileId, info->pack);
 	internalDrawSprite(sprite, x, y, spriteCenter.x, spriteCenter.y);
 }

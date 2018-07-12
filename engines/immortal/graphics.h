@@ -48,7 +48,7 @@ public:
 	Renderer(ResourceManager *resMan);
 	void drawChar(char c, int x, int y);
 	void drawImage(ImageId id);
-	void drawSprite(SpriteId id, int x, int y, int offset = 0);
+	void drawSprite(SpriteId id, int x, int y, int offsetFrame = 0, int offsetPack = 0);
 	void drawIcon(SpriteId id, int x, int y);
 	void drawMap(int x, int y);
 	void fillRect(int x1, int y1, int x2, int y2, int color);
