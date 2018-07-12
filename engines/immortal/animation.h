@@ -33,6 +33,7 @@ struct AnimationInfo {
 	int _pack;
 	int _repeat;
 	const int *_frames;
+	int _numFrames;
 };
 
 }
