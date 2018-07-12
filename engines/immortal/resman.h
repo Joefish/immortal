@@ -186,6 +186,15 @@ enum SpriteId {
 	kSpriteFightingGaugeExhaustion,
 	kSpriteFightingGaugeLife,
 	kSpriteKoorsLight,
+
+	kSpriteWizardN,
+	kSpriteWizardNE,
+	kSpriteWizardE,
+	kSpriteWizardSE,
+	kSpriteWizardS,
+	kSpriteWizardSW,
+	kSpriteWizardW,
+	kSpriteWizardNW,
 	kSpriteNum
 };
 

@@ -136,20 +136,16 @@ static const SpriteInfo spriteInfo[kSpriteNum] = {
 	{kFileGeneral2, 4, 59},     // kSpriteThingy59
 	{kFileGeneral2, 4, 60},     // kSpriteFightingGaugeExhaustion
 	{kFileGeneral2, 4, 61},     // kSpriteFightingGaugeLife
-	{kFileGeneral2, 4, 62}      // kSpriteKoorsLight
+	{kFileGeneral2, 4, 62},     // kSpriteKoorsLight
 
-#if 0
-	{kFileGeneral2, 5, 0},      // kSpriteSmallFlash
-	{kFileGeneral2, 5, 1},      // kSpriteBigFlash
-	{kFileGeneral2, 6, 0},      // kSpriteWizardAmulet
-	{kFileGeneral2, 6, 1},      // kSpriteWizardNoAmulet
-	{kFileGeneral2, 6, 2},      // kSpriteWizardPetrified
-	{kFileGeneral2, 6, 3},      // kSpriteWizardAmulet2
-	// Animation
-	{kFileGeneral2, 6, 4},      // kSpriteWizardIncinerated1
-	{kFileGeneral2, 6, 5},      // kSpriteWizardIncinerated2
-	{kFileGeneral2, 6, 6}       // kSpriteWizardIncinerated3
-#endif
+	{kFileWizard,   0,  0},     // kSpriteWizardN
+	{kFileWizard,   1,  0},     // kSpriteWizardNE
+	{kFileWizard,   2,  0},     // kSpriteWizardE
+	{kFileWizard,   3,  0},     // kSpriteWizardSE
+	{kFileWizard,   4,  0},     // kSpriteWizardS
+	{kFileWizard,   5,  0},     // kSpriteWizardSW
+	{kFileWizard,   6,  0},     // kSpriteWizardW
+	{kFileWizard,   7,  0},     // kSpriteWizardN
 };
 
 static byte *decodeFile(byte *buffer, int encodedFilesize, int *decodedFilesize);
