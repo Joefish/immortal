@@ -283,7 +283,7 @@ void Logic::handleDialogYesNo() {
 	case kDialogNewGame:
 		if (_keyStartAttackPressed) {
 			if (_buttonYesSelected) {
-				_level.loadLevel(1);
+				loadLevel(1);
 				setState(kLogicGame);
 				_music->play(kMusic04);
 			} else if (_buttonNoSelected) {
@@ -322,6 +322,12 @@ void Logic::handleDialogEnd() {
 			_lastDialogToken = kDialogTokenInvalid;
 		}
 	}
+}
+
+void Logic::loadLevel(int level) {
+	_level.loadLevel(level);
+	setCamera(_level._initCameraPos.x, _level._initCameraPos.y);
+	_wizard.setPos(_level._spawnPos.x, _level._spawnPos.y);
 }
 
 }
