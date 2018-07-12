@@ -27,7 +27,19 @@
 
 namespace Immortal {
 
+enum Direction {
+	kDirectionN = 0,
+	kDirectionNE,
+	kDirectionE,
+	kDirectionSE,
+	kDirectionS,
+	kDirectionSW,
+	kDirectionW,
+	kDirectionNW
+};
+
 enum EntityType {
+	kEntityTypeNone = -1,
 	// Items
 	kEntityTypeGold,
 	kEntityTypeSonicProtectionScroll,
@@ -120,65 +132,85 @@ enum EntityType {
 
 class Entity {
 public:
-	// TODO:
-	// Split states up in 'general' states that every entity can go in and
-	// state that is specifically for the wizard
-
-	typedef int64 EntityState;
-
-	static const EntityState kStateNone             = 0;
-	static const EntityState kStateInvisible        = 1UL <<  1;        // won't be drawn
-	static const EntityState kStateRunning          = 1UL <<  2;        // routine bound to object gets called every frame
-	static const EntityState kStateChest            = 1UL <<  3;        // may contain objects
-	static const EntityState kStateOnGround         = 1UL <<  4;        // low priority?
-
-	static const EntityState kStateUsesFireButton   = 1UL <<  5;
-	static const EntityState kStateEaten            = 1UL <<  6;
-	static const EntityState kStateSpiked           = 1UL <<  7;
-	static const EntityState kStateSleeping         = 1UL <<  8;
-	static const EntityState kStateSquished         = 1UL <<  9;
-	static const EntityState kStateLevitating       = 1UL << 10;
-	static const EntityState kStateDevoured         = 1UL << 11;
-	static const EntityState kStateBadCrawl         = 1UL << 12;
-	static const EntityState kStateWebbed           = 1UL << 13;
-	static const EntityState kStateSunk             = 1UL << 14;
-	static const EntityState kStateDownVortex       = 1UL << 15;
-	static const EntityState kStateBlinked          = 1UL << 16;
-	static const EntityState kStateFireProtected    = 1UL << 17;
-	static const EntityState kStateBronze           = 1UL << 18;
-	static const EntityState kStateLightning        = 1UL << 19;
-	static const EntityState kStateGettingAmulet    = 1UL << 20;
-	static const EntityState kStateHead             = 1UL << 21;
-	static const EntityState kStateChop             = 1UL << 22;
-	static const EntityState kStateRope             = 1UL << 23;
-	static const EntityState kStateNurse            = 1UL << 24;
-	static const EntityState kStateBurned           = 1UL << 25;
-	static const EntityState kStateOnObject         = 1UL << 26;
-	static const EntityState kStateOnBody           = 1UL << 27;
-	static const EntityState kStateOnCarpet         = 1UL << 28;
-	static const EntityState kStateProteanGoblin    = 1UL << 29;
-	static const EntityState kStateTiny             = 1UL << 30;
-	static const EntityState kStateDrunk            = 1UL << 31;
-	static const EntityState kStateCombat           = 1UL << 32;
-	static const EntityState kStateObjectIsF1       = 1UL << 33;        // ?
-	static const EntityState kStateObjectIsF2       = 1UL << 34;
-
-	static const EntityState kStateTough            = 1UL << 35;
-	static const EntityState kStateDead             = 1UL << 36;        // set after death sequence
-	static const EntityState kStatePossessive       = 1UL << 37;        // possessions die with entity
-	static const EntityState kStateBaby             = 1UL << 38;        // something with the wisps
-	static const EntityState kStateEngageable       = 1UL << 39;
+	typedef int EntityState;
+	static const EntityState kStateNone             = 1 <<  0;
+	static const EntityState kStateInvisible        = 1 <<  1;        // won't be drawn
+	static const EntityState kStateRunning          = 1 <<  2;        // routine bound to object gets called every frame
+	static const EntityState kStateChest            = 1 <<  3;        // may contain objects
+	static const EntityState kStateOnGround         = 1 <<  4;        // low priority?
+	static const EntityState kStateTough            = 1 <<  5;
+	static const EntityState kStateDead             = 1 <<  6;        // set after death sequence
+	static const EntityState kStatePossessive       = 1 <<  7;        // possessions die with entity
+	static const EntityState kStateBaby             = 1 <<  8;        // something with the wisps
+	static const EntityState kStateEngageable       = 1 <<  9;
+	static const EntityState kStateUsesFireButton   = 1 << 10;
 
 public:
+	Entity();
 	Entity(int x, int y, SpriteId defaultSprite, EntityType type,
 	       EntityState state, int parameter);
 
+	Common::Point getPos() const;
+	void setPos(int x, int y);
+
+public:
 	int _x;
 	int _y;
 	SpriteId _defaultSprite;
 	EntityType _type;
 	EntityState _state;
 	int _parameter;
+};
+
+
+class Wizard : public Entity {
+public:
+	enum WizardState {
+		kStateNone             = 0,
+		kStateEaten            = 1 <<  0,
+		kStateSpiked           = 1 <<  1,
+		kStateSleeping         = 1 <<  2,
+		kStateSquished         = 1 <<  3,
+		kStateLevitating       = 1 <<  4,
+		kStateDevoured         = 1 <<  5,
+		kStateBadCrawl         = 1 <<  6,
+		kStateWebbed           = 1 <<  7,
+		kStateSunk             = 1 <<  8,
+		kStateDownVortex       = 1 <<  9,
+		kStateBlinked          = 1 << 10,
+		kStateFireProtected    = 1 << 11,
+		kStateBronze           = 1 << 12,
+		kStateLightning        = 1 << 13,
+		kStateGettingAmulet    = 1 << 14,
+		kStateHead             = 1 << 15,
+		kStateChop             = 1 << 16,
+		kStateRope             = 1 << 17,
+		kStateNurse            = 1 << 18,
+		kStateBurned           = 1 << 19,
+		kStateOnObject         = 1 << 20,
+		kStateOnBody           = 1 << 21,
+		kStateOnCarpet         = 1 << 22,
+		kStateProteanGoblin    = 1 << 23,
+		kStateTiny             = 1 << 24,
+		kStateDrunk            = 1 << 25,
+		kStateCombat           = 1 << 26,
+		kStateObjectIsF1       = 1 << 27,       // ?
+		kStateObjectIsF2       = 1 << 28        // ?
+	};
+
+public:
+	Wizard();
+
+	void step(Direction direction);
+	int getFrame() const;
+	Direction getDirection() const;
+
+private:
+	WizardState _wizardState;
+	Direction _direction;
+	int _frame;
+	int _frameStart;
+	int _frameEnd;
 };
 
 }

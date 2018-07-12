@@ -24,6 +24,15 @@
 
 namespace Immortal {
 
+Entity::Entity()
+    : _x(0)
+    , _y(0)
+    , _defaultSprite(kSpriteNone)
+    , _type(kEntityTypeNone)
+    , _state(kStateNone)
+    , _parameter(0) {
+}
+
 Entity::Entity(int x, int y, SpriteId defaultSprite, EntityType type,
                EntityState state, int parameter)
     : _x(x)
@@ -34,5 +43,80 @@ Entity::Entity(int x, int y, SpriteId defaultSprite, EntityType type,
     , _parameter(parameter) {
 }
 
+
+Common::Point Entity::getPos() const {
+	return Common::Point(_x, _y);
+}
+
+void Entity::setPos(int x, int y) {
+	_x = x;
+	_y = y;
+}
+
+
+Wizard::Wizard()
+    : Entity()
+    , _wizardState(kStateNone)
+    , _direction(kDirectionN)
+    , _frame(0)
+    , _frameStart(0)
+    , _frameEnd(0) {
+}
+
+int Wizard::getFrame() const {
+	return _frame;
+}
+
+Direction Wizard::getDirection() const {
+	return _direction;
+}
+
+void Wizard::step(Direction direction) {
+	switch (direction) {
+	case kDirectionN:
+		_y += -8;
+		break;
+	case kDirectionNE:
+		_x += 8;
+		_y += -8;
+		break;
+	case kDirectionE:
+		_x += 8;
+		break;
+	case kDirectionSE:
+		_x += 8;
+		_y += 8;
+		break;
+	case kDirectionS:
+		_y += 8;
+		break;
+	case kDirectionSW:
+		_x += -8;
+		_y += 8;
+		break;
+	case kDirectionW:
+		_x += -8;
+		break;
+	case kDirectionNW:
+		_x += -8;
+		_y += -8;
+		break;
+	}
+
+	// TODO:
+	// Check for wizard state if he's on carpet, barrell or whatever and set
+	// the appropriate frame range. For now limited to walking
+	if (_direction != direction) {
+		if (_wizardState == kStateNone) {
+			_frameStart = 0;
+			_frameEnd = 4;
+		}
+		_frame = _frameStart;
+		_direction = direction;
+	} else {
+		if (++_frame > _frameEnd)
+			_frame = _frameStart;
+	}
+}
 
 }
