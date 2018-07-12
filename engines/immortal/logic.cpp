@@ -97,6 +97,7 @@ void Logic::updateGraphics() {
 	int frame = _wizard.getFrame();
 	_screen->drawSprite(kSpriteWizardN, _wizard.getPos().x, _wizard.getPos().y,
 	                    frame, pack);
+	// TODO: update camera pos according to wizard pos
 }
 
 void Logic::pollInput() {
@@ -241,6 +242,10 @@ void Logic::loadDialog(DialogId id) {
 }
 
 bool Logic::loadFromPassword(Dialog *dialog) {
+	// TODO:
+	// Generate password (see blog post on structure)
+	// Generate/Check checksum
+
 	return false;
 }
 
