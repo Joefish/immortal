@@ -76,6 +76,7 @@ private:
 	bool loadFromPassword(Dialog *dialog);
 	void handleDialogYesNo();
 	void handleDialogEnd();
+	void setCamera(int x, int y);
 	void updateGraphics();
 
 private:

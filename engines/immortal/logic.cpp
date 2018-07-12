@@ -244,6 +244,15 @@ bool Logic::loadFromPassword(Dialog *dialog) {
 	return false;
 }
 
+// TODO:
+// Unify coordinate systems.
+// Most definitions are in pixel coordinates anyway, so adjusting the map renderer
+// from tile to pixel coords would be better than dividing and multiplying everywhere
+void Logic::setCamera(int x, int y) {
+	_cameraPos.x = x / 8;
+	_cameraPos.y = y / 8;
+}
+
 void Logic::handleDialogYesNo() {
 	if (isKeyPressed(kKeyLeft)) {
 		_buttonNoSelected = true;
