@@ -91,6 +91,8 @@ public:
 	Common::Array<Room> _rooms;
 	Common::Array<Door> _doors;
 	Common::Array<Common::Array<Entity> > _object;
+	Common::Point _spawnPos;
+	Common::Point _initCameraPos;
 };
 
 }

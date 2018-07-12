@@ -119,6 +119,10 @@ void Level::initLevel1() {
 	_rooms.clear();
 	_doors.clear();
 
+	_spawnPos.x = 1152;
+	_spawnPos.y = 464;
+	_initCameraPos.x = 1024;
+	_initCameraPos.y = 480;
 	_rooms.push_back(_room1_5); // room with invisible enemies
 	_rooms.push_back(_room1_7);
 	_rooms.push_back(_room1_8);
