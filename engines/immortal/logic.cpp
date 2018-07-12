@@ -76,6 +76,7 @@ void Logic::update() {
 		break;
 	case kLogicGame:
 		runGame();
+		updateGraphics();
 		break;
 	case kLogicPause:
 		runPause();
@@ -84,6 +85,18 @@ void Logic::update() {
 		error("Game ended up in invalid state!");
 		break;
 	}
+}
+
+void Logic::updateGraphics() {
+	// non animated static objects (chests)
+	// animated static objects (torches)
+	// NPCs
+
+	// wizard
+	int pack = _wizard.getDirection();
+	int frame = _wizard.getFrame();
+	_screen->drawSprite(kSpriteWizardN, _wizard.getPos().x, _wizard.getPos().y,
+	                    frame, pack);
 }
 
 void Logic::pollInput() {

@@ -76,6 +76,7 @@ private:
 	bool loadFromPassword(Dialog *dialog);
 	void handleDialogYesNo();
 	void handleDialogEnd();
+	void updateGraphics();
 
 private:
 	Console *_console;
@@ -96,6 +97,7 @@ private:
 	Level _level;
 	// TODO: just temporary. Camera is centered on wizard (all the time?)
 	Common::Point _cameraPos;
+	Wizard _wizard;
 };
 
 }
