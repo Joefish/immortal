@@ -36,6 +36,16 @@ struct AnimationInfo {
 	int _numFrames;
 };
 
+class Animation {
+public:
+	void loadAnimation(AnimationId id);
+	const AnimationInfo *getAnimationInfo() const;
+
+private:
+	int _currentFrame;
+	AnimationInfo _info;
+};
+
 }
 
 #endif

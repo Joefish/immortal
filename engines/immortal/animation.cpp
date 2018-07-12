@@ -577,4 +577,14 @@ static const AnimationInfo animationList[kAnimationNum] = {
 	spikeSmall,
 };
 
+
+const AnimationInfo *Animation::getAnimationInfo() const {
+	return &_info;
+}
+
+void Animation::loadAnimation(AnimationId id) {
+	_info = animationList[id];
+	_currentFrame = _info._frames[0];
+}
+
 }
