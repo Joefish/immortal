@@ -49,8 +49,8 @@ Common::Point Entity::getPos() const {
 }
 
 void Entity::setPos(int x, int y) {
-	_x = x;
-	_y = y;
+	_x = x / 8;
+	_y = y / 8;
 }
 
 
