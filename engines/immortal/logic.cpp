@@ -132,28 +132,30 @@ void Logic::pollInput() {
 void Logic::handleInput() {
 	_keyStartAttackPressed = isKeyPressed(kKeyAttack) || isKeyPressed(kKeyStart);
 
-	if (isKeyPressed(kKeyLeft)) {
-		if (_cameraPos.x > 0)
-			--_cameraPos.x;
+	if (isKeyPressed(kKeyLeft) && isKeyPressed(kKeyUp)) {
+		_wizard.step(kDirectionNW);
+	} else if (isKeyPressed(kKeyUp) && isKeyPressed(kKeyRight)) {
+		_wizard.step(kDirectionNE);
+	} else if (isKeyPressed(kKeyRight) && isKeyPressed(kKeyDown)) {
+		_wizard.step(kDirectionSE);
+	} else if (isKeyPressed(kKeyDown) && isKeyPressed(kKeyLeft)) {
+		_wizard.step(kDirectionSW);
+	} else if (isKeyPressed(kKeyUp)) {
+		_wizard.step(kDirectionN);
+	} else if (isKeyPressed(kKeyRight)) {
+		_wizard.step(kDirectionE);
+	} else if (isKeyPressed(kKeyDown)) {
+		_wizard.step(kDirectionS);
+	} else if (isKeyPressed(kKeyLeft)) {
+		_wizard.step(kDirectionW);
 	}
-	if (isKeyPressed(kKeyRight)) {
-		if (_cameraPos.x <= 159)
-			++_cameraPos.x;
-	}
-	if (isKeyPressed(kKeyUp)) {
-		if (_cameraPos.y > 0)
-			--_cameraPos.y;
-	}
-	if (isKeyPressed(kKeyDown)) {
-		if (_cameraPos.y <= 511)
-			++_cameraPos.y;
-	}
+
 	if (isKeyPressed(kKeyAttack)) {
-		_cameraPos.x = 0;
-		_cameraPos.y = 0;
+
 	}
 	if (isKeyPressed(kKeyStart)) {
-
+		debug("X:%3d  Y:%3d", _cameraPos.x, _cameraPos.y);
+		debug("Wizard: X:%3d Y:%3d", _wizard.getPos().x, _wizard.getPos().y);
 	}
 	if (isKeyPressed(kKeyQuit)) {
 		if (_logicState == kLogicGame) {
