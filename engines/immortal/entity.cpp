@@ -27,7 +27,11 @@ namespace Immortal {
 Entity::Entity()
     : _x(0)
     , _y(0)
+    , _direction(kDirectionN)
     , _defaultSprite(kSpriteNone)
+    , _animationFrame(0)
+    , _animationFrameStart(0)
+    , _animationFrameEnd(0)
     , _type(kEntityTypeNone)
     , _state(kStateNone)
     , _parameter(0) {
@@ -37,7 +41,11 @@ Entity::Entity(int x, int y, SpriteId defaultSprite, EntityType type,
                EntityState state, int parameter)
     : _x(x)
     , _y(y)
+    , _direction(kDirectionN)
     , _defaultSprite(defaultSprite)
+    , _animationFrame(0)
+    , _animationFrameStart(0)
+    , _animationFrameEnd(0)
     , _type(type)
     , _state(state)
     , _parameter(parameter) {
@@ -53,69 +61,56 @@ void Entity::setPos(int x, int y) {
 	_y = y / 8;
 }
 
-
-Wizard::Wizard()
-    : Entity()
-    , _wizardState(kStateNone)
-    , _direction(kDirectionN)
-    , _frame(0)
-    , _frameStart(0)
-    , _frameEnd(0) {
+int Entity::getFrame() const {
+	return _animationFrame;
 }
 
-int Wizard::getFrame() const {
-	return _frame;
-}
-
-Direction Wizard::getDirection() const {
+Direction Entity::getDirection() const {
 	return _direction;
 }
 
-void Wizard::step(Direction direction) {
+void Entity::setDirection(Direction direction) {
+	_direction = direction;
+}
+
+void Entity::setMonsterType(MonsterType type) {
+	_monsterType = type;
+}
+
+
+static const int wizardMoveSpeedX[] = {
+	0, 2, 3, 2, 0, -2, -3, -2
+};
+static const int wizardMoveSpeedY[] = {
+	-4, -2, 0, 2, 4, 2, 0, -2
+};
+
+void Entity::move(Direction direction, WizardState wizardState) {
 	switch (direction) {
-	case kDirectionN:
-		_y += -8;
-		break;
-	case kDirectionNE:
-		_x += 8;
-		_y += -8;
-		break;
-	case kDirectionE:
-		_x += 8;
-		break;
-	case kDirectionSE:
-		_x += 8;
-		_y += 8;
-		break;
-	case kDirectionS:
-		_y += 8;
-		break;
-	case kDirectionSW:
-		_x += -8;
-		_y += 8;
-		break;
-	case kDirectionW:
-		_x += -8;
-		break;
-	case kDirectionNW:
-		_x += -8;
-		_y += -8;
-		break;
+	case kDirectionNone:
+		return;
+	default:
+		_x += wizardMoveSpeedX[direction];
+		_y += wizardMoveSpeedY[direction];
 	}
 
 	// TODO:
 	// Check for wizard state if he's on carpet, barrell or whatever and set
 	// the appropriate frame range. For now limited to walking
-	if (_direction != direction) {
-		if (_wizardState == kStateNone) {
-			_frameStart = 0;
-			_frameEnd = 4;
+	if (_monsterType == kMonsterTypeWizard) {
+		_animationFrameStart = 0;
+		_animationFrameEnd = 4;
+		if (_direction != direction) {
+			if (wizardState == kStateNone) {
+				_animationFrameStart = 0;
+				_animationFrameEnd = 4;
+			}
+			_animationFrame = _animationFrameStart;
+			_direction = direction;
+		} else {
+			if (++_animationFrame > _animationFrameEnd)
+				_animationFrame = _animationFrameStart;
 		}
-		_frame = _frameStart;
-		_direction = direction;
-	} else {
-		if (++_frame > _frameEnd)
-			_frame = _frameStart;
 	}
 }
 

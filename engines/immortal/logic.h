@@ -78,7 +78,7 @@ private:
 	void handleDialogEnd();
 	void loadLevel(int level);
 	void setCamera(int x, int y);
-	void updateGraphics();
+	void updateEntities();
 
 private:
 	Console *_console;
@@ -92,6 +92,7 @@ private:
 	bool _buttonYesSelected;
 	Common::Array<int> _keyInputBuffer;
 	Timer _timer;
+	Timer _gameDelay;
 	LogicState _logicState;
 	int64 _timeInit;
 	bool _keyState[kKeyNum];
@@ -99,7 +100,9 @@ private:
 	Level _level;
 	// TODO: just temporary. Camera is centered on wizard (all the time?)
 	Common::Point _cameraPos;
-	Wizard _wizard;
+	Entity _wizard;
+	WizardState _wizardState;
+	Direction _moveDirection;
 };
 
 }

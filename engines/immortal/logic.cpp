@@ -61,6 +61,7 @@ Logic::Logic(ImmortalEngine *vm)
 // Parameters for loading savestates/new game/..
 // init rooms and gamestate
 void Logic::init() {
+	_wizard.setMonsterType(kMonsterTypeWizard);
 }
 
 void Logic::update() {
@@ -76,7 +77,6 @@ void Logic::update() {
 		break;
 	case kLogicGame:
 		runGame();
-		updateGraphics();
 		break;
 	case kLogicPause:
 		runPause();
@@ -87,17 +87,23 @@ void Logic::update() {
 	}
 }
 
-void Logic::updateGraphics() {
+void Logic::updateEntities() {
+
 	// non animated static objects (chests)
 	// animated static objects (torches)
 	// NPCs
 
 	// wizard
+	_wizard.move(_moveDirection, _wizardState);
+	_moveDirection = kDirectionNone;
 	int pack = _wizard.getDirection();
 	int frame = _wizard.getFrame();
-	_screen->drawSprite(kSpriteWizardN, _wizard.getPos().x, _wizard.getPos().y,
-	                    frame, pack);
 	// TODO: update camera pos according to wizard pos
+	// entity world pos conversion to viewport pos
+	// sprite clipping
+	_screen->drawSprite(kSpriteWizard, _wizard.getPos().x, _wizard.getPos().y,
+	                    frame, pack);
+
 }
 
 void Logic::pollInput() {
@@ -133,25 +139,25 @@ void Logic::handleInput() {
 	_keyStartAttackPressed = isKeyPressed(kKeyAttack) || isKeyPressed(kKeyStart);
 
 	if (isKeyPressed(kKeyLeft) && isKeyPressed(kKeyUp)) {
-		_wizard.step(kDirectionNW);
+		_moveDirection = kDirectionNW;
 	} else if (isKeyPressed(kKeyUp) && isKeyPressed(kKeyRight)) {
-		_wizard.step(kDirectionNE);
+		_moveDirection = kDirectionNE;
 	} else if (isKeyPressed(kKeyRight) && isKeyPressed(kKeyDown)) {
-		_wizard.step(kDirectionSE);
+		_moveDirection = kDirectionSE;
 	} else if (isKeyPressed(kKeyDown) && isKeyPressed(kKeyLeft)) {
-		_wizard.step(kDirectionSW);
+		_moveDirection = kDirectionSW;
 	} else if (isKeyPressed(kKeyUp)) {
-		_wizard.step(kDirectionN);
+		_moveDirection = kDirectionN;
 	} else if (isKeyPressed(kKeyRight)) {
-		_wizard.step(kDirectionE);
+		_moveDirection = kDirectionE;
 	} else if (isKeyPressed(kKeyDown)) {
-		_wizard.step(kDirectionS);
+		_moveDirection = kDirectionS;
 	} else if (isKeyPressed(kKeyLeft)) {
-		_wizard.step(kDirectionW);
+		_moveDirection = kDirectionW;
 	}
 
 	if (isKeyPressed(kKeyAttack)) {
-
+		// TODO: Last bound spell (e.g. fireball)
 	}
 	if (isKeyPressed(kKeyStart)) {
 		debug("X:%3d  Y:%3d", _cameraPos.x, _cameraPos.y);
@@ -214,8 +220,15 @@ void Logic::runDialog() {
 }
 
 void Logic::runGame() {
+	_gameDelay.start();
+	if (_gameDelay.elapsedTime() < 33)
+		return;
+
 	_screen->clear();
 	_screen->drawMap(_cameraPos.x, _cameraPos.y);
+	updateEntities();
+
+	_gameDelay.reset();
 }
 
 void Logic::runPause() {

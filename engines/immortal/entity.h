@@ -39,6 +39,47 @@ enum Direction {
 	kDirectionNW
 };
 
+enum WizardState {
+	kWizardStateNone             = 0,
+	kWizardStateEaten            = 1 <<  0,
+	kWizardStateSpiked           = 1 <<  1,
+	kWizardStateSleeping         = 1 <<  2,
+	kWizardStateSquished         = 1 <<  3,
+	kWizardStateLevitating       = 1 <<  4,
+	kWizardStateDevoured         = 1 <<  5,
+	kWizardStateBadCrawl         = 1 <<  6,
+	kWizardStateWebbed           = 1 <<  7,
+	kWizardStateSunk             = 1 <<  8,
+	kWizardStateDownVortex       = 1 <<  9,
+	kWizardStateBlinked          = 1 << 10,
+	kWizardStateFireProtected    = 1 << 11,
+	kWizardStateBronze           = 1 << 12,
+	kWizardStateLightning        = 1 << 13,
+	kWizardStateGettingAmulet    = 1 << 14,
+	kWizardStateHead             = 1 << 15,
+	kWizardStateChop             = 1 << 16,
+	kWizardStateRope             = 1 << 17,
+	kWizardStateNurse            = 1 << 18,
+	kWizardStateBurned           = 1 << 19,
+	kWizardStateOnObject         = 1 << 20,
+	kWizardStateOnBody           = 1 << 21,
+	kWizardStateOnCarpet         = 1 << 22,
+	kWizardStateProteanGoblin    = 1 << 23,
+	kWizardStateTiny             = 1 << 24,
+	kWizardStateDrunk            = 1 << 25,
+	kWizardStateCombat           = 1 << 26,
+	kWizardStateObjectIsF1       = 1 << 27,       // ?
+	kWizardStateObjectIsF2       = 1 << 28        // ?
+};
+
+enum MonsterType {
+	kMonsterTypeWizard,
+	kMonsterTypeGoblin,
+	kMonsterTypeTroll,
+	kMonsterTypeUlindor,
+	kMonsterTypeOther
+};
+
 enum EntityType {
 	kEntityTypeNone = -1,
 	// Items
@@ -153,65 +194,27 @@ public:
 
 	Common::Point getPos() const;
 	void setPos(int x, int y);
-
-public:
-	int _x;
-	int _y;
-	SpriteId _defaultSprite;
-	EntityType _type;
-	EntityState _state;
-	int _parameter;
-};
-
-
-class Wizard : public Entity {
-public:
-	enum WizardState {
-		kStateNone             = 0,
-		kStateEaten            = 1 <<  0,
-		kStateSpiked           = 1 <<  1,
-		kStateSleeping         = 1 <<  2,
-		kStateSquished         = 1 <<  3,
-		kStateLevitating       = 1 <<  4,
-		kStateDevoured         = 1 <<  5,
-		kStateBadCrawl         = 1 <<  6,
-		kStateWebbed           = 1 <<  7,
-		kStateSunk             = 1 <<  8,
-		kStateDownVortex       = 1 <<  9,
-		kStateBlinked          = 1 << 10,
-		kStateFireProtected    = 1 << 11,
-		kStateBronze           = 1 << 12,
-		kStateLightning        = 1 << 13,
-		kStateGettingAmulet    = 1 << 14,
-		kStateHead             = 1 << 15,
-		kStateChop             = 1 << 16,
-		kStateRope             = 1 << 17,
-		kStateNurse            = 1 << 18,
-		kStateBurned           = 1 << 19,
-		kStateOnObject         = 1 << 20,
-		kStateOnBody           = 1 << 21,
-		kStateOnCarpet         = 1 << 22,
-		kStateProteanGoblin    = 1 << 23,
-		kStateTiny             = 1 << 24,
-		kStateDrunk            = 1 << 25,
-		kStateCombat           = 1 << 26,
-		kStateObjectIsF1       = 1 << 27,       // ?
-		kStateObjectIsF2       = 1 << 28        // ?
-	};
-
-public:
-	Wizard();
-
-	void step(Direction direction);
 	int getFrame() const;
 	Direction getDirection() const;
+	void setDirection(Direction direction);
+	void setMonsterType(MonsterType type);
+	void move(Direction direction, WizardState state = kWizardStateNone);
 
 private:
-	WizardState _wizardState;
+	int _x;
+	int _y;
 	Direction _direction;
-	int _frame;
-	int _frameStart;
-	int _frameEnd;
+	SpriteId _defaultSprite;
+	int _animationFrame;
+	int _animationFrameStart;
+	int _animationFrameEnd;
+	EntityType _type;
+	MonsterType _monsterType;
+	EntityState _state;
+	// TODO:
+	// _parameter is used in the original for all kinds of purposes.
+	// Function pointers, strings, HP, ..
+	int _parameter;
 };
 
 }
