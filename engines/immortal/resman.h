@@ -187,14 +187,9 @@ enum SpriteId {
 	kSpriteFightingGaugeLife,
 	kSpriteKoorsLight,
 
-	kSpriteWizardN,
-	kSpriteWizardNE,
-	kSpriteWizardE,
-	kSpriteWizardSE,
-	kSpriteWizardS,
-	kSpriteWizardSW,
-	kSpriteWizardW,
-	kSpriteWizardNW,
+	kSpriteWizard,
+	kSpriteGoblin,
+	kSpriteTroll,
 	kSpriteNum
 };
 

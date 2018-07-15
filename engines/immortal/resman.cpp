@@ -138,14 +138,9 @@ static const SpriteInfo spriteInfo[kSpriteNum] = {
 	{kFileGeneral2, 4, 61},     // kSpriteFightingGaugeLife
 	{kFileGeneral2, 4, 62},     // kSpriteKoorsLight
 
-	{kFileWizard,   0,  0},     // kSpriteWizardN
-	{kFileWizard,   1,  0},     // kSpriteWizardNE
-	{kFileWizard,   2,  0},     // kSpriteWizardE
-	{kFileWizard,   3,  0},     // kSpriteWizardSE
-	{kFileWizard,   4,  0},     // kSpriteWizardS
-	{kFileWizard,   5,  0},     // kSpriteWizardSW
-	{kFileWizard,   6,  0},     // kSpriteWizardW
-	{kFileWizard,   7,  0},     // kSpriteWizardN
+	{kFileWizard,   0,  0},     // kSpriteWizard
+	{kFileGoblin,   0,  0},     // kSpriteGoblin
+	{kFileTroll,    0,  0}      // kSpriteTroll
 };
 
 static byte *decodeFile(byte *buffer, int encodedFilesize, int *decodedFilesize);
