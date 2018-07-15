@@ -85,6 +85,8 @@ void Renderer::drawSprite(SpriteId id, int x, int y, int offsetFrame, int offset
 	const SpriteInfo *info = _resMan->getSpriteInfo(id);
 	int pack = info->pack + offsetPack;
 	int frame = info->sprite + offsetFrame;
+	assert(pack >= 0 && frame >= 0);
+
 	const Sprite *sprite = _resMan->getSprite(info->fileId, pack, frame);
 	Common::Point spriteCenter = _resMan->getSpritePackCenter(info->fileId, info->pack);
 	internalDrawSprite(sprite, x, y, spriteCenter.x, spriteCenter.y);
