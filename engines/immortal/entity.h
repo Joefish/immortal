@@ -28,6 +28,7 @@
 namespace Immortal {
 
 enum Direction {
+	kDirectionNone = -1,
 	kDirectionN = 0,
 	kDirectionNE,
 	kDirectionE,
