@@ -275,7 +275,7 @@ void Renderer::internalDrawSprite(const Sprite *sprite, int x, int y, int center
 void Renderer::internalPaletteFade(PaletteFadeType type) {
 	byte tmpPalette[16 * 3];
 	int colorMultiplier = (type == kPaletteFadeIn) ? 0 : 15;
-	int colorMultiplierEnd = (type == kPaletteFadeIn) ? 15: 0;
+	int colorMultiplierEnd = (type == kPaletteFadeIn) ? 16 : -1;
 	int colorMultiplierStep = (type == kPaletteFadeIn) ? 1 : -1;
 
 	for (; colorMultiplier != colorMultiplierEnd; colorMultiplier += colorMultiplierStep) {
