@@ -294,14 +294,14 @@ Dialog::Dialog(Renderer *screen)
 	        "You get a strange sense of- it's difficult to pinpoint- eternity. It feels as if ~";
 	_dialog[kDialogDream1P2X]._nextPage = kDialogDream1P3Y;
 	_dialog[kDialogDream1P3Y]._text = "the civilization has existed since the beginning of time.]]]]]=";
-	_dialog[kDialogGeigerDescription]._text =
+	_dialog[kDialogWormSensorDescription]._text =
 	        "_}You find a strange device and instructions:[(Worm danger in room after flying lizards! "
 	        "The only safe path is left, down, right, down, left, down, right, up, right, down. ~";
-	_dialog[kDialogGeigerDescription]._nextPage = kDialogGeigerDescription2;
-	_dialog[kDialogGeigerDescription2]._text =
+	_dialog[kDialogWormSensorDescription]._nextPage = kDialogWormSensorDescription2;
+	_dialog[kDialogWormSensorDescription2]._text =
 	        "Sensor pitch changes when you step off the path. Sensor only lasts 30 seconds.'[@";
-	_dialog[kDialogGeigerString]._text = "#sensor@";
-	_dialog[kDialogGeigerString]._iconId = kSpriteIconSporesBag;
+	_dialog[kDialogWormSensorString]._text = "#sensor@";
+	_dialog[kDialogWormSensorString]._iconId = kSpriteIconSporesBag;
 	_dialog[kDialogEggString]._text = "#  egg@";
 	_dialog[kDialogEggString]._iconId = kSpriteIconBook;
 	_dialog[kDialogEggDescription]._text = "You find a large egg.&@";
