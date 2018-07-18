@@ -36,7 +36,8 @@ enum Direction {
 	kDirectionS,
 	kDirectionSW,
 	kDirectionW,
-	kDirectionNW
+	kDirectionNW,
+	kDirectionNum
 };
 
 enum WizardState {
@@ -64,12 +65,13 @@ enum WizardState {
 	kWizardStateOnObject         = 1 << 20,
 	kWizardStateOnBody           = 1 << 21,
 	kWizardStateOnCarpet         = 1 << 22,
-	kWizardStateProteanGoblin    = 1 << 23,
-	kWizardStateTiny             = 1 << 24,
-	kWizardStateDrunk            = 1 << 25,
-	kWizardStateCombat           = 1 << 26,
-	kWizardStateObjectIsF1       = 1 << 27,       // ?
-	kWizardStateObjectIsF2       = 1 << 28        // ?
+	kWizardStateOnBarrel         = 1 << 23,
+	kWizardStateProteanGoblin    = 1 << 24,
+	kWizardStateTiny             = 1 << 25,
+	kWizardStateDrunk            = 1 << 26,
+	kWizardStateCombat           = 1 << 27,
+	kWizardStateObjectIsF1       = 1 << 28,       // ?
+	kWizardStateObjectIsF2       = 1 << 29        // ?
 };
 
 enum MonsterType {

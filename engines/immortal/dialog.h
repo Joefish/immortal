@@ -294,44 +294,25 @@ public:
 	int getDelay() const;
 	DialogId getId() const;
 
+	SpriteId getDialogIcon(DialogId id) const;
+	const char *getDialogText(DialogId id) const;
+
 private:
 	void reset();
-	void printText();
-	void newline();
-	void resetCursor();
 
 public:
-	// TODO:
-	// button pos relative to viewport. Look close at source what's going on here..
-	static const int _cursorOriginX = 40;
-	static const int _cursorOriginY = 24;
-	static const int _buttonYesX = 214 - 32;
-	static const int _buttonYesY = 100 - 12;
-	static const int _buttonNoX = 40 - 32;
-	static const int _buttonNoY = 100 - 12;
-	static const int _iconWidth = 64;
-	static const int _iconHeight = 48;
-	static const int _maxCharWidth = 16;
-	static const int _rowHeight = 16;
-	static const int _rowWidthLimit = 288;  // 256 px viewport + 32 px border
-	static const int _maxRows = 5;
-	static const int _charGaugeOff = 1;
-	static const int _charGaugeOn = 2;
-	static const int _charCopyright = 24;
-	static const int _charTrademark = 25;
-	static const int _charBlank = 26;
 	static const int _scrollingDelay = 100;
 	static const int _delayInMs = (1 / 72.8) * 1000;
+
+	DialogData _dialog[kDialogNum];
 
 private:
 	Renderer *_screen;
 	const char *_text;
-	Common::Point _cursorPos;
 	Timer _timeSinceLastUpdate;
 	int _delay;
 	bool _scrollingMode;
 	DialogId _id;
-	DialogData _dialog[kDialogNum];
 	char _password[18];     // 16 char password + '-' + terminator
 	int _passwordCharIndex;
 };

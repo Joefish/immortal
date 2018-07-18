@@ -30,7 +30,6 @@ namespace Immortal {
 Dialog::Dialog(Renderer *screen)
     : _screen(screen)
     , _text(nullptr)
-    , _cursorPos(_cursorOriginX, _cursorOriginY)
     , _timeSinceLastUpdate()
     , _delay(0)
     , _scrollingMode(false)
@@ -459,8 +458,7 @@ void Dialog::load(DialogId id) {
 }
 
 void Dialog::reset() {
-	_cursorPos.x = _cursorOriginX;
-	_cursorPos.y = _cursorOriginY;
+	_screen->cursorPosReset();
 	_text = nullptr;
 	_timeSinceLastUpdate.stop();
 	_scrollingMode = false;
@@ -473,6 +471,14 @@ int Dialog::getDelay() const {
 
 DialogId Dialog::getId() const {
 	return _id;
+}
+
+SpriteId Dialog::getDialogIcon(DialogId id) const {
+	return _dialog[id]._iconId;
+}
+
+const char *Dialog::getDialogText(DialogId id) const {
+	return _dialog[id]._text;
 }
 
 void Dialog::nextChar() {
@@ -491,10 +497,9 @@ void Dialog::printChar(int c) {
 		_password[_passwordCharIndex++] = c;
 		_password[_passwordCharIndex] = '-';
 
-		resetCursor();
-		newline();
-		_screen->fillRect(_cursorPos.x, _cursorPos.y,
-		                  _rowWidthLimit, _cursorPos.y + _rowHeight, 0);
+		_screen->cursorPosReset();
+		_screen->cursorPosNewline();
+		_screen->cursorClearLine();
 		_text = _password;
 		while (*_text)
 			update(false);
@@ -506,10 +511,11 @@ bool Dialog::removeChar() {
 		_password[_passwordCharIndex--] = 0;
 		_password[_passwordCharIndex] = '-';
 
-		_screen->fillRect(_cursorOriginX, _cursorPos.y,
-		                  _rowWidthLimit, _cursorPos.y + _rowHeight, 0);
+		Common::Point cursorPos(_screen->getCursorPos());
+		_screen->fillRect(_screen->_cursorOriginX, cursorPos.y,
+		                  _screen->_rowWidthLimit, cursorPos.y + _screen->_rowHeight, 0);
 		_text = _password;
-		_cursorPos.x = _cursorOriginX;
+		_screen->setCursorPos(_screen->_cursorOriginX, cursorPos.y);
 		while (*_text)
 			update(false);
 
@@ -525,7 +531,7 @@ bool Dialog::removeChar() {
  * advance the animation during update? Probably not. Instead, confine the Renderer to rendering and store
  * as little non-render state as possible.
  * At what x value is it necessary to line break the text? -- Scan word length and check if it fits
- * Difference between fast and slow scroll?
+ *
  * The following are tokens for render behavior that should better be handled in the logic
  *      =       end of string
  *      @       end of string, wait for OKAY
@@ -555,156 +561,97 @@ bool Dialog::removeChar() {
  *         For dialog without buttons we just return Ok as well.
  */
 DialogToken Dialog::update(bool keyPressed) {
-	switch (*_text) {
-	case kDialogTokenEndOfStringOk:
-	case kDialogTokenEndOfStringYesNo:
-	case kDialogTokenLoadNextString:
-	case kDialogTokenStringTerminator:
-		return (DialogToken)*_text;
+	do {
+		switch (*_text) {
+		case kDialogTokenEndOfStringOk:
+		case kDialogTokenEndOfStringYesNo:
+		case kDialogTokenLoadNextString:
+		case kDialogTokenStringTerminator:
+			return (DialogToken)*_text;
 
-	case kDialogTokenEndOfString:
-		_cursorPos.x = _cursorOriginX;
-		_cursorPos.y = _cursorOriginY;
-		return kDialogTokenDelay;
+		case kDialogTokenEndOfString:
+			_screen->cursorPosReset();
+			return kDialogTokenDelay;
 
-	case kDialogTokenDelay40:
-		_delay = 40 * _delayInMs;
-		return kDialogTokenDelay;
+		case kDialogTokenDelay40:
+			_delay = 40 * _delayInMs;
+			return kDialogTokenDelay;
 
-	case kDialogTokenDelayAndPageBreak:
-		_delay = 140 * _delayInMs;
-		return kDialogTokenDelay;
+		case kDialogTokenDelayAndPageBreak:
+			_delay = 140 * _delayInMs;
+			return kDialogTokenDelay;
 
-	case kDialogTokenDelay:
-		_delay = 0;
-		++_text;
-		while (Common::isDigit(*_text)) {
-			_delay = _delay * 10 + (*_text - '0');
+		case kDialogTokenDelay:
+			_delay = 0;
 			++_text;
+			while (Common::isDigit(*_text)) {
+				_delay = _delay * 10 + (*_text - '0');
+				++_text;
+			}
+			--_text;
+			_delay *= _delayInMs;
+			return kDialogTokenDelay;
+
+		case kDialogTokenDelayAndClear:
+			// parse number after token
+			break;
+
+		case kDialogTokenSlowScroll:
+			_scrollingMode = true;
+			break;
+
+		case kDialogTokenFastScroll:
+			_scrollingMode = true;
+			break;
+
+		case kDialogTokenFadeIn:
+			_screen->paletteFadeIn();
+			break;
+
+		case kDialogTokenFadeOut:
+			_screen->paletteFadeOut();
+			break;
+
+		case kDialogTokenSlowFadeOut:
+			_screen->paletteSlowFadeOut();
+			break;
+
+		case kDialogTokenLineBreak:
+			_screen->cursorPosNewline();
+			break;
+
+		case kDialogTokenDrawIcon:
+			break;
+
+		case kDialogTokenPrintNumber:
+			break;
+
+		case kDialogTokenNoFormat:
+			break;
+
+		case kDialogTokenApostrophy:
+			_screen->drawChar(*_text);
+			break;
+
+		case kDialogTokenBackquote:
+			_screen->drawChar(*_text);
+			break;
+
+		case kDialogTokenCenterCursorX:
+			_screen->cursorPosCenter();
+			break;
+
+		case kDialogTokenAutoLineAndPageBreaks:
+			break;
+
+		default:
+			_screen->drawChar(*_text);
+			break;
 		}
-		--_text;
-		_delay *= _delayInMs;
-		return kDialogTokenDelay;
+	} while (*_text++ && !_scrollingMode);
 
-	case kDialogTokenDelayAndClear:
-		// parse number after token
-		break;
-
-	case kDialogTokenSlowScroll:
-		_scrollingMode = true;
-		break;
-
-	case kDialogTokenFastScroll:
-		_scrollingMode = true;
-		break;
-
-	case kDialogTokenFadeIn:
-		_screen->paletteFadeIn();
-		break;
-
-	case kDialogTokenFadeOut:
-		_screen->paletteFadeOut();
-		break;
-
-	case kDialogTokenSlowFadeOut:
-		_screen->paletteSlowFadeOut();
-		break;
-
-	case kDialogTokenLineBreak:
-		newline();
-		break;
-
-	case kDialogTokenDrawIcon:
-		break;
-
-	case kDialogTokenPrintNumber:
-		break;
-
-	case kDialogTokenNoFormat:
-		break;
-
-	case kDialogTokenApostrophy:
-		printText();
-		break;
-
-	case kDialogTokenBackquote:
-		printText();
-		break;
-
-	case kDialogTokenCenterCursorX:
-		_cursorPos.x = _screen->_frameWidth +
-		               ((_screen->_viewportWidth / 2) - (_iconWidth / 2));
-		break;
-
-	case kDialogTokenAutoLineAndPageBreaks:
-		break;
-
-	default:
-		printText();
-		break;
-	}
-
-	++_text;
 	_timeSinceLastUpdate.reset();
-
 	return (DialogToken)*_text;
-}
-
-void Dialog::printText() {
-	// TODO:
-	// Advance to next line if word does not fit in row (test row limit to be sure)
-	// Current linebreak is just a workaround
-	// If dialog not in scrolling mode, render whole page instead of single char
-	// return if *_text is a token
-	if (_cursorPos.x + _maxCharWidth > _rowWidthLimit)
-		newline();
-
-	switch (*_text) {
-	case ' ':
-		_cursorPos.x += 8;
-		return;
-	case '\'':
-		_cursorPos.x -= 2;
-		break;
-	case 'm':
-	case 'M':
-	case 'w':
-	case 'W':
-		_cursorPos.x += 8;
-		break;
-	case 'i':
-	case 'l':
-		_cursorPos.x -= 4;
-		break;
-	case 'j':
-	case 't':
-		_cursorPos.x -= 2;
-		break;
-	}
-	if (Common::isUpper(*_text))
-		_cursorPos.x += 8;
-
-	_screen->drawChar(*_text, _cursorPos.x, _cursorPos.y);
-
-	switch (*_text) {
-	case '\'':
-	case 'T':
-		_cursorPos.x += 6;
-		break;
-	default:
-		_cursorPos.x += 8;
-		break;
-	}
-}
-
-void Dialog::resetCursor() {
-	_cursorPos.x = _cursorOriginX;
-	_cursorPos.y = _cursorOriginY;
-}
-
-void Dialog::newline() {
-	_cursorPos.x = _cursorOriginX;
-	_cursorPos.y += _rowHeight;
 }
 
 }

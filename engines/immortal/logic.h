@@ -52,8 +52,55 @@ enum KeyState {
 enum LogicState {
 	kLogicStartup,
 	kLogicDialog,
+	kLogicInventory,
 	kLogicGame,
 	kLogicPause
+};
+
+enum ItemId {
+	kItemBottle,
+	kItemAlcohol,
+	kItemBootOil,
+	kItemShrinkPotion,
+	kItemKey,
+	kItemWormSensor,
+	kItemSporesBag,
+	kItemBaitBag,
+	kItemGoldBag,
+//	kItemBook,
+	kItemDragonEgg,
+	kItemMap,
+	kItemRuby,
+	kItemStone,
+	kItemLetter,
+	kItemAmulet,
+	kItemBomb,
+	kItemRingDunric,
+	kItemRingProtean,
+	kItemCarpet,
+	kItemFireballScroll,
+	kItemNum
+};
+
+struct InventoryItem {
+	ItemId _itemId;
+	int _quantity;
+	const char *_text;
+	SpriteId _spriteId;
+};
+
+class Inventory {
+public:
+	Inventory(Dialog *dialog);
+
+	InventoryItem *getItem(int index);
+	SpriteId getSprite(int index);
+	void addItem(ItemId id, int quantity);
+	int numItems() const;
+
+private:
+	Common::Array<InventoryItem> _inventory;
+	Dialog *_dialog;
 };
 
 class Logic {
@@ -67,6 +114,7 @@ private:
 	void runDialog();
 	void runGame();
 	void runPause();
+	void runInventory();
 
 	void pollInput();
 	void handleInput();
@@ -93,6 +141,7 @@ private:
 	Common::Array<int> _keyInputBuffer;
 	Timer _timer;
 	Timer _gameDelay;
+	Timer _keyDelay;
 	LogicState _logicState;
 	int64 _timeInit;
 	bool _keyState[kKeyNum];
@@ -103,6 +152,8 @@ private:
 	Entity _wizard;
 	WizardState _wizardState;
 	Direction _moveDirection;
+	Inventory _inventory;
+	int _inventoryPage;
 };
 
 }

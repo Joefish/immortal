@@ -23,6 +23,7 @@
 #include "common/system.h"
 #include "graphics/palette.h"
 
+#include "immortal/dialog.h"
 #include "immortal/graphics.h"
 
 namespace Immortal {
@@ -73,7 +74,8 @@ void Renderer::convertPaletteToRGB(int palColor, byte *red, byte *green, byte *b
 
 Renderer::Renderer(ResourceManager *resMan)
     : _resMan(resMan)
-    , _currentPalette(kPaletteInvalid) {
+    , _currentPalette(kPaletteInvalid)
+    , _cursorPos(_cursorOriginX, _cursorOriginY) {
 	_backBuffer.create(_screenWidth, _screenHeight, g_system->getScreenFormat());
 }
 
@@ -101,8 +103,184 @@ void Renderer::drawIcon(SpriteId id, int x, int y) {
 	internalDrawSprite(sprite, iconPosX, iconPosY, spriteCenter.x, spriteCenter.y);
 }
 
-void Renderer::drawChar(char c, int x, int y) {
-	drawSprite(kSpriteAsciiBase, x, y, c);
+void Renderer::drawChar(char c) {
+	if (_cursorPos.x + _maxCharWidth > _rowWidthLimit)
+		cursorPosNewline();
+
+	switch (c) {
+	case ' ':
+		_cursorPos.x += 8;
+		return;
+	case '\'':
+		_cursorPos.x -= 2;
+		break;
+	case 'm':
+	case 'M':
+	case 'w':
+	case 'W':
+		_cursorPos.x += 8;
+		break;
+	case 'i':
+	case 'l':
+		_cursorPos.x -= 4;
+		break;
+	case 'j':
+	case 't':
+		_cursorPos.x -= 2;
+		break;
+	}
+	if (Common::isUpper(c))
+		_cursorPos.x += 8;
+
+	drawSprite(kSpriteAsciiBase, _cursorPos.x, _cursorPos.y, c);
+
+	switch (c) {
+	case '\'':
+	case 'T':
+		_cursorPos.x += 6;
+		break;
+	default:
+		_cursorPos.x += 8;
+		break;
+	}
+}
+
+Common::Point Renderer::getCursorPos() const {
+	return Common::Point(_cursorPos.x, _cursorPos.y);
+}
+
+void Renderer::setCursorPos(int x, int y) {
+	_cursorPos.x = (int16)x;
+	_cursorPos.y = (int16)y;
+}
+
+void Renderer::cursorPosReset() {
+	_cursorPos.x = _cursorOriginX;
+	_cursorPos.y = _cursorOriginY;
+}
+
+void Renderer::cursorPosNewline() {
+	_cursorPos.x = _cursorOriginX;
+	_cursorPos.y += _rowHeight;
+}
+
+void Renderer::cursorPosCenter() {
+	_cursorPos.x = _frameWidth + ((_viewportWidth / 2) - (_iconWidth / 2));
+}
+
+void Renderer::cursorClearLine() {
+	fillRect(_cursorPos.x, _cursorPos.y,
+	         _rowWidthLimit, _cursorPos.y + _rowHeight, 0);
+}
+
+// TODO: cleanup
+static int textWidth(const char *text) {
+	int width = 0;
+
+	while (*text && *text != kDialogTokenEndOfStringOk) {
+		char c = *text++;
+		bool skip = false;
+		switch (c) {
+		case kDialogTokenInvalid:
+		case kDialogTokenStringTerminator:
+		case kDialogTokenEndOfString:
+		case kDialogTokenEndOfStringOk:
+		case kDialogTokenEndOfStringYesNo:
+		case kDialogTokenDelayAndClear:
+		case kDialogTokenDelayAndPageBreak:
+		case kDialogTokenSlowScroll:
+		case kDialogTokenFastScroll:
+		case kDialogTokenFadeIn:
+		case kDialogTokenFadeOut:
+		case kDialogTokenSlowFadeOut:
+		case kDialogTokenLineBreak:
+		case kDialogTokenDrawIcon:
+		case kDialogTokenLoadNextString:
+		case kDialogTokenPrintNumber:
+		case kDialogTokenNoFormat:
+		case kDialogTokenApostrophy:
+		case kDialogTokenBackquote:
+		case kDialogTokenDelay:
+		case kDialogTokenDelay40:
+		case kDialogTokenCenterCursorX:
+		case kDialogTokenAutoLineAndPageBreaks:
+			skip = true;
+		}
+		if (skip)
+			continue;
+
+		switch (c) {
+		case ' ':
+			width += 8;
+			skip = true;
+			break;
+		case '\'':
+			width -= 2;
+			break;
+		case 'm':
+		case 'M':
+		case 'w':
+		case 'W':
+			width += 8;
+			break;
+		case 'i':
+		case 'l':
+			width -= 4;
+			break;
+		case 'j':
+		case 't':
+			width -= 2;
+			break;
+		}
+		if (skip)
+			continue;
+		if (Common::isUpper(c))
+			width += 8;
+
+		switch (c) {
+		case '\'':
+		case 'T':
+			width += 6;
+			break;
+		default:
+			width += 8;
+			break;
+		}
+	}
+
+	return width;
+}
+
+// TODO:
+// Positioning of text is off.
+// egg is a book.
+// drink me.
+void Renderer::drawInventoryItem(const char *text, SpriteId spriteId, int parameter, int x, int y) {
+	Common::String parameterString(Common::String::format("%d", parameter));
+	Common::Point oldCursorPos = getCursorPos();
+	// centering text cursor
+	setCursorPos(_viewportPosX + x + (_viewportWidth / 6) - (textWidth(text) / 2),
+	             _cursorOriginY + y + _iconHeight - (_rowHeight / 2));
+	Common::Point iconCenter(x + (_viewportWidth / 6) - (_iconWidth / 2), y);
+
+	while (*text && *text != kDialogTokenEndOfStringOk) {
+		switch (*text) {
+		case kDialogTokenDrawIcon:
+			drawIcon(spriteId, iconCenter.x, iconCenter.y);
+			break;
+		case kDialogTokenPrintNumber:
+			for (int i = 0; i < parameterString.size(); ++i) {
+				drawChar(parameterString[i]);
+			}
+			break;
+		default:
+			drawChar(*text);
+			break;
+		}
+
+		++text;
+	}
+	setCursorPos(oldCursorPos.x, oldCursorPos.y);
 }
 
 void Renderer::fillRect(int x1, int y1, int x2, int y2, int color) {

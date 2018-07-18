@@ -47,14 +47,16 @@ Logic::Logic(ImmortalEngine *vm)
     , _resMan(vm->_resMan)
     , _music(vm->_midiPlayer)
     , _screen(vm->_screen)
-    , _keyState()
-    , _logicState(kLogicStartup)
-    , _timeInit(vm->_system->getMillis())
+    , _dialog(vm->_screen)
     , _lastDialogToken(kDialogTokenInvalid)
     , _buttonNoSelected(true)
     , _buttonYesSelected(false)
+    , _logicState(kLogicStartup)
+    , _timeInit(vm->_system->getMillis())
+    , _keyState()
     , _cameraPos(0, 0)
-    , _dialog(vm->_screen) {
+    , _wizardState(kWizardStateNone)
+    , _inventory(&_dialog) {
 }
 
 // TODO:
@@ -62,6 +64,11 @@ Logic::Logic(ImmortalEngine *vm)
 // init rooms and gamestate
 void Logic::init() {
 	_wizard.setMonsterType(kMonsterTypeWizard);
+	_inventory.addItem(kItemGoldBag, 2);
+	_inventory.addItem(kItemAmulet, 1);
+	_inventory.addItem(kItemCarpet, 10);
+	_inventory.addItem(kItemBomb, 8);
+	_inventory.addItem(kItemDragonEgg, 1);
 }
 
 void Logic::update() {
@@ -74,6 +81,9 @@ void Logic::update() {
 		break;
 	case kLogicDialog:
 		runDialog();
+		break;
+	case kLogicInventory:
+		runInventory();
 		break;
 	case kLogicGame:
 		runGame();
@@ -88,7 +98,6 @@ void Logic::update() {
 }
 
 void Logic::updateEntities() {
-
 	// non animated static objects (chests)
 	// animated static objects (torches)
 	// NPCs
@@ -154,14 +163,49 @@ void Logic::handleInput() {
 		_moveDirection = kDirectionS;
 	} else if (isKeyPressed(kKeyLeft)) {
 		_moveDirection = kDirectionW;
+	} else {
+		_moveDirection = kDirectionNone;
 	}
 
 	if (isKeyPressed(kKeyAttack)) {
 		// TODO: Last bound spell (e.g. fireball)
+		_keyDelay.start();
+		if (_keyDelay.elapsedTime() < 300)
+			return;
+
+		switch (_wizardState) {
+		case kWizardStateNone:
+			_wizardState = kWizardStateOnCarpet;
+			break;
+		case kWizardStateLevitating:
+			_wizardState = kWizardStateNone;
+			break;
+		case kWizardStateOnCarpet:
+			_wizardState = kWizardStateOnBarrel;
+			break;
+		case kWizardStateOnBarrel:
+			_wizardState = kWizardStateLevitating;
+			break;
+		default:
+			break;
+		}
+
+		_keyDelay.reset();
 	}
 	if (isKeyPressed(kKeyStart)) {
+		_keyDelay.start();
+		if (_keyDelay.elapsedTime() < 300)
+			return;
+
 		debug("X:%3d  Y:%3d", _cameraPos.x, _cameraPos.y);
 		debug("Wizard: X:%3d Y:%3d", _wizard.getPos().x, _wizard.getPos().y);
+
+		if (_logicState == kLogicGame)
+			setState(kLogicInventory);
+		else if (_logicState == kLogicInventory)
+			setState(kLogicGame);
+
+		_keyDelay.reset();
 	}
 	if (isKeyPressed(kKeyQuit)) {
 		if (_logicState == kLogicGame) {
@@ -175,12 +219,11 @@ void Logic::runStartup() {
 	_timer.start();
 	if (_timer.elapsedTime() > 3000 || _keyStartAttackPressed) {
 		_timer.stop();
-		loadDialog(kDialogIntro);
+		loadDialog(kDialogNewGame);
 	}
 }
 
 void Logic::runDialog() {
-
 	switch (_lastDialogToken) {
 	case kDialogTokenDelay:
 		_timer.start();
@@ -193,7 +236,7 @@ void Logic::runDialog() {
 
 	case kDialogTokenEndOfStringOk: {
 		int buttonX = (_screen->_viewportWidth / 2) - (_screen->_iconWidth / 2);
-		int buttonY = _dialog._buttonNoY;
+		int buttonY = _screen->_buttonNoY;
 		_screen->drawIcon(kSpriteButtonOk, buttonX, buttonY);
 
 		if (_keyStartAttackPressed)
@@ -221,7 +264,7 @@ void Logic::runDialog() {
 
 void Logic::runGame() {
 	_gameDelay.start();
-	if (_gameDelay.elapsedTime() < 33)
+	if (_gameDelay.elapsedTime() < 80)
 		return;
 
 	_screen->clear();
@@ -274,21 +317,20 @@ void Logic::setCamera(int x, int y) {
 }
 
 void Logic::handleDialogYesNo() {
-	if (isKeyPressed(kKeyLeft)) {
-		_buttonNoSelected = true;
-		_buttonYesSelected = false;
-	}
 	if (isKeyPressed(kKeyRight)) {
 		_buttonNoSelected = false;
 		_buttonYesSelected = true;
+	} else {
+		_buttonNoSelected = true;
+		_buttonYesSelected = false;
 	}
 
 	SpriteId buttonNo = _buttonNoSelected ? kSpriteButtonNoActive
 	                                      : kSpriteButtonNoInactive;
 	SpriteId buttonYes = _buttonYesSelected ? kSpriteButtonYesActive
 	                                        : kSpriteButtonYesInactive;
-	_screen->drawIcon(buttonNo, _dialog._buttonNoX, _dialog._buttonNoY);
-	_screen->drawIcon(buttonYes, _dialog._buttonYesX, _dialog._buttonYesY);
+	_screen->drawIcon(buttonNo, _screen->_buttonNoX, _screen->_buttonNoY);
+	_screen->drawIcon(buttonYes, _screen->_buttonYesX, _screen->_buttonYesY);
 
 	switch (_dialog.getId()) {
 	case kDialogExitString:
@@ -344,10 +386,122 @@ void Logic::handleDialogEnd() {
 	}
 }
 
+static const DialogId itemList[] = {
+	kDialogBootsString,         // kItemBottle
+	kDialogAlcoholString,       // kItemAlcohol
+	kDialogBootsString,         // kItemBootOil
+	kDialogMuscleString,        // kItemShrinkPotion
+	kDialogChestKeyString,      // kItemKey
+	kDialogWormSensorString,    // kItemWormSensor
+	kDialogSporesString,        // kItemSporesBag
+	kDialogWormFoodString,      // kItemBaitBag
+	kDialogGoldString,          // kItemGoldBag
+	                            // kItemBook
+	kDialogEggString,           // kItemDragonEgg
+	kDialogDeathMapString,      // kItemMap
+	kDialogGemString,           // kItemRuby
+	kDialogStoneString,         // kItemStone
+	kDialogNoteString,          // kItemLetter
+	kDialogAmuletString,        // kItemAmulet
+	kDialogBombString,          // kItemBomb
+	kDialogDunricRingString,    // kItemRingDunric
+	kDialogFaceString,          // kItemRingProtean
+	kDialogCarpetString,        // kItemCarpet
+	kDialogFireballString       // kItemFirballScroll
+};
+
+void Logic::runInventory() {
+	Common::Point itemPos[6];
+	itemPos[0] = Common::Point(_screen->_viewportWidth / 3, 0);
+	itemPos[1] = Common::Point(0, 0);
+	itemPos[2] = Common::Point(2 * _screen->_viewportWidth / 3, 0);
+	itemPos[3] = Common::Point(0 , _screen->_viewportHeight / 2);
+	itemPos[4] = Common::Point(_screen->_viewportWidth / 3 , _screen->_viewportHeight / 2);
+	itemPos[5] = Common::Point(2 * _screen->_viewportWidth / 3, _screen->_viewportHeight / 2);
+
+	_screen->clear();
+
+	// render items (icons + text)
+	// if more than 6 items in inventory, render 'other' at itempos[5]
+	// and render items 6 - 11. (same rules apply)
+	int maxItemIndex = 5 + 6 * _inventoryPage;
+	if (_inventory.numItems() > 6) {
+		--maxItemIndex;
+	}
+
+	for (int i = 6 * _inventoryPage; i < maxItemIndex; ++i) {
+		if (i >= _inventory.numItems())
+			break;
+
+		InventoryItem *item = _inventory.getItem(i);
+		const char *itemText = item->_text;
+		// TODO: why does it crash with drawSprite() ?
+
+		// render text
+		_screen->drawInventoryItem(item->_text, item->_spriteId, item->_quantity,
+		                           itemPos[i % 6].x, itemPos[i % 6].y);
+	}
+
+	switch (_moveDirection) {
+	case kDirectionNone:
+	case kDirectionN:
+		_screen->drawIcon(kSpriteInventorySelect, 2 + itemPos[0].x, itemPos[0].y);
+		break;
+	case kDirectionNW:
+	case kDirectionW:
+		_screen->drawIcon(kSpriteInventorySelect, 2 + itemPos[1].x, itemPos[1].y);
+		break;
+	case kDirectionNE:
+	case kDirectionE:
+		_screen->drawIcon(kSpriteInventorySelect, 2 + itemPos[2].x, itemPos[2].y);
+		break;
+	case kDirectionSW:
+		_screen->drawIcon(kSpriteInventorySelect, 2 + itemPos[3].x, itemPos[3].y);
+		break;
+	case kDirectionS:
+		_screen->drawIcon(kSpriteInventorySelect, 2 + itemPos[4].x, itemPos[4].y);
+		break;
+	case kDirectionSE:
+		_screen->drawIcon(kSpriteInventorySelect, 2 + itemPos[5].x, itemPos[5].y);
+		break;
+	}
+}
+
 void Logic::loadLevel(int level) {
 	_level.loadLevel(level);
 	setCamera(_level._initCameraPos.x, _level._initCameraPos.y);
 	_wizard.setPos(_level._spawnPos.x, _level._spawnPos.y);
+//	_inventory.addItem(kItemGoldBag, 20);
 }
 
+
+Inventory::Inventory(Dialog *dialog)
+    : _dialog(dialog) {
+}
+
+int Inventory::numItems() const {
+	return _inventory.size();
+}
+
+InventoryItem *Inventory::getItem(int index) {
+	assert(index >= 0 && index < _inventory.size());
+	return &_inventory[index];
+}
+
+void Inventory::addItem(ItemId id, int quantity) {
+	// TODO: if item already there, increase quantity
+
+	const char *text = _dialog->getDialogText(itemList[id]);
+	SpriteId spriteId = _dialog->getDialogIcon(itemList[id]);
+	const InventoryItem temp = {id, quantity, text, spriteId};
+	_inventory.push_back(temp);
+}
+
+SpriteId Inventory::getSprite(int index) {
+	InventoryItem *item = getItem(index);
+	if (!item)
+		return kSpriteNone;
+
+	return kSpriteNone;
+}
 }
