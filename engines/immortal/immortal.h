@@ -25,7 +25,10 @@
 
 #include "audio/mixer.h"
 #include "common/error.h"
+#include "common/platform.h"
 #include "engines/engine.h"
+
+struct ADGameDescription;
 
 namespace Immortal {
 
@@ -37,12 +40,22 @@ class Logic;
 
 class ImmortalEngine : public Engine {
 public:
-	explicit ImmortalEngine(OSystem *syst);
+	ImmortalEngine(OSystem *syst, const ADGameDescription *gameDesc);
 	~ImmortalEngine();
 
-	virtual Common::Error run();
+	Common::Error run() override;
+    bool hasFeature(EngineFeature f) const override;
+    const char *getGameId() const;
+    Common::Platform getPlatform() const;
+    // bool canLoadGameStateCurrently() override { return true; }
+    // bool canSaveGameStateCurrently() override { return true; }
+    // Common::Error loadGameStream(Common::SeekableReadStream *stream) override;
+    // Common::Error saveGameStream(Common::WriteStream *stream, bool isAutosave = false) override;
+    // void syncGameStream(Common::Serializer &s);
 
 public:
+    const ADGameDescription *_gameDescription;
+
 	ResourceManager *_resMan;
 	MusicPlayer *_midiPlayer;
 	Renderer *_screen;

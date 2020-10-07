@@ -3,17 +3,16 @@ MODULE := engines/immortal
 MODULE_OBJS :=  \
 	animation.o \
 	console.o   \
-	detection.o \
 	dialog.o \
 	entity.o \
 	graphics.o \
 	immortal.o \
 	logic.o \
+	metaengine.o \
 	resman.o \
 	rooms.o \
 	sound.o \
 	timer.o
-
 
 MODULE_DIRS += \
 	engines/immortal
@@ -25,3 +24,6 @@ endif
 
 # Include common rules
 include $(srcdir)/rules.mk
+
+# Detection objects
+DETECT_OBJS += $(MODULE)/detection.o

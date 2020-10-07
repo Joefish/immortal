@@ -21,13 +21,8 @@
  */
 
 #include "base/plugins.h"
-#include "common/file.h"
-#include "common/savefile.h"
-#include "common/system.h"
-#include "graphics/thumbnail.h"
 #include "engines/advancedDetector.h"
-
-#include "immortal/immortal.h"
+#include "engines/game.h"
 
 static const PlainGameDescriptor immortalGames[] = {
 	{"immortal", "The Immortal"},
@@ -55,55 +50,23 @@ static const ADGameDescription gameDescriptions[] = {
 };
 }
 
-class ImmortalMetaEngine: public AdvancedMetaEngine {
+class ImmortalMetaEngineStatic : public AdvancedMetaEngineStatic {
 public:
-	ImmortalMetaEngine() : AdvancedMetaEngine(Immortal::gameDescriptions, sizeof(ADGameDescription), immortalGames) {
+    ImmortalMetaEngineStatic() : AdvancedMetaEngineStatic(
+        Immortal::gameDescriptions, sizeof(ADGameDescription), immortalGames) {
+    }
+
+	const char *getEngineId() const override {
+		return "immortal";
 	}
 
-	virtual const char *getName() const {
+	const char *getName() const override {
 		return "The Immortal";
 	}
 
-	virtual const char *getOriginalCopyright() const {
+	const char *getOriginalCopyright() const override {
 		return "(c)1990 Will Harvey & Electronic Arts";
 	}
-
-	virtual bool hasFeature(MetaEngineFeature f) const;
-	virtual bool createInstance(OSystem *syst, Engine **engine, const ADGameDescription *desc) const;
 };
 
-bool ImmortalMetaEngine::hasFeature(MetaEngineFeature f) const {
-	switch (f) {
-	case kSupportsLoadingDuringStartup:
-		// fallthrough
-	case kSupportsListSaves:
-		// fallthrough
-	case kSupportsDeleteSave:
-		// fallthrough
-	case kSavesSupportMetaInfo:
-		// fallthrough
-	case kSavesSupportThumbnail:
-		// fallthrough
-	case kSavesSupportCreationDate:
-		// fallthrough
-	case kSavesSupportPlayTime:
-		return false;
-	default:
-		return false;
-	}
-}
-
-bool ImmortalMetaEngine::createInstance(OSystem *syst, Engine **engine, const ADGameDescription *desc) const {
-	if (desc) {
-		*engine = new Immortal::ImmortalEngine(syst);
-	}
-
-	return desc != nullptr;
-}
-
-
-#if PLUGIN_ENABLED_DYNAMIC(IMMORTAL)
-REGISTER_PLUGIN_DYNAMIC(IMMORTAL, PLUGIN_TYPE_ENGINE, ImmortalMetaEngine);
-#else
-REGISTER_PLUGIN_STATIC(IMMORTAL, PLUGIN_TYPE_ENGINE, ImmortalMetaEngine);
-#endif
+REGISTER_PLUGIN_STATIC(IMMORTAL_DETECTION, PLUGIN_TYPE_METAENGINE, ImmortalMetaEngineStatic);

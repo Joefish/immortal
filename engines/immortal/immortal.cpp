@@ -40,8 +40,9 @@
 
 namespace Immortal {
 
-ImmortalEngine::ImmortalEngine(OSystem *syst)
+ImmortalEngine::ImmortalEngine(OSystem *syst, const ADGameDescription *gameDesc)
     : Engine(syst)
+    , _gameDescription(gameDesc)
     , _resMan(nullptr)
     , _midiPlayer(nullptr)
     , _screen(nullptr)
@@ -83,6 +84,10 @@ Common::Error ImmortalEngine::run() {
 	}
 
 	return Common::kNoError;
+}
+
+bool ImmortalEngine::hasFeature(EngineFeature f) const {
+    return false;
 }
 
 }
